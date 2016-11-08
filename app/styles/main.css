@@ -1,0 +1,25 @@
+body {
+  padding: 20px;
+}
+
+.tab-helper-options {
+  width : 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.missing-monitor {
+  color: red;
+}
+
+.tab-action-bar .btn {
+  border: none;
+  color: lightgray;
+}
+tr:hover .tab-action-bar .btn {
+  color: black;
+}
+
+.hidden-only {
+  visibility: hidden;
+}
