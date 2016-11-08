@@ -1,10 +1,19 @@
-# chrome-tab-helper
+# Chrome Tab Helper
 
 Utility extension that enables seamless tab placement in multi-monitor setups.
+
+Features:
+* Flexible placement options via Rules concept
+* Multi-monitor support
+* Validation of rules configuration against existent Monitor.
+* Monitor detection
 
 ## Getting Started
 
 ```sh
+# Install dependencies
+npm install
+
 # Transform updated source written by ES2015 (default option)
 gulp babel
 
