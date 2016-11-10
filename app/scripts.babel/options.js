@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsController',
+angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelperOptionsController',
   ['$scope', '$timeout', 'Upload', function ($scope, $timeout, Upload) {
     var vm = $scope;
 
@@ -56,8 +56,17 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
 
     //////////////////////////////////////////////////////////////////
 
+
     function activate() {
       loadOptions();
+      loadDisplayInfos();
+    }
+
+    function showAdvancedOptions() {
+      vm.showExtraOptions = !vm.showExtraOptions;
+    }
+
+    function loadDisplayInfos() {
       chrome.system.display.getInfo(function (displayInfos) {
         vm.displayInfos = angular.copy(displayInfos);
         console.table(displayInfos);
@@ -75,10 +84,6 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
           validateOptions();
         });
       });
-    }
-
-    function showAdvancedOptions() {
-      vm.showExtraOptions = !vm.showExtraOptions;
     }
 
     function detectMonitors() {
@@ -152,6 +157,7 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
         vm.newTabOption.name = vm.newTabOption.template.name;
         vm.newTabOption.url = vm.newTabOption.template.url;
         vm.newTabOption.active = vm.newTabOption.template.active;
+        vm.newTabOption.remember = vm.newTabOption.template.remember;
       }
     }
 
@@ -172,6 +178,7 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
       vm.showEditTabOption = false;
       vm.options.tabs[vm.editTabOptionIdx] = {
         active: vm.newTabOption.active,
+        remember: vm.newTabOption.remember,
         url: vm.newTabOption.url,
         name: vm.newTabOption.name,
         monitor: vm.newTabOption.monitor,
@@ -188,6 +195,7 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
     function saveTabOption() {
       vm.options.tabs.push({
         active: vm.newTabOption.active,
+        remember: vm.newTabOption.remember,
         url: vm.newTabOption.url,
         name: vm.newTabOption.name,
         monitor: vm.newTabOption.monitor,
@@ -219,9 +227,9 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
     }
 
     function loadOptions() {
-      var options = localStorage[OPTIONS_KEY];
-      if (options) {
-        vm.options = JSON.parse(options);
+      var tabRuleOptions = localStorage[OPTIONS_KEY];
+      if (tabRuleOptions) {
+        vm.options = JSON.parse(tabRuleOptions);
         markAsPristine();
       } else {
         vm.options = {
@@ -298,6 +306,7 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
     function createNewOption() {
       return {
         active: true,
+        remember: false,
         name: 'Option Name Here',
         url: 'http://any.url/',
         monitor: getPrimaryDisplay(),
@@ -336,21 +345,25 @@ angular.module('tabHelper', ['ngFileUpload']).controller('TabHelperOptionsContro
       return [
         {
           active: true,
+          remember: false,
           name: 'C€2.0 Pruefberichte',
           url: '/reportviewer/'
         },
         {
           active: true,
+          remember: false,
           name: 'C€2.0 Dokumente',
           url: '/multimediaviewer/?type=pdf'
         },
         {
           active: true,
+          remember: false,
           name: 'C€2.0 Bilder',
           url: '/multimediaviewer/?type=image'
         },
         {
           active: true,
+          remember: false,
           name: 'C€2.0 Archive',
           url: '/Common.ArchiveDocumentViewer'
         }

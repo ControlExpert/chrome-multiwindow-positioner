@@ -70,10 +70,6 @@ You can use es2015 now for developing the Chrome extension. However, at this mom
 
 The sources written by es2015 is located at `scripts.babel` and runnable sources are will be at `script` after compiling by `gulp babel`. May you don't want to use babel and ES2015 use `--no-babel` option when scaffolding a new project.
 
-```sh
-yo chrome-extension --no-babel
-```
-
 ## Contribute
 
 See the [contributing docs](https://github.com/ControlExpert/chrome-tab-helper/blob/master/contributing.md)

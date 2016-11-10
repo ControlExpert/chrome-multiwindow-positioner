@@ -16,10 +16,19 @@ body {
   border: none;
   color: lightgray;
 }
+
 tr:hover .tab-action-bar .btn {
   color: black;
 }
 
 .hidden-only {
   visibility: hidden;
+}
+
+.fix-checkbox {
+  min-width: inherit !important
+}
+
+.rule-dialog .form-group {
+
 }

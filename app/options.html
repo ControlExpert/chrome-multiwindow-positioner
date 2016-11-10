@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="tabHelper" class="tab-helper-options">
   <head>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- build:css styles/options-vendor.css -->
     <!-- bower:css -->
@@ -33,6 +34,7 @@
                         <th>Active</th>
                         <th>Name</th>
                         <th ng-if="showExtraOptions">URL</th>
+                        <th>Remember</th>
                         <th>Monitor</th>
                         <th>Position</th>
                         <th ng-if="showExtraOptions">Plain</th>
@@ -42,13 +44,21 @@
                   <tbody>
                       <tr ng-repeat="tabOption in options.tabs track by tabOption.url">
                         <td>
-                          <input type="checkbox"
-                                 class="form-control"
-                                 ng-model="tabOption.active"
-                                 ng-change="markAsDirty()"/>
+                          <checkbox
+                            class="fix-checkbox"
+                            ng-model="tabOption.active"
+                            ng-change="markAsDirty()">
+                          </checkbox>
                         </td>
                         <td>{{tabOption.name}}</td>
                         <td ng-if="showExtraOptions">{{tabOption.url}}</td>
+                        <td>
+                          <checkbox
+                            class="fix-checkbox"
+                            ng-model="tabOption.remember"
+                            ng-change="markAsDirty()">
+                          </checkbox>
+                        </td>
                         <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
                           {{tabOption.monitor.name}} [{{tabOption.monitor.idx}}]
                         </td>
@@ -87,7 +97,7 @@
 
 
       <div class="row" ng-if="showNewTabOption || showEditTabOption">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 rule-dialog">
           <div class="panel"
           ng-class="{'panel-primary':showNewTabOption, 'panel-default': showEditTabOption}">
           	<!-- Default panel contents -->
@@ -116,17 +126,30 @@
                     <hr>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
                     <div class="form-group">
                       <label for="inputActive"
                              focus-on-for="focus-inputActive"
                              class="col-md-4 col-lg-4">Active</label>
                       <div class="col-lg-8" >
-                        <input id="inputActive" type="checkbox"
-                               focus-on="focus-inputActive"
-                               class="form-control"
-                               ng-model="newTabOption.active"
-                        />
+                        <checkbox
+                          id="inputActive"
+                          class="fix-checkbox"
+                          ng-model="newTabOption.active">
+                        </checkbox>
+                      </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                      <label for="inputRemember"
+                             focus-on-for="focus-inputRemember"
+                             class="col-md-4 col-lg-4">Remembers</label>
+                      <div class="col-lg-8" >
+                        <checkbox
+                          id="inputRemember"
+                          class="fix-checkbox"
+                          ng-model="newTabOption.remember">
+                        </checkbox>
                       </div>
                     </div>
 
@@ -191,11 +214,11 @@
                              focus-on-for="focus-inputPopup"
                              class="col-md-4 col-lg-4">Plain Window</label>
                       <div class="col-md-8 col-lg-8" >
-                        <input id="inputPopup" type="checkbox"
-                               focus-on="focus-inputUrl"
-                               class="form-control"
-                               ng-model="newTabOption.popup"
-                        />
+                        <checkbox
+                          id="inputPopup"
+                          class="fix-checkbox"
+                          ng-model="newTabOption.popup">
+                        </checkbox>
                       </div>
                     </div>
 
@@ -223,11 +246,10 @@
       <hr>
 
       <div class="btn-group">
-        <label class="btn btn-primary" type="button"
+        <label class="btn btn-default" type="button"
               ng-disabled="showNewTabOption || showEditTabOption"
               title="Add Tab Option"
               ng-click="addTabOption();"><i class="fa fa-plus"></i></label>
-
         <label class="btn btn-default" type="button"
               ng-class="{'btn-primary':dirty}"
               title="Save"
@@ -286,6 +308,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
