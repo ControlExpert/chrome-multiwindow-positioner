@@ -1,0 +1,122 @@
+{
+   "tabs": [
+      {
+         "active": true,
+         "url": "/reportviewer/",
+         "name": "C€2.0 Pruefberichte",
+         "monitor": {
+            "id": "2528732444",
+            "name": "PnP-Monitor (Standard)",			
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }
+         },
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-08T15:16:48.512Z",
+         "inconsistentMonitor": false,
+         "remember": true,
+		 "code": "ce20-report"
+      },
+      {
+         "active": true,
+         "url": "/multimediaviewer/?type=image",
+         "name": "C€2.0 Bilder",
+         "monitor": {
+            "id": "2480450848",
+            "name": "PnP-Monitor (Standard)",			
+            "workArea": {
+               "height": 1080,
+               "left": -1920,
+               "top": 0,
+               "width": 1920
+            }
+         },
+         "fullScreen": false,
+         "popup": true,
+         "position": "right-half",
+         "timestamp": "2016-11-08T15:17:07.263Z",
+         "inconsistentMonitor": false,
+         "remember": true,
+		 "code": "ce20-image"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "url": "/multimediaviewer/?type=pdf",
+         "name": "C€2.0 Dokumente",
+         "monitor": {
+            "id": "2480450848",
+            "name": "PnP-Monitor (Standard)",
+            "workArea": {
+               "height": 1080,
+               "left": -1920,
+               "top": 0,
+               "width": 1920
+            }
+         },
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-09T14:10:47.083Z",
+         "inconsistentMonitor": false,
+		 "code": "ce20-document"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "url": "Common.ArchiveDocumentViewer",
+         "name": "C€2.0 Archive",
+         "monitor": {
+            "id": "2528732444",
+            "name": "PnP-Monitor (Standard)",
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            },
+         },
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-10T12:37:57.275Z",
+         "inconsistentMonitor": false,
+		 "code": "ce20-archive"
+      }
+   ],
+   "templates": [
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Pruefberichte",
+         "url": "/reportviewer/",
+		 "code": "ce20-report"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Dokumente",
+         "url": "/multimediaviewer/?type=pdf",
+		 "code": "ce20-document"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Bilder",
+         "url": "/multimediaviewer/?type=image",
+		 "code": "ce20-image"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Archive",
+         "url": "/Common.ArchiveDocumentViewer",
+		 "code": "ce20-archive"
+      }
+   ]
+}
