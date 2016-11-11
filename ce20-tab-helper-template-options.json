@@ -79,8 +79,7 @@
                "left": 1920,
                "top": 0,
                "width": 1600
-            }
-         },
+            }},
          "fullScreen": false,
          "popup": true,
          "position": "center",
