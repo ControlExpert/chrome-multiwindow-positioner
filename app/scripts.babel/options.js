@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelperOptionsController',
-  ['$scope', '$timeout', 'Upload', function ($scope, $timeout, Upload) {
+  ['$scope', '$timeout', 'Upload', '$http', function ($scope, $timeout, Upload, $http) {
     var vm = $scope;
 
     var OPTIONS_KEY = 'TAB_HELPER_OPTIONS';
+    var TAB_HELPER_TEMPLATE_URL = 'TAB_HELPER_TEMPLATE_URL';
+
+    var PAGE_LOADING_OFFSET = 1100;
+    var PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
 
     var POSITIONS = {
       CENTER: {id: 'center', name: 'center'},
@@ -22,10 +26,13 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.options = null;
     vm.showNewTabOption = false;
     vm.showEditTabOption = false;
+    vm.showImportTemplateDialog = false;
     vm.inconsistentOptions = false;
     vm.dirty = false;
     vm.showExtraOptions = false;
     vm.isopen = true;
+    vm.showImportTemplateDialog = false;
+    vm.templateUrl = '';
 
     vm.markAsDirty = markAsDirk;
     vm.saveOptions = saveOptions;
@@ -46,6 +53,9 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.moveOptionDown = moveOptionDown;
 
     vm.importTemplate = importTemplate;
+    vm.openImportTemplateMenu = openImportTemplateMenu;
+    vm.acceptImportTemplateMenu = acceptImportTemplateMenu;
+    vm.cancelImportTemplateMenu = cancelImportTemplateMenu;
     vm.exportTemplate = exportTemplate;
 
     vm.cancelTabOption = cancelTabOption;
@@ -88,9 +98,13 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
 
     function detectMonitors() {
       _.forEach(vm.displayInfos, function (display, idx) {
-        var delay = 3; //3 seconds
+        var detectionUrl =
+          'https://igorlino.github.io/page-generator/? ' +
+          'title=Monitor%20' + (idx + 1) +
+          '&type=monitor&id=' + (idx + 1) +
+          '&delay=' + PAGE_DETECTION_DISPLAY_INTERVAL;
         var createData = {
-          url: 'https://igorlino.github.io/page-generator/?title=Monitor%20' + (idx + 1) + '&type=monitor&id=' + (idx + 1) + '&delay=' + delay,
+          url: detectionUrl,
           left: display.workArea.left,
           top: display.workArea.top,
           width: display.workArea.width,
@@ -104,7 +118,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
             chrome.windows.remove(window.id, function () {
               console.log('Removed window ' + window.id);
             });
-          }, (delay * 1000) + 1100); //+800ms to offset detect page loading
+          }, (PAGE_DETECTION_DISPLAY_INTERVAL * 1000) + PAGE_LOADING_OFFSET); //+800ms to offset detect page loading
         });
       });
     }
@@ -114,6 +128,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       _.forEach(vm.displayInfos, function (display, idx) {
         if (display.isPrimary) {
           found = display;
+          return false;
         }
       });
       return found;
@@ -122,9 +137,9 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     function getDisplayById(id) {
       var found = null;
       _.forEach(vm.displayInfos, function (display, idx) {
-        //MONITORS[monitor.id] = monitor;
         if (display.id === id) {
           found = display;
+          return false;
         }
       });
       return found;
@@ -156,13 +171,13 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       if (vm.newTabOption.template) {
         vm.newTabOption.name = vm.newTabOption.template.name;
         vm.newTabOption.url = vm.newTabOption.template.url;
+        vm.newTabOption.code = vm.newTabOption.template.code;
         vm.newTabOption.active = vm.newTabOption.template.active;
         vm.newTabOption.remember = vm.newTabOption.template.remember;
       }
     }
 
     function findPositionById(positionId) {
-      var POSS = POSITIONS;
       var positionKey = _.findKey(POSITIONS, function (position) {
         return position.id === positionId;
       });
@@ -178,6 +193,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       vm.showEditTabOption = false;
       vm.options.tabs[vm.editTabOptionIdx] = {
         active: vm.newTabOption.active,
+        code: vm.newTabOption.code,
         remember: vm.newTabOption.remember,
         url: vm.newTabOption.url,
         name: vm.newTabOption.name,
@@ -195,6 +211,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     function saveTabOption() {
       vm.options.tabs.push({
         active: vm.newTabOption.active,
+        code: vm.newTabOption.code,
         remember: vm.newTabOption.remember,
         url: vm.newTabOption.url,
         name: vm.newTabOption.name,
@@ -237,7 +254,9 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         };
         markAsDirk();
       }
-      vm.options.templates = getDefaultTemplates();
+      if (vm.options.templates) {
+        vm.options.templates = getDefaultTemplates();
+      }
       return vm.options;
     }
 
@@ -307,6 +326,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       return {
         active: true,
         remember: false,
+        code: 'custom',
         name: 'Option Name Here',
         url: 'http://any.url/',
         monitor: getPrimaryDisplay(),
@@ -314,6 +334,34 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         popup: true,
         position: POSITIONS.CENTER
       };
+    }
+
+    function openImportTemplateMenu() {
+      var templateUrl = localStorage[TAB_HELPER_TEMPLATE_URL];
+      if (templateUrl) {
+        vm.templateUrl = templateUrl;
+      }
+      vm.showImportTemplateDialog = true;
+    }
+
+    function acceptImportTemplateMenu(templateUrl) {
+      vm.showImportTemplateDialog = false;
+      if (templateUrl && templateUrl !== '') {
+        localStorage[TAB_HELPER_TEMPLATE_URL] = templateUrl;
+        vm.templateUrl = templateUrl;
+
+        callHttpByGet(templateUrl, function onResponse(response) {
+          if (response.success && response.data) {
+            vm.options = response.data;
+            validateOptions();
+          }
+        });
+      }
+    }
+
+    function cancelImportTemplateMenu() {
+      vm.showImportTemplateDialog = false;
+      vm.templateUrl = '';
     }
 
     function importTemplate(file) {
@@ -346,26 +394,44 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         {
           active: true,
           remember: false,
-          name: 'C€2.0 Pruefberichte',
-          url: '/reportviewer/'
+          name: 'Google Search',
+          url: 'https://www.google.com/',
+          code: 'google-search'
         },
         {
           active: true,
           remember: false,
-          name: 'C€2.0 Dokumente',
-          url: '/multimediaviewer/?type=pdf'
+          name: 'Facebook',
+          url: 'https://www.facebook.com',
+          code: 'facebook'
         },
         {
           active: true,
           remember: false,
-          name: 'C€2.0 Bilder',
-          url: '/multimediaviewer/?type=image'
+          name: 'YouTube',
+          url: 'https://www.youtube.com/',
+          code: 'google-youtube'
         },
         {
           active: true,
           remember: false,
-          name: 'C€2.0 Archive',
-          url: '/Common.ArchiveDocumentViewer'
+          name: 'Wikipedia',
+          url: 'https://www.wikipedia.org/',
+          code: 'wikipedia'
+        },
+        {
+          active: true,
+          remember: false,
+          name: 'Amazon',
+          url: 'https://www.amazon.com/',
+          code: 'amazon-global'
+        },
+        {
+          active: true,
+          remember: false,
+          name: 'Ebay',
+          url: 'http://www.ebay.com/',
+          code: 'ebay-global'
         }
       ]
     }
@@ -374,7 +440,6 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       if (!first) {
         swap(vm.options.tabs, index, index - 1);
         markAsDirk();
-
       }
     }
 
@@ -389,5 +454,41 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       var tmp = list[idx1];
       list[idx1] = list[idx2];
       list[idx2] = tmp;
+    }
+
+    function callHttpByGet(callPath, callback) {
+      $http({
+        method: 'get',
+        url: callPath,
+      })
+        .success(function (data, status, headers, config) {
+          var response =
+          {
+            success: true,
+            data: data
+          };
+
+          callback(response);
+        })
+        .error(function (data, status, headers, config) {
+          var response = handleHttpError(data, callPath);
+          callback(response);
+        });
+    }
+
+    function handleHttpError(data, callPath) {
+      var response = {success: false};
+      if (data) {
+        response.error = data;
+      }
+      else {
+        response.error = dateNow() + ' - Request failed: ' + callPath;
+      }
+      return response;
+    }
+
+    function dateNow() {
+      var d = new Date();
+      return d.toLocaleString();
     }
   }]);

@@ -1,320 +1,367 @@
 <!doctype html>
 <html ng-app="tabHelper" class="tab-helper-options">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- build:css styles/options-vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/select2/select2.css" />
-    <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <div ng-controller="TabHelperOptionsController">
-      <h1>Tab Helper Configuration</h1>
-      <hr>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-          	<!-- Default panel contents -->
-          	<div class="panel-heading">Tab Settings</div>
-              <!--<div class="panel-body">
-                  <p>Panel body ...</p>
-              </div>-->
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- build:css styles/options-vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/select2/select2.css"/>
+  <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css"/>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link href="styles/main.css" rel="stylesheet">
+  <!-- endbuild -->
+</head>
+<body>
+<div ng-controller="TabHelperOptionsController">
+  <h1>Tab Helper Configuration</h1>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Tab Settings</div>
+        <!--<div class="panel-body">
+            <p>Panel body ...</p>
+        </div>-->
 
-              <!-- Table -->
-              <table class="table">
-                  <thead>
-                      <tr>
-                        <th>Active</th>
-                        <th>Name</th>
-                        <th ng-if="showExtraOptions">URL</th>
-                        <th>Remember</th>
-                        <th>Monitor</th>
-                        <th>Position</th>
-                        <th ng-if="showExtraOptions">Plain</th>
-                        <th></th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr ng-repeat="tabOption in options.tabs track by tabOption.url">
-                        <td>
-                          <checkbox
-                            class="fix-checkbox"
-                            ng-model="tabOption.active"
-                            ng-change="markAsDirty()">
-                          </checkbox>
-                        </td>
-                        <td>{{tabOption.name}}</td>
-                        <td ng-if="showExtraOptions">{{tabOption.url}}</td>
-                        <td>
-                          <checkbox
-                            class="fix-checkbox"
-                            ng-model="tabOption.remember"
-                            ng-change="markAsDirty()">
-                          </checkbox>
-                        </td>
-                        <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
-                          {{tabOption.monitor.name}} [{{tabOption.monitor.idx}}]
-                        </td>
-                        <td>{{tabOption.position}}</td>
-                        <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
-                        <td class="tab-action-bar">
+        <!-- Table -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Active</th>
+            <th>Name</th>
+            <th ng-if="showExtraOptions">URL</th>
+            <th>Remember</th>
+            <th>Monitor</th>
+            <th>Position</th>
+            <th ng-if="showExtraOptions">Plain</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="tabOption in options.tabs track by tabOption.url">
+            <td>
+              <checkbox
+                class="fix-checkbox"
+                ng-model="tabOption.active"
+                ng-change="markAsDirty()">
+              </checkbox>
+            </td>
+            <td>{{tabOption.name}}</td>
+            <td ng-if="showExtraOptions">{{tabOption.url}}</td>
+            <td>
+              <checkbox
+                class="fix-checkbox"
+                ng-model="tabOption.remember"
+                ng-change="markAsDirty()">
+              </checkbox>
+            </td>
+            <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
+              {{tabOption.monitor.name}} [{{tabOption.monitor.idx}}]
+            </td>
+            <td>{{tabOption.position}}</td>
+            <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
+            <td class="tab-action-bar">
                           <span class="btn btn-default"
                                 title="Edit tab option"
                                 ng-click="editTabOption(tabOption)">
                             <i class="fa fa-edit"></i>
                           </span>
-                          <span class="btn btn-default"
-                                title="Delete tab option"
-                                ng-click="deleteTabOption(tabOption)">
+              <span class="btn btn-default"
+                    title="Delete tab option"
+                    ng-click="deleteTabOption(tabOption)">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="btn btn-default"
-                                ng-class="{'hidden-only': $first}"
-                                title="Move up"
-                                ng-click="moveOptionUp($first, $index)">
+              <span class="btn btn-default"
+                    ng-class="{'hidden-only': $first}"
+                    title="Move up"
+                    ng-click="moveOptionUp($first, $index)">
                             <i class="fa fa-arrow-up"></i>
                           </span>
-                          <span class="btn btn-default"
-                                ng-class="{'hidden-only': $last}"
-                                title="Move down"
-                                ng-click="moveOptionDown($last, $index)">
+              <span class="btn btn-default"
+                    ng-class="{'hidden-only': $last}"
+                    title="Move down"
+                    ng-click="moveOptionDown($last, $index)">
                             <i class="fa fa-arrow-down"></i>
                           </span>
-                        </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-        </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+  </div>
 
 
-      <div class="row" ng-if="showNewTabOption || showEditTabOption">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 rule-dialog">
-          <div class="panel"
-          ng-class="{'panel-primary':showNewTabOption, 'panel-default': showEditTabOption}">
-          	<!-- Default panel contents -->
-          	<div class="panel-heading">
-              <span ng-if="showNewTabOption">New tab option</span>
-              <span ng-if="showEditTabOption">Edit tab option</span>
-            </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                      <label for="inputTemplate"
-                             focus-on-for="focus-inputTemplate"
-                             class="col-md-4 col-lg-4">Template</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <select name="mySelect" id="inputTemplate"
-                                focus-on="focus-inputTemplate"
-                                class="form-control"
-                                ng-options="option.name for option in options.templates track by option.url"
-                                ng-model="newTabOption.template"
-                                ng-change="useTemplateAsOption()"></select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <hr>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                      <label for="inputActive"
-                             focus-on-for="focus-inputActive"
-                             class="col-md-4 col-lg-4">Active</label>
-                      <div class="col-lg-8" >
-                        <checkbox
-                          id="inputActive"
-                          class="fix-checkbox"
-                          ng-model="newTabOption.active">
-                        </checkbox>
-                      </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <div class="form-group">
-                      <label for="inputRemember"
-                             focus-on-for="focus-inputRemember"
-                             class="col-md-4 col-lg-4">Remembers</label>
-                      <div class="col-lg-8" >
-                        <checkbox
-                          id="inputRemember"
-                          class="fix-checkbox"
-                          ng-model="newTabOption.remember">
-                        </checkbox>
-                      </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <div class="form-group">
-                      <label for="inputName"
-                             focus-on-for="focus-inputUrl"
-                             class="col-md-4 col-lg-4">Name</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <input id="inputName" type="text"
-                               focus-on="focus-inputName"
-                               class="form-control"
-                               ng-model="newTabOption.name"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="inputUrl"
-                             focus-on-for="focus-inputUrl"
-                             class="col-md-4 col-lg-4">URL</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <input id="inputUrl" type="text"
-                               focus-on="focus-inputUrl"
-                               class="form-control"
-                               ng-model="newTabOption.url"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="inputMonitor"
-                             focus-on-for="focus-inputMonitor"
-                             class="col-md-4 col-lg-4">Monitor</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <select name="mySelect" id="inputMonitor"
-                                focus-on="focus-inputMonitor"
-                                class="form-control"
-                                ng-options="option.name for option in MONITORS track by option.id"
-                                ng-model="newTabOption.monitor"></select>
-
-                      </div>
-                    </div>
-
-
-                    <div class="form-group">
-                      <label for="inputPosition"
-                             focus-on-for="focus-inputPosition"
-                             class="col-md-4 col-lg-4">Position</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <select name="mySelect" id="inputPosition"
-                                focus-on="focus-inputPosition"
-                                class="form-control"
-                                ng-options="option.name for option in POSITIONS track by option.id"
-                                ng-model="newTabOption.position"></select>
-
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="inputPopup"
-                             focus-on-for="focus-inputPopup"
-                             class="col-md-4 col-lg-4">Plain Window</label>
-                      <div class="col-md-8 col-lg-8" >
-                        <checkbox
-                          id="inputPopup"
-                          class="fix-checkbox"
-                          ng-model="newTabOption.popup">
-                        </checkbox>
-                      </div>
-                    </div>
-
-                  </div>
+  <div class="row" ng-if="showNewTabOption || showEditTabOption">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 rule-dialog">
+      <div class="panel"
+           ng-class="{'panel-primary':showNewTabOption, 'panel-default': showEditTabOption}">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+          <span ng-if="showNewTabOption">New tab option</span>
+          <span ng-if="showEditTabOption">Edit tab option</span>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <label for="inputTemplate"
+                       focus-on-for="focus-inputTemplate"
+                       class="col-md-4 col-lg-4">Template</label>
+                <div class="col-md-8 col-lg-8">
+                  <select name="mySelect" id="inputTemplate"
+                          focus-on="focus-inputTemplate"
+                          class="form-control"
+                          ng-options="option.name for option in options.templates track by option.url"
+                          ng-model="newTabOption.template"
+                          ng-change="useTemplateAsOption()"></select>
                 </div>
-                <hr>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <hr>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <label for="inputActive"
+                       focus-on-for="focus-inputActive"
+                       class="col-md-4 col-lg-4">Active</label>
+                <div class="col-lg-8">
+                  <checkbox
+                    id="inputActive"
+                    class="fix-checkbox"
+                    ng-model="newTabOption.active">
+                  </checkbox>
+                </div>
+              </div>
 
-                <span class="btn btn-primary"
-                      ng-if="showNewTabOption"
-                      type="button" ng-click="saveTabOption();">
+              <div class="clearfix"></div>
+              <div class="form-group">
+                <label for="inputRemember"
+                       focus-on-for="focus-inputRemember"
+                       class="col-md-4 col-lg-4">Remembers</label>
+                <div class="col-lg-8">
+                  <checkbox
+                    id="inputRemember"
+                    class="fix-checkbox"
+                    ng-model="newTabOption.remember">
+                  </checkbox>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+              <div class="form-group">
+                <label for="inputName"
+                       focus-on-for="focus-inputUrl"
+                       class="col-md-4 col-lg-4">Name</label>
+                <div class="col-md-8 col-lg-8">
+                  <input id="inputName" type="text"
+                         focus-on="focus-inputName"
+                         class="form-control"
+                         ng-model="newTabOption.name"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputUrl"
+                       focus-on-for="focus-inputUrl"
+                       class="col-md-4 col-lg-4">URL</label>
+                <div class="col-md-8 col-lg-8">
+                  <input id="inputUrl" type="text"
+                         focus-on="focus-inputUrl"
+                         class="form-control"
+                         ng-model="newTabOption.url"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputMonitor"
+                       focus-on-for="focus-inputMonitor"
+                       class="col-md-4 col-lg-4">Monitor</label>
+                <div class="col-md-8 col-lg-8">
+                  <select name="mySelect" id="inputMonitor"
+                          focus-on="focus-inputMonitor"
+                          class="form-control"
+                          ng-options="option.name for option in MONITORS track by option.id"
+                          ng-model="newTabOption.monitor"></select>
+
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputPosition"
+                       focus-on-for="focus-inputPosition"
+                       class="col-md-4 col-lg-4">Position</label>
+                <div class="col-md-8 col-lg-8">
+                  <select name="mySelect" id="inputPosition"
+                          focus-on="focus-inputPosition"
+                          class="form-control"
+                          ng-options="option.name for option in POSITIONS track by option.id"
+                          ng-model="newTabOption.position"></select>
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPopup"
+                       focus-on-for="focus-inputPopup"
+                       class="col-md-4 col-lg-4">Plain Window</label>
+                <div class="col-md-8 col-lg-8">
+                  <checkbox
+                    id="inputPopup"
+                    class="fix-checkbox"
+                    ng-model="newTabOption.popup">
+                  </checkbox>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr>
+
+          <span class="btn btn-primary"
+                ng-if="showNewTabOption"
+                type="button" ng-click="saveTabOption();">
                   Add
                 </span>
-                <span class="btn btn-primary"
-                      ng-if="showEditTabOption"
-                      type="button" ng-click="updateTabOption();">
+          <span class="btn btn-primary"
+                ng-if="showEditTabOption"
+                type="button" ng-click="updateTabOption();">
                   Update
                 </span>
-                <span class="btn btn-default" type="button" ng-click="cancelTabOption();">Cancel</span>
+          <span class="btn btn-default" type="button" ng-click="cancelTabOption();">Cancel</span>
 
-              </div>
-          </div>
         </div>
       </div>
-
-      <hr>
-
-      <div class="btn-group">
-        <label class="btn btn-default" type="button"
-              ng-disabled="showNewTabOption || showEditTabOption"
-              title="Add Tab Option"
-              ng-click="addTabOption();"><i class="fa fa-plus"></i></label>
-        <label class="btn btn-default" type="button"
-              ng-class="{'btn-primary':dirty}"
-              title="Save"
-              ng-click="saveOptions();"><i class="fa fa-floppy-o"></i></label>
-        <label class="btn btn-default" type="button"
-              title="Re-load"
-              ng-click="reloadOptions();"><i class="fa fa-refresh"></i></label>
-        <label class="btn btn-default" type="button"
-              title="Import template"
-              ngf-select="importTemplate($file)"><i class="fa fa-download"></i></label>
-        <label class="btn btn-default" type="button"
-               ng-if="showExtraOptions"
-              title="Export template"
-              ng-click="exportTemplate();"><i class="fa fa-upload"></i></label>
-      </div>
-
-      <div class="btn-group pull-right">
-        <label class="btn btn-default"
-               type="button"
-               title="Show more options"
-               ng-click="showAdvancedOptions();">
-          <i class="fa fa-eye"></i>
-        </label>
-        <label class="btn btn-default"
-              type="button"
-              ng-if="!inconsistentOptions"
-              title="Validate"
-              ng-click="validateOptions();">
-        <i class="fa fa-check-square-o"></i>
-      </label>
-        <label class="btn btn-default"
-              type="button"
-              title="Detect"
-              ng-click="detectMonitors();">
-          <i class="fa fa-television"></i>
-      </label>
-        <label class="btn btn-warning"
-              type="button"
-              ng-if="inconsistentOptions"
-              title="Auto-Repair"
-              ng-click="autofixOptions();">
-        <i class="fa fa-wrench"></i>
-      </label>
-      </div>
-
     </div>
+  </div>
 
-    <!-- build:js scripts/options-vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/select2/select2.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/file-saver/FileSaver.js"></script>
-    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
-    <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <hr>
 
-    <!-- build:js scripts/options.js -->
-    <script src="scripts/options.js"></script>
-    <!-- endbuild -->
+  <div class="row" ng-if="showImportTemplateDialog">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 rule-dialog">
+      <div class="panel default panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+          Import Template
+        </div>
+        <div class="panel-body">
+          <div class="row">
 
-  </body>
+            <div class="form-group">
+              <label for="inputTemplateUrl"
+                     focus-on-for="focus-inputTemplateUrl"
+                     class="col-md-2 col-lg-2">Template URL</label>
+              <div class="col-md-10 col-lg-10">
+                <input id="inputTemplateUrl" type="text"
+                       focus-on="focus-inputTemplateUrl"
+                       class="form-control"
+                       ng-model="templateUrl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="btn-group">
+          <span class="btn btn-primary"
+                ng-class="{'btn-default': (!templateUrl || templateUrl === '')}"
+                type="button" ng-click="acceptImportTemplateMenu(templateUrl);">
+                  Add
+                </span>
+          <span class="btn btn-default" type="button" ng-click="cancelImportTemplateMenu();">Cancel</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="btn-group">
+    <label class="btn btn-default" type="button"
+           ng-disabled="showNewTabOption || showEditTabOption"
+           title="Add Tab Option"
+           ng-click="addTabOption();"><i class="fa fa-plus"></i></label>
+    <label class="btn btn-default" type="button"
+           ng-class="{'btn-primary':dirty}"
+           title="Save"
+           ng-click="saveOptions();"><i class="fa fa-floppy-o"></i></label>
+    <label class="btn btn-default" type="button"
+           title="Re-load"
+           ng-click="reloadOptions();"><i class="fa fa-refresh"></i></label>
+    <!--<label class="btn btn-default" type="button"
+          title="Import template"
+          ngf-select="importTemplate($file)"><i class="fa fa-download"></i></label>-->
+    <label class="btn btn-default" type="button"
+           title="Import template"
+           ng-click="openImportTemplateMenu();"><i class="fa fa-download"></i></label>
+    <label class="btn btn-default" type="button"
+           ng-if="showExtraOptions"
+           title="Export template"
+           ng-click="exportTemplate();"><i class="fa fa-upload"></i></label>
+  </div>
+
+  <div class="btn-group pull-right">
+    <label class="btn btn-default"
+           type="button"
+           title="Show more options"
+           ng-click="showAdvancedOptions();">
+      <i class="fa fa-eye"></i>
+    </label>
+    <label class="btn btn-default"
+           type="button"
+           ng-if="!inconsistentOptions"
+           title="Validate"
+           ng-click="validateOptions();">
+      <i class="fa fa-check-square-o"></i>
+    </label>
+    <label class="btn btn-default"
+           type="button"
+           title="Detect"
+           ng-click="detectMonitors();">
+      <i class="fa fa-television"></i>
+    </label>
+    <label class="btn btn-warning"
+           type="button"
+           ng-if="inconsistentOptions"
+           title="Auto-Repair"
+           ng-click="autofixOptions();">
+      <i class="fa fa-wrench"></i>
+    </label>
+  </div>
+
+</div>
+
+<!-- build:js scripts/options-vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/select2/select2.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/file-saver/FileSaver.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js scripts/options.js -->
+<script src="scripts/options.js"></script>
+<!-- endbuild -->
+
+</body>
 </html>
