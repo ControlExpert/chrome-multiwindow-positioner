@@ -352,7 +352,12 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
 
         callHttpByGet(templateUrl, function onResponse(response) {
           if (response.success && response.data) {
-            vm.options = response.data;
+            if (response.data.tabs) {
+              vm.options.tabs = response.data.tabs;
+            }
+            if (response.data.templates) {
+              vm.options.templates = response.templates;
+            }
             validateOptions();
           }
         });
