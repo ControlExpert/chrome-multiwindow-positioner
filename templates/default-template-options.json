@@ -1,0 +1,46 @@
+{
+  "templates": [
+    {
+      "active": true,
+      "remember": false,
+      "name": "Google Search",
+      "url": "https://www.google.com/",
+      "code": "google-search"
+    },
+    {
+      "active": true,
+      "remember": false,
+      "name": "Facebook",
+      "url": "https://www.facebook.com",
+      "code": "facebook"
+    },
+    {
+      "active": true,
+      "remember": false,
+      "name": "YouTube",
+      "url": "https://www.youtube.com/",
+      "code": "google-youtube"
+    },
+    {
+      "active": true,
+      "remember": false,
+      "name": "Wikipedia",
+      "url": "https://www.wikipedia.org/",
+      "code": "wikipedia"
+    },
+    {
+      "active": true,
+      "remember": false,
+      "name": "Amazon",
+      "url": "https://www.amazon.com/",
+      "code": "amazon-global"
+    },
+    {
+      "active": true,
+      "remember": false,
+      "name": "Ebay",
+      "url": "http://www.ebay.com/",
+      "code": "ebay-global"
+    }
+  ]
+}
