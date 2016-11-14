@@ -38,7 +38,7 @@
          },
          "fullScreen": false,
          "popup": true,
-         "position": "right-half",
+         "position": "center",
          "timestamp": "2016-11-08T15:17:07.263Z",
          "inconsistentMonitor": false,
          "remember": true,
