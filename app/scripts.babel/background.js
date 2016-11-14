@@ -67,7 +67,7 @@ function loadDisplayInfos() {
 
 function findCachedWindow(windowId) {
   var found = -1;
-  for(var idx=0; idx < windowCache.length; idx++) {
+  for (var idx = 0; idx < windowCache.length; idx++) {
     if (windowCache[idx].id === windowId) {
       found = idx;
     }
@@ -90,7 +90,7 @@ function storeWindowIntoCache(window) {
 
 chrome.windows.onFocusChanged.addListener(function callback(windowId) {
   console.log('Window Focused ' + windowId);
-  var allIdentifiersMap =  {};
+  var allIdentifiersMap = {};
   allIdentifiersMap['i' + states.lastWindowInFocus] = states.lastWindowInFocus;
   allIdentifiersMap['i' + states.currentWindowInFocus] = states.currentWindowInFocus;
   allIdentifiersMap['i' + windowId] = windowId;
@@ -122,14 +122,13 @@ function updateTabRules(windowId, cachedWindow) {
   } else {
     chrome.windows.get(windowId, {
       populate: true
-    }, function(window) {
-      try
-      {
+    }, function (window) {
+      try {
         if (window) {
           storeWindowIntoCache(window);
           doUpdateTabRules(window);
         }
-      } catch(e) {
+      } catch (e) {
         if (e.toString().indexOf('No window with id') >= 0) {
         }
       }
@@ -299,8 +298,20 @@ function saveOptions(tabRuleOptions) {
   localStorage[OPTIONS_KEY] = JSON.stringify(tabRuleOptions);
 }
 
-chrome.tabs.onCreated.addListener(function callback(tab) {
-  console.log('Tab Created id:' + tab.id + ' url:' + tab.url);
+chrome.tabs.onCreated.addListener(onTabCreated);
+chrome.tabs.onUpdated.addListener(onTabUpdate);
+
+function onTabUpdate(tabId, changeInfo, tab) {
+  if (changeInfo.url && changeInfo.url !== '') {
+    console.log('Tab updated id:' + tab.id + ' url:' + changeInfo.url);
+    onTabCreated(tab, true);
+  }
+}
+
+function onTabCreated(tab, disableCreationMessage) {
+  if (!disableCreationMessage) {
+    console.log('Tab Created id:' + tab.id + ' url:' + tab.url);
+  }
   moveTabIntoPositionedWindow(tab, 0);
 
   function moveTabIntoPositionedWindow(tab, count) {
@@ -314,20 +325,20 @@ chrome.tabs.onCreated.addListener(function callback(tab) {
           moveTabIntoPositionedWindow(tab, count + 1);
         });
       }, 100);
-      return;
-    }
-    var tabRuleOptions = loadOptions();
-    var tabRule = findTabRuleMatch(tabRuleOptions, tab);
-    if (tabRule) {
-      console.log('Tab matched ' + tab.id + ' moving tab with url:' + tab.url);
-      var createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
-      createData.tabId = tab.id;
-      if (tabRule.popup) {
-        createData.type = 'popup';
+    } else {
+      var tabRuleOptions = loadOptions();
+      var tabRule = findTabRuleMatch(tabRuleOptions, tab);
+      if (tabRule) {
+        console.log('Tab matched ' + tab.id + ' moving tab with url:' + tab.url);
+        var createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
+        createData.tabId = tab.id;
+        if (tabRule.popup) {
+          createData.type = 'popup';
+        }
+        chrome.windows.create(createData, function onCreated() {
+        });
       }
-      chrome.windows.create(createData, function onCreated() {
-      });
     }
   }
-});
+}
 

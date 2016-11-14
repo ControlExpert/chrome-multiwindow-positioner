@@ -353,14 +353,70 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         callHttpByGet(templateUrl, function onResponse(response) {
           if (response.success && response.data) {
             if (response.data.tabs) {
-              vm.options.tabs = response.data.tabs;
+              mergeRules(vm.options.tabs, response.data.tabs);
             }
             if (response.data.templates) {
-              vm.options.templates = response.templates;
+              mergeTemplates(vm.options.templates, response.templates);
             }
             validateOptions();
           }
         });
+      }
+    }
+
+    function mergeRules(existentRules, templateRules) {
+      for (var i = 0; i < existentRules.length; i++) {
+        var rule = existentRules[i];
+        for (var k = 0; k < templateRules.length; k++) {
+          var template = templateRules[k];
+          if (rule.code === template.code) {
+            //mark as merged
+            templateRules.merged = true;
+            //rule.active = template.active;
+            //rule.code = template.code;
+            //rule.remember = template.remember;
+            rule.url = template.url;
+            rule.name = template.name;
+            //rule.monitor = template.monitor;
+            //rule.fullScreen = template.fullScreen;
+            //rule.popup = template.popup;
+            //rule.position = template.position ? template.position.id : 'center';
+          }
+        }
+      }
+
+      //add new templates
+      for (var k = 0; k < templateRules.length; k++) {
+        var template = templateRules[k];
+        if (!templateRules.merged) {
+          existentRules.push(template);
+        }
+      }
+    }
+
+    function mergeTemplates(currentTemplates, newTemplates) {
+      for (var i = 0; i < currentTemplates.length; i++) {
+        var existingTemplate = currentTemplates[i];
+        for (var k = 0; k < newTemplates.length; k++) {
+          var newTemplate = newTemplates[k];
+          if (existingTemplate.code === newTemplate.code) {
+            //mark as merged
+            newTemplates.merged = true;
+            existingTemplate.active = newTemplate.active;
+            existingTemplate.code = newTemplate.code;
+            existingTemplate.remember = newTemplate.remember;
+            existingTemplate.url = newTemplate.url;
+            existingTemplate.name = newTemplate.name;
+          }
+        }
+      }
+
+      //add new templates
+      for (var k = 0; k < newTemplates.length; k++) {
+        var template = newTemplates[k];
+        if (!newTemplates.merged) {
+          currentTemplates.push(template);
+        }
       }
     }
 

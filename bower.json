@@ -1,7 +1,7 @@
 {
   "name": "chrome-tab-helper",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "dependencies": {
     "jquery": "~3.1.0",
     "lodash": "4.16.4",

@@ -246,9 +246,9 @@
   <hr>
 
   <div class="row" ng-if="showImportTemplateDialog">
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
     </div>
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 rule-dialog">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 rule-dialog">
       <div class="panel default panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
@@ -273,9 +273,10 @@
         </div>
         <hr>
 
-        <div class="btn-group">
-          <span class="btn btn-primary"
-                ng-class="{'btn-default': (!templateUrl || templateUrl === '')}"
+        <div class="btn-group" style="margin: 8px;">
+          <span class="btn btn-default"
+                ng-class="{'btn-primary': templateUrl && templateUrl !== ''}"
+                ng-disabled="!templateUrl || templateUrl === ''"
                 type="button" ng-click="acceptImportTemplateMenu(templateUrl);">
                   Add
                 </span>
@@ -283,7 +284,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
     </div>
   </div>
 
