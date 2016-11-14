@@ -371,7 +371,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
           var template = templateRules[k];
           if (rule.code === template.code) {
             //mark as merged
-            templateRules.merged = true;
+            template.merged = true;
             //rule.active = template.active;
             //rule.code = template.code;
             //rule.remember = template.remember;
@@ -388,7 +388,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       //add new templates
       for (var k = 0; k < templateRules.length; k++) {
         var template = templateRules[k];
-        if (!templateRules.merged) {
+        if (!template.merged) {
           existentRules.push(template);
         }
       }
@@ -401,7 +401,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
           var newTemplate = newTemplates[k];
           if (existingTemplate.code === newTemplate.code) {
             //mark as merged
-            newTemplates.merged = true;
+            newTemplate.merged = true;
             existingTemplate.active = newTemplate.active;
             existingTemplate.code = newTemplate.code;
             existingTemplate.remember = newTemplate.remember;
@@ -414,7 +414,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       //add new templates
       for (var k = 0; k < newTemplates.length; k++) {
         var template = newTemplates[k];
-        if (!newTemplates.merged) {
+        if (!newTemplate.merged) {
           currentTemplates.push(template);
         }
       }
