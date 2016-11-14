@@ -1,22 +1,22 @@
 {
   "appName": {
     "message": "tab-helper",
-    "description": "The name of the application"
+    "description": ""
   },
   "appDescription": {
-    "message": "Utility extension that enables tab placement in multi-monitor setups",
-    "description": "The description of the application"
+    "message": "Erweiterung, die Tab-Platzierung in Multi-Monitor-Setups ermöglicht",
+    "description": ""
   },
   "OPTIONS_TITLE": {
-    "message": "Tab Helper Configuration",
+    "message": "Tab Helper Konfiguration",
     "description": ""
   },
   "TAB_SETTINGS": {
-    "message": "Tab Settings",
+    "message": "Tab Einstellungen",
     "description": ""
   },
   "ACTIVE": {
-    "message": "Active",
+    "message": "Aktiv",
     "description": ""
   },
   "NAME": {
@@ -28,7 +28,7 @@
     "description": ""
   },
   "REMEMBER": {
-    "message": "Remember",
+    "message": "Merken",
     "description": ""
   },
   "MONITOR": {
@@ -36,99 +36,99 @@
     "description": ""
   },
   "LOCATION": {
-    "message": "Location",
+    "message": "Position",
     "description": ""
   },
   "PLAIN": {
-    "message": "Plain",
+    "message": "Ebene",
     "description": ""
   },
   "EDIT_TAB_RULE": {
-    "message": "Edit tab rule",
+    "message": "Regel bearbeiten",
     "description": ""
   },
   "DELETE_TAB_RULE": {
-    "message": "Delete tab rule",
+    "message": "Regel löschen",
     "description": ""
   },
   "MOVE_UP": {
-    "message": "Move up",
+    "message": "Nach oben",
     "description": ""
   },
   "MOVE_DOWN": {
-    "message": "Move down",
+    "message": "Nach unten",
     "description": ""
   },
   "NEW_TAB_OPTION_TITLE": {
-    "message": "New tab option",
+    "message": "Neuer Tab",
     "description": ""
   },
   "EDIT_TAB_OPTION_TITLE": {
-    "message": "Edit tab option",
+    "message": "Tab-Regel bearbeiten",
     "description": ""
   },
   "TEMPLATE": {
-    "message": "Template",
+    "message": "Vorlage",
     "description": ""
   },
   "PLAIN_WINDOW": {
-    "message": "Plain Window",
+    "message": "Ebene Fenster",
     "description": ""
   },
   "ADD": {
-    "message": "ADD",
+    "message": "Hinzufügen",
     "description": ""
   },
   "UPDATE": {
-    "message": "UPDATE",
+    "message": "Aktualisieren",
     "description": ""
   },
   "CANCEL": {
-    "message": "Cancel",
+    "message": "Abbrechen",
     "description": ""
   },
   "IMPORT_TEMPLATE": {
-    "message": "Import Template",
+    "message": "Vorlage importieren",
     "description": ""
   },
   "TEMPLATE_URL": {
-    "message": "Template URL",
+    "message": "Vorlagen-URL",
     "description": ""
   },
   "REPLACE_ALL_TEMPLATES": {
-    "message": "Replace all templates",
+    "message": "Ersetzen Sie alle Vorlage",
     "description": ""
   },
   "ADD_TAB_OPTION": {
-    "message": "Add Tab Option",
+    "message": "Regel hinzufügen",
     "description": ""
   },
   "SAVE": {
-    "message": "Save",
+    "message": "Speichern",
     "description": ""
   },
   "RELOAD": {
-    "message": "Re-load",
+    "message": "Neu laden",
     "description": ""
   },
   "EXPORT_TEMPLATE": {
-    "message": "Export template",
+    "message": "Exportvorlage",
     "description": ""
   },
   "SHOW_MORE_OPTIONS": {
-    "message": "Show more options",
+    "message": "Weitere Optionen anzeigen",
     "description": ""
   },
   "VALIDATE_RULES": {
-    "message": "Validate tab rules",
+    "message": "Überprüfen alle existierende Regel",
     "description": ""
   },
   "DETECT_MONITORS": {
-    "message": "Detect Monitors",
+    "message": "Erkennen von Monitoren",
     "description": ""
   },
   "AUTO_REPAIR_RULES": {
-    "message": "Auto-repair rules",
+    "message": "Reparieren",
     "description": ""
   }
 }

@@ -9,6 +9,9 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
 
     var PAGE_LOADING_OFFSET = 1100;
     var PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
+    var MONITORS = {};
+
+    vm.locale = prepareLocale();
 
     var POSITIONS = {
       CENTER: {id: 'center', name: 'center'},
@@ -18,7 +21,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       BOTTOM_HALF: {id: 'bottom-half', name: 'bottom-half'}
     };
 
-    var MONITORS = {};
+
 
     vm.POSITIONS = POSITIONS;
     vm.MONITORS = MONITORS;
@@ -557,4 +560,41 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       var d = new Date();
       return d.toLocaleString();
     }
+
+    function prepareLocale() {
+      return {
+        OPTIONS_TITLE: chrome.i18n.getMessage("OPTIONS_TITLE"),
+        TAB_SETTINGS:  chrome.i18n.getMessage("TAB_SETTINGS"),
+        ACTIVE: chrome.i18n.getMessage("ACTIVE"),
+        NAME: chrome.i18n.getMessage("NAME"),
+        URL: chrome.i18n.getMessage("URL"),
+        REMEMBER: chrome.i18n.getMessage("REMEMBER"),
+        MONITOR: chrome.i18n.getMessage("MONITOR"),
+        LOCATION: chrome.i18n.getMessage("LOCATION"),
+        PLAIN: chrome.i18n.getMessage("PLAIN"),
+        EDIT_TAB_RULE: chrome.i18n.getMessage("EDIT_TAB_RULE"),
+        DELETE_TAB_RULE: chrome.i18n.getMessage("DELETE_TAB_RULE"),
+        MOVE_UP: chrome.i18n.getMessage("MOVE_UP"),
+        MOVE_DOWN: chrome.i18n.getMessage("MOVE_DOWN"),
+        NEW_TAB_OPTION_TITLE: chrome.i18n.getMessage("NEW_TAB_OPTION_TITLE"),
+        EDIT_TAB_OPTION_TITLE: chrome.i18n.getMessage("EDIT_TAB_OPTION_TITLE"),
+        TEMPLATE: chrome.i18n.getMessage("TEMPLATE"),
+        PLAIN_WINDOW: chrome.i18n.getMessage("PLAIN_WINDOW"),
+        ADD: chrome.i18n.getMessage("ADD"),
+        UPDATE: chrome.i18n.getMessage("UPDATE"),
+        CANCEL: chrome.i18n.getMessage("CANCEL"),
+        TEMPLATE_URL: chrome.i18n.getMessage("TEMPLATE_URL"),
+        REPLACE_ALL_TEMPLATES: chrome.i18n.getMessage("REPLACE_ALL_TEMPLATES"),
+        ADD_TAB_OPTION: chrome.i18n.getMessage("ADD_TAB_OPTION"),
+        SAVE: chrome.i18n.getMessage("SAVE"),
+        RELOAD: chrome.i18n.getMessage("RELOAD"),
+        IMPORT_TEMPLATE: chrome.i18n.getMessage("IMPORT_TEMPLATE"),
+        EXPORT_TEMPLATE: chrome.i18n.getMessage("EXPORT_TEMPLATE"),
+        SHOW_MORE_OPTIONS: chrome.i18n.getMessage("SHOW_MORE_OPTIONS"),
+        VALIDATE_RULES: chrome.i18n.getMessage("VALIDATE_RULES"),
+        DETECT_MONITORS: chrome.i18n.getMessage("DETECT_MONITORS"),
+        AUTO_REPAIR_RULES: chrome.i18n.getMessage("AUTO_REPAIR_RULES")
+      };
+    }
+
   }]);

@@ -17,13 +17,13 @@
 </head>
 <body>
 <div ng-controller="TabHelperOptionsController">
-  <h1>Tab Helper Configuration</h1>
+  <h1>{{::locale.OPTIONS_TITLE}}</h1>
   <hr>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Tab Settings</div>
+        <div class="panel-heading">{{::locale.TAB_SETTINGS}}</div>
         <!--<div class="panel-body">
             <p>Panel body ...</p>
         </div>-->
@@ -32,13 +32,13 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Active</th>
-            <th>Name</th>
-            <th ng-if="showExtraOptions">URL</th>
-            <th>Remember</th>
-            <th>Monitor</th>
-            <th>Position</th>
-            <th ng-if="showExtraOptions">Plain</th>
+            <th>{{::locale.ACTIVE}}</th>
+            <th>{{::locale.NAME}}</th>
+            <th ng-if="showExtraOptions">{{::locale.URL}}</th>
+            <th>{{::locale.REMEMBER}}</th>
+            <th>{{::locale.MONITOR}}</th>
+            <th>{{::locale.LOCATION}}</th>
+            <th ng-if="showExtraOptions">{{::locale.PLAIN}}</th>
             <th></th>
           </tr>
           </thead>
@@ -67,24 +67,24 @@
             <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
             <td class="tab-action-bar">
                           <span class="btn btn-default"
-                                title="Edit tab option"
+                                title="{{::locale.EDIT_TAB_RULE}}"
                                 ng-click="editTabOption(tabOption)">
                             <i class="fa fa-edit"></i>
                           </span>
               <span class="btn btn-default"
-                    title="Delete tab option"
+                    title="{{::locale.DELETE_TAB_RULE}}"
                     ng-click="deleteTabOption(tabOption)">
                             <i class="fa fa-remove"></i>
                           </span>
               <span class="btn btn-default"
                     ng-class="{'hidden-only': $first}"
-                    title="Move up"
+                    title="{{::locale.MOVE_UP}}"
                     ng-click="moveOptionUp($first, $index)">
                             <i class="fa fa-arrow-up"></i>
                           </span>
               <span class="btn btn-default"
                     ng-class="{'hidden-only': $last}"
-                    title="Move down"
+                    title="{{::locale.MOVE_DOWN}}"
                     ng-click="moveOptionDown($last, $index)">
                             <i class="fa fa-arrow-down"></i>
                           </span>
@@ -103,8 +103,8 @@
            ng-class="{'panel-primary':showNewTabOption, 'panel-default': showEditTabOption}">
         <!-- Default panel contents -->
         <div class="panel-heading">
-          <span ng-if="showNewTabOption">New tab option</span>
-          <span ng-if="showEditTabOption">Edit tab option</span>
+          <span ng-if="showNewTabOption">{{::locale.NEW_TAB_OPTION_TITLE}}</span>
+          <span ng-if="showEditTabOption">{{::locale.EDIT_TAB_OPTION_TITLE}}</span>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -112,7 +112,7 @@
               <div class="form-group">
                 <label for="inputTemplate"
                        focus-on-for="focus-inputTemplate"
-                       class="col-md-4 col-lg-4">Template</label>
+                       class="col-md-4 col-lg-4">{{::locale.TEMPLATE}}</label>
                 <div class="col-md-8 col-lg-8">
                   <select name="mySelect" id="inputTemplate"
                           focus-on="focus-inputTemplate"
@@ -130,7 +130,7 @@
               <div class="form-group">
                 <label for="inputActive"
                        focus-on-for="focus-inputActive"
-                       class="col-md-4 col-lg-4">Active</label>
+                       class="col-md-4 col-lg-4">{{::locale.ACTIVE}}</label>
                 <div class="col-lg-8">
                   <checkbox
                     id="inputActive"
@@ -144,7 +144,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputRemember"
                        focus-on-for="focus-inputRemember"
-                       class="col-md-4 col-lg-4">Remembers</label>
+                       class="col-md-4 col-lg-4">{{::locale.REMEMBER}}</label>
                 <div class="col-lg-8">
                   <checkbox
                     id="inputRemember"
@@ -158,7 +158,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputName"
                        focus-on-for="focus-inputUrl"
-                       class="col-md-4 col-lg-4">Name</label>
+                       class="col-md-4 col-lg-4">{{::locale.NAME}}</label>
                 <div class="col-md-8 col-lg-8">
                   <input id="inputName" type="text"
                          focus-on="focus-inputName"
@@ -171,7 +171,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputUrl"
                        focus-on-for="focus-inputUrl"
-                       class="col-md-4 col-lg-4">URL</label>
+                       class="col-md-4 col-lg-4">{{::locale.URL}}</label>
                 <div class="col-md-8 col-lg-8">
                   <input id="inputUrl" type="text"
                          focus-on="focus-inputUrl"
@@ -184,7 +184,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputMonitor"
                        focus-on-for="focus-inputMonitor"
-                       class="col-md-4 col-lg-4">Monitor</label>
+                       class="col-md-4 col-lg-4">{{::locale.MONITOR}}</label>
                 <div class="col-md-8 col-lg-8">
                   <select name="mySelect" id="inputMonitor"
                           focus-on="focus-inputMonitor"
@@ -199,7 +199,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputPosition"
                        focus-on-for="focus-inputPosition"
-                       class="col-md-4 col-lg-4">Position</label>
+                       class="col-md-4 col-lg-4">{{::locale.LOCATION}}</label>
                 <div class="col-md-8 col-lg-8">
                   <select name="mySelect" id="inputPosition"
                           focus-on="focus-inputPosition"
@@ -213,7 +213,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputPopup"
                        focus-on-for="focus-inputPopup"
-                       class="col-md-4 col-lg-4">Plain Window</label>
+                       class="col-md-4 col-lg-4">{{::locale.PLAIN_WINDOW}}</label>
                 <div class="col-md-8 col-lg-8">
                   <checkbox
                     id="inputPopup"
@@ -230,14 +230,14 @@
           <span class="btn btn-primary"
                 ng-if="showNewTabOption"
                 type="button" ng-click="saveTabOption();">
-                  Add
-                </span>
+                  {{::locale.ADD}}
+          </span>
           <span class="btn btn-primary"
                 ng-if="showEditTabOption"
                 type="button" ng-click="updateTabOption();">
-                  Update
-                </span>
-          <span class="btn btn-default" type="button" ng-click="cancelTabOption();">Cancel</span>
+            {{::locale.UPDATE}}
+          </span>
+          <span class="btn btn-default" type="button" ng-click="cancelTabOption();">{{::locale.CANCEL}}</span>
 
         </div>
       </div>
@@ -253,7 +253,7 @@
       <div class="panel default panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
-          Import Template
+          {{::locale.IMPORT_TEMPLATE}}
         </div>
         <div class="panel-body">
           <div class="row">
@@ -261,7 +261,7 @@
             <div class="form-group">
               <label for="inputTemplateUrl"
                      focus-on-for="focus-inputTemplateUrl"
-                     class="col-md-2 col-lg-2">Template URL</label>
+                     class="col-md-2 col-lg-2">{{::locale.IMPORT_TEMPLATE}}</label>
               <div class="col-md-10 col-lg-10">
                 <input id="inputTemplateUrl" type="text"
                        focus-on="focus-inputTemplateUrl"
@@ -273,7 +273,7 @@
             <div class="form-group">
               <label for="inputReplaceAllTemplates"
                      focus-on-for="focus-inputReplaceAllTemplates"
-                     class="col-md-2 col-lg-2 margin-top-md">Replace all templates</label>
+                     class="col-md-2 col-lg-2 margin-top-md">{{::locale.REPLACE_ALL_TEMPLATES}}</label>
               <div class="col-md-10 col-lg-10 margin-top-md">
                 <checkbox
                   id="inputReplaceAllTemplates"
@@ -291,9 +291,9 @@
                 ng-class="{'btn-primary': templateUrl && templateUrl !== ''}"
                 ng-disabled="!templateUrl || templateUrl === ''"
                 type="button" ng-click="acceptImportTemplateMenu(templateUrl);">
-                  Add
+                  {{::locale.ADD}}
                 </span>
-          <span class="btn btn-default" type="button" ng-click="cancelImportTemplateMenu();">Cancel</span>
+          <span class="btn btn-default" type="button" ng-click="cancelImportTemplateMenu();">{{::locale.CANCEL}}</span>
         </div>
       </div>
     </div>
@@ -306,51 +306,51 @@
   <div class="btn-group">
     <label class="btn btn-default" type="button"
            ng-disabled="showNewTabOption || showEditTabOption"
-           title="Add Tab Option"
+           title="{{::locale.ADD_TAB_OPTION}}"
            ng-click="addTabOption();"><i class="fa fa-plus"></i></label>
     <label class="btn btn-default" type="button"
            ng-class="{'btn-primary':dirty}"
-           title="Save"
+           title="{{::locale.SAVE}}"
            ng-click="saveOptions();"><i class="fa fa-floppy-o"></i></label>
     <label class="btn btn-default" type="button"
-           title="Re-load"
+           title="{{::locale.RELOAD}}"
            ng-click="reloadOptions();"><i class="fa fa-refresh"></i></label>
     <!--<label class="btn btn-default" type="button"
           title="Import template"
           ngf-select="importTemplate($file)"><i class="fa fa-download"></i></label>-->
     <label class="btn btn-default" type="button"
-           title="Import template"
+           title="{{::locale.IMPORT_TEMPLATE}}"
            ng-click="openImportTemplateMenu();"><i class="fa fa-download"></i></label>
     <label class="btn btn-default" type="button"
            ng-if="showExtraOptions"
-           title="Export template"
+           title="{{::locale.EXPORT_TEMPLATE}}"
            ng-click="exportTemplate();"><i class="fa fa-upload"></i></label>
   </div>
 
   <div class="btn-group pull-right">
     <label class="btn btn-default"
            type="button"
-           title="Show more options"
+           title="{{::locale.SHOW_MORE_OPTIONS}}"
            ng-click="showAdvancedOptions();">
       <i class="fa fa-eye"></i>
     </label>
     <label class="btn btn-default"
            type="button"
            ng-if="!inconsistentOptions"
-           title="Validate"
+           title="{{::locale.VALIDATE_RULES}}"
            ng-click="validateOptions();">
       <i class="fa fa-check-square-o"></i>
     </label>
     <label class="btn btn-default"
            type="button"
-           title="Detect"
+           title="{{::locale.DETECT_MONITORS}}"
            ng-click="detectMonitors();">
       <i class="fa fa-television"></i>
     </label>
     <label class="btn btn-warning"
            type="button"
            ng-if="inconsistentOptions"
-           title="Auto-Repair"
+           title="{{::locale.AUTO_REPAIR_RULES}}"
            ng-click="autofixOptions();">
       <i class="fa fa-wrench"></i>
     </label>
