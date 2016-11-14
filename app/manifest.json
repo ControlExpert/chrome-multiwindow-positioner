@@ -18,15 +18,7 @@
     "system.display",
     "activeTab",
     "tabs",
-    "http://*/*",
-    "https://*/*",
-    "debugger",
-    "management",
-    "notifications",
-    "storage",
-    "webNavigation",
-    "webRequest",
-    "*://*.google.com/"
+    "storage"
   ],
   "options_ui": {
     "page": "options.html",
