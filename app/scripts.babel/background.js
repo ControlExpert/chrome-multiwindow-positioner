@@ -25,7 +25,7 @@ var POSITIONS = {
 
 var WINDOW_ID_NONE = -1;
 var PIXEL_MONITOR_DETECTION_DELTA = 100;
-var WINDOW_CHANGE_DETECTION_INTERVAL = 2000;
+var WINDOW_CHANGE_DETECTION_INTERVAL = 1000;
 var MAX_MOVE_TRIES = 10;
 
 var WINDOW_CACHE_SIZE = 20;
@@ -111,6 +111,9 @@ chrome.windows.onFocusChanged.addListener(function callback(windowId) {
   function startUpdateTabRules(targetWindowId) {
     setTimeout(function () {
       updateTabRules(targetWindowId);
+      setTimeout(function () {
+        updateTabRules(targetWindowId);
+      }, WINDOW_CHANGE_DETECTION_INTERVAL * 5);
     }, WINDOW_CHANGE_DETECTION_INTERVAL);
   }
 
