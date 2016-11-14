@@ -5,7 +5,7 @@
          "url": "/reportviewer/",
          "name": "C€2.0 Pruefberichte",
          "monitor": {
-            "id": "2528732444",
+            "id": "111",
             "name": "PnP-Monitor (Standard)",			
             "workArea": {
                "height": 900,
@@ -27,7 +27,7 @@
          "url": "/multimediaviewer/?type=image",
          "name": "C€2.0 Bilder",
          "monitor": {
-            "id": "2480450848",
+            "id": "111",
             "name": "PnP-Monitor (Standard)",			
             "workArea": {
                "height": 1080,
@@ -50,7 +50,7 @@
          "url": "/multimediaviewer/?type=pdf",
          "name": "C€2.0 Dokumente",
          "monitor": {
-            "id": "2480450848",
+            "id": "111",
             "name": "PnP-Monitor (Standard)",
             "workArea": {
                "height": 1080,
@@ -72,7 +72,7 @@
          "url": "Common.ArchiveDocumentViewer",
          "name": "C€2.0 Archive",
          "monitor": {
-            "id": "2528732444",
+            "id": "111",
             "name": "PnP-Monitor (Standard)",
             "workArea": {
                "height": 900,
