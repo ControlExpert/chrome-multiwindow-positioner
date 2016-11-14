@@ -33,6 +33,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.isopen = true;
     vm.showImportTemplateDialog = false;
     vm.templateUrl = '';
+    vm.replaceAllTemplates = true;
 
     vm.markAsDirty = markAsDirk;
     vm.saveOptions = saveOptions;
@@ -356,7 +357,11 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
               mergeRules(vm.options.tabs, response.data.tabs);
             }
             if (response.data.templates) {
-              mergeTemplates(vm.options.templates, response.templates);
+              if (vm.replaceAllTemplates) {
+                vm.options.templates = response.data.templates;
+              } else {
+                mergeTemplates(vm.options.templates, response.data.templates);
+              }
             }
             validateOptions();
           }

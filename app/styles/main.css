@@ -32,3 +32,11 @@ tr:hover .tab-action-bar .btn {
 .rule-dialog .form-group {
 
 }
+
+.margin-top-md {
+  margin-top: 8px !important;
+}
+
+.margin-md {
+  margin: 8px !important;
+}

@@ -140,7 +140,7 @@
               </div>
 
               <div class="clearfix"></div>
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputRemember"
                        focus-on-for="focus-inputRemember"
                        class="col-md-4 col-lg-4">Remembers</label>
@@ -154,7 +154,7 @@
               </div>
 
               <div class="clearfix"></div>
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputName"
                        focus-on-for="focus-inputUrl"
                        class="col-md-4 col-lg-4">Name</label>
@@ -167,7 +167,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputUrl"
                        focus-on-for="focus-inputUrl"
                        class="col-md-4 col-lg-4">URL</label>
@@ -180,7 +180,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputMonitor"
                        focus-on-for="focus-inputMonitor"
                        class="col-md-4 col-lg-4">Monitor</label>
@@ -195,7 +195,7 @@
               </div>
 
 
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputPosition"
                        focus-on-for="focus-inputPosition"
                        class="col-md-4 col-lg-4">Position</label>
@@ -209,7 +209,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group margin-top-md">
                 <label for="inputPopup"
                        focus-on-for="focus-inputPopup"
                        class="col-md-4 col-lg-4">Plain Window</label>
@@ -269,11 +269,23 @@
                 />
               </div>
             </div>
+            <div class="form-group">
+              <label for="inputReplaceAllTemplates"
+                     focus-on-for="focus-inputReplaceAllTemplates"
+                     class="col-md-2 col-lg-2 margin-top-md">Replace all templates</label>
+              <div class="col-md-10 col-lg-10 margin-top-md">
+                <checkbox
+                  id="inputReplaceAllTemplates"
+                  class="fix-checkbox"
+                  ng-model="replaceAllTemplates">
+                </checkbox>
+              </div>
+            </div>
           </div>
         </div>
         <hr>
 
-        <div class="btn-group" style="margin: 8px;">
+        <div class="btn-group margin-md">
           <span class="btn btn-default"
                 ng-class="{'btn-primary': templateUrl && templateUrl !== ''}"
                 ng-disabled="!templateUrl || templateUrl === ''"
