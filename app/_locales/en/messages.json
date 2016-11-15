@@ -35,8 +35,8 @@
     "message": "Monitor",
     "description": ""
   },
-  "LOCATION": {
-    "message": "Location",
+  "POSITION": {
+    "message": "Position",
     "description": ""
   },
   "PLAIN": {
@@ -129,6 +129,26 @@
   },
   "AUTO_REPAIR_RULES": {
     "message": "Auto-repair rules",
+    "description": ""
+  },
+  "MAXIMIZED": {
+    "message": "Maximized",
+    "description": ""
+  },
+  "LEFT_HALF": {
+    "message": "Left-Half",
+    "description": ""
+  },
+  "RIGHT_HALF": {
+    "message": "Right-Half",
+    "description": ""
+  },
+  "TOP_HALF": {
+    "message": "Top-Half",
+    "description": ""
+  },
+  "BOTTOM_HALF": {
+    "message": "Bottom-Half",
     "description": ""
   }
 }

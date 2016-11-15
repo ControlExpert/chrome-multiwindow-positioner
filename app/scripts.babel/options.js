@@ -14,14 +14,12 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.locale = prepareLocale();
 
     var POSITIONS = {
-      CENTER: {id: 'center', name: 'center'},
-      LEFT_HALF: {id: 'left-half', name: 'left-half'},
-      RIGHT_HALF: {id: 'right-half', name: 'right-half'},
-      TOP_HALF: {id: 'top-half', name: 'top-half'},
-      BOTTOM_HALF: {id: 'bottom-half', name: 'bottom-half'}
+      CENTER: {id: 'center', name: vm.locale.MAXIMIZED},
+      LEFT_HALF: {id: 'left-half', name: vm.locale.LEFT_HALF},
+      RIGHT_HALF: {id: 'right-half', name: vm.locale.RIGHT_HALF},
+      TOP_HALF: {id: 'top-half', name: vm.locale.TOP_HALF},
+      BOTTOM_HALF: {id: 'bottom-half', name: vm.locale.BOTTOM_HALF}
     };
-
-
 
     vm.POSITIONS = POSITIONS;
     vm.MONITORS = MONITORS;
@@ -38,6 +36,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.templateUrl = '';
     vm.replaceAllTemplates = true;
 
+    vm.localizePosition = localizePosition;
     vm.markAsDirty = markAsDirk;
     vm.saveOptions = saveOptions;
     vm.loadOptions = loadOptions;
@@ -563,38 +562,60 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
 
     function prepareLocale() {
       return {
-        OPTIONS_TITLE: chrome.i18n.getMessage("OPTIONS_TITLE"),
-        TAB_SETTINGS:  chrome.i18n.getMessage("TAB_SETTINGS"),
-        ACTIVE: chrome.i18n.getMessage("ACTIVE"),
-        NAME: chrome.i18n.getMessage("NAME"),
-        URL: chrome.i18n.getMessage("URL"),
-        REMEMBER: chrome.i18n.getMessage("REMEMBER"),
-        MONITOR: chrome.i18n.getMessage("MONITOR"),
-        LOCATION: chrome.i18n.getMessage("LOCATION"),
-        PLAIN: chrome.i18n.getMessage("PLAIN"),
-        EDIT_TAB_RULE: chrome.i18n.getMessage("EDIT_TAB_RULE"),
-        DELETE_TAB_RULE: chrome.i18n.getMessage("DELETE_TAB_RULE"),
-        MOVE_UP: chrome.i18n.getMessage("MOVE_UP"),
-        MOVE_DOWN: chrome.i18n.getMessage("MOVE_DOWN"),
-        NEW_TAB_OPTION_TITLE: chrome.i18n.getMessage("NEW_TAB_OPTION_TITLE"),
-        EDIT_TAB_OPTION_TITLE: chrome.i18n.getMessage("EDIT_TAB_OPTION_TITLE"),
-        TEMPLATE: chrome.i18n.getMessage("TEMPLATE"),
-        PLAIN_WINDOW: chrome.i18n.getMessage("PLAIN_WINDOW"),
-        ADD: chrome.i18n.getMessage("ADD"),
-        UPDATE: chrome.i18n.getMessage("UPDATE"),
-        CANCEL: chrome.i18n.getMessage("CANCEL"),
-        TEMPLATE_URL: chrome.i18n.getMessage("TEMPLATE_URL"),
-        REPLACE_ALL_TEMPLATES: chrome.i18n.getMessage("REPLACE_ALL_TEMPLATES"),
-        ADD_TAB_OPTION: chrome.i18n.getMessage("ADD_TAB_OPTION"),
-        SAVE: chrome.i18n.getMessage("SAVE"),
-        RELOAD: chrome.i18n.getMessage("RELOAD"),
-        IMPORT_TEMPLATE: chrome.i18n.getMessage("IMPORT_TEMPLATE"),
-        EXPORT_TEMPLATE: chrome.i18n.getMessage("EXPORT_TEMPLATE"),
-        SHOW_MORE_OPTIONS: chrome.i18n.getMessage("SHOW_MORE_OPTIONS"),
-        VALIDATE_RULES: chrome.i18n.getMessage("VALIDATE_RULES"),
-        DETECT_MONITORS: chrome.i18n.getMessage("DETECT_MONITORS"),
-        AUTO_REPAIR_RULES: chrome.i18n.getMessage("AUTO_REPAIR_RULES")
+        OPTIONS_TITLE: chrome.i18n.getMessage('OPTIONS_TITLE'),
+        TAB_SETTINGS: chrome.i18n.getMessage('TAB_SETTINGS'),
+        ACTIVE: chrome.i18n.getMessage('ACTIVE'),
+        NAME: chrome.i18n.getMessage('NAME'),
+        URL: chrome.i18n.getMessage('URL'),
+        REMEMBER: chrome.i18n.getMessage('REMEMBER'),
+        MONITOR: chrome.i18n.getMessage('MONITOR'),
+        POSITION: chrome.i18n.getMessage('POSITION'),
+        PLAIN: chrome.i18n.getMessage('PLAIN'),
+        EDIT_TAB_RULE: chrome.i18n.getMessage('EDIT_TAB_RULE'),
+        DELETE_TAB_RULE: chrome.i18n.getMessage('DELETE_TAB_RULE'),
+        MOVE_UP: chrome.i18n.getMessage('MOVE_UP'),
+        MOVE_DOWN: chrome.i18n.getMessage('MOVE_DOWN'),
+        NEW_TAB_OPTION_TITLE: chrome.i18n.getMessage('NEW_TAB_OPTION_TITLE'),
+        EDIT_TAB_OPTION_TITLE: chrome.i18n.getMessage('EDIT_TAB_OPTION_TITLE'),
+        TEMPLATE: chrome.i18n.getMessage('TEMPLATE'),
+        PLAIN_WINDOW: chrome.i18n.getMessage('PLAIN_WINDOW'),
+        ADD: chrome.i18n.getMessage('ADD'),
+        UPDATE: chrome.i18n.getMessage('UPDATE'),
+        CANCEL: chrome.i18n.getMessage('CANCEL'),
+        TEMPLATE_URL: chrome.i18n.getMessage('TEMPLATE_URL'),
+        REPLACE_ALL_TEMPLATES: chrome.i18n.getMessage('REPLACE_ALL_TEMPLATES'),
+        ADD_TAB_OPTION: chrome.i18n.getMessage('ADD_TAB_OPTION'),
+        SAVE: chrome.i18n.getMessage('SAVE'),
+        RELOAD: chrome.i18n.getMessage('RELOAD'),
+        IMPORT_TEMPLATE: chrome.i18n.getMessage('IMPORT_TEMPLATE'),
+        EXPORT_TEMPLATE: chrome.i18n.getMessage('EXPORT_TEMPLATE'),
+        SHOW_MORE_OPTIONS: chrome.i18n.getMessage('SHOW_MORE_OPTIONS'),
+        VALIDATE_RULES: chrome.i18n.getMessage('VALIDATE_RULES'),
+        DETECT_MONITORS: chrome.i18n.getMessage('DETECT_MONITORS'),
+        AUTO_REPAIR_RULES: chrome.i18n.getMessage('AUTO_REPAIR_RULES'),
+        MAXIMIZED: chrome.i18n.getMessage('MAXIMIZED'),
+        LEFT_HALF: chrome.i18n.getMessage('LEFT_HALF'),
+        RIGHT_HALF: chrome.i18n.getMessage('RIGHT_HALF'),
+        TOP_HALF: chrome.i18n.getMessage('TOP_HALF'),
+        BOTTOM_HALF: chrome.i18n.getMessage('BOTTOM_HALF'),
       };
+    }
+
+    function localizePosition(position) {
+      var localizedPosition = position;
+      if (position === POSITIONS.CENTER.id) {
+        localizedPosition = vm.locale.MAXIMIZED;
+      } else if (position === POSITIONS.LEFT_HALF.id) {
+        localizedPosition = vm.locale.LEFT_HALF;
+      } else if (position === POSITIONS.RIGHT_HALF.id) {
+        localizedPosition = vm.locale.RIGHT_HALF;
+      } else if (position === POSITIONS.TOP_HALF.id) {
+        localizedPosition = vm.locale.TOP_HALF;
+      } else if (position === POSITIONS.BOTTOM_HALF.id) {
+        localizedPosition = vm.locale.BOTTOM_HALF;
+      }
+
+      return localizedPosition
     }
 
   }]);

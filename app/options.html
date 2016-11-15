@@ -15,7 +15,7 @@
   <link href="styles/main.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
-<body>
+<body ng-cloak>
 <div ng-controller="TabHelperOptionsController">
   <h1>{{::locale.OPTIONS_TITLE}}</h1>
   <hr>
@@ -37,7 +37,7 @@
             <th ng-if="showExtraOptions">{{::locale.URL}}</th>
             <th>{{::locale.REMEMBER}}</th>
             <th>{{::locale.MONITOR}}</th>
-            <th>{{::locale.LOCATION}}</th>
+            <th>{{::locale.POSITION}}</th>
             <th ng-if="showExtraOptions">{{::locale.PLAIN}}</th>
             <th></th>
           </tr>
@@ -63,7 +63,7 @@
             <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
               {{tabOption.monitor.name}} [{{tabOption.monitor.idx}}]
             </td>
-            <td>{{tabOption.position}}</td>
+            <td>{{localizePosition(tabOption.position)}}</td>
             <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
             <td class="tab-action-bar">
                           <span class="btn btn-default"
@@ -199,7 +199,7 @@
               <div class="form-group margin-top-md">
                 <label for="inputPosition"
                        focus-on-for="focus-inputPosition"
-                       class="col-md-4 col-lg-4">{{::locale.LOCATION}}</label>
+                       class="col-md-4 col-lg-4">{{::locale.POSITION}}</label>
                 <div class="col-md-8 col-lg-8">
                   <select name="mySelect" id="inputPosition"
                           focus-on="focus-inputPosition"
