@@ -90,6 +90,28 @@
          "timestamp": "2016-11-10T12:37:57.275Z",
          "inconsistentMonitor": false,
 		 "code": "ce20-archive"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "url": "/cerep02/Reports",
+         "name": "C€ Prüferleistung",
+         "monitor": {
+            "id": "111",
+            "name": "PnP-Monitor (Standard)",
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }},
+         "defaultMonitor": "not-main-monitor",
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-10T12:37:57.275Z",
+         "inconsistentMonitor": false,
+         "code": "ce20-expert-performance"
       }
    ],
    "templates": [
@@ -123,6 +145,14 @@
          "name": "C€2.0 Archive",
          "url": "/Common.ArchiveDocumentViewer",
          "code": "ce20-archive",
+         "defaultMonitor": "not-main-monitor"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€ Prüferleistung",
+         "url": "/cerep02/Reports",
+         "code": "ce20-expert-performance",
          "defaultMonitor": "not-main-monitor"
       }
    ]
