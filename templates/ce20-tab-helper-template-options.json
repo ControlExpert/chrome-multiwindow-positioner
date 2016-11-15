@@ -94,28 +94,32 @@
          "remember": true,
          "name": "C€2.0 Pruefberichte",
          "url": "/reportviewer/",
-		 "code": "ce20-report"
+         "code": "ce20-report",
+         "defaultMonitor": "not-main-monitor"
       },
       {
          "active": true,
          "remember": true,
          "name": "C€2.0 Dokumente",
          "url": "/multimediaviewer/?type=pdf",
-		 "code": "ce20-document"
+         "code": "ce20-document",
+         "defaultMonitor": "not-main-monitor"
       },
       {
          "active": true,
          "remember": true,
          "name": "C€2.0 Bilder",
          "url": "/multimediaviewer/?type=image",
-		 "code": "ce20-image"
+         "code": "ce20-image",
+         "defaultMonitor": "not-main-monitor"
       },
       {
          "active": true,
          "remember": true,
          "name": "C€2.0 Archive",
          "url": "/Common.ArchiveDocumentViewer",
-		 "code": "ce20-archive"
+         "code": "ce20-archive",
+         "defaultMonitor": "not-main-monitor"
       }
    ]
 }
