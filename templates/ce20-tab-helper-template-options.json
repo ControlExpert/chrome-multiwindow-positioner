@@ -14,7 +14,7 @@
                "width": 1600
             }
          },
-         "defaultMonitor": "not-main-monitor"
+         "defaultMonitor": "not-main-monitor",
          "fullScreen": false,
          "popup": true,
          "position": "center",
@@ -37,7 +37,7 @@
                "width": 1920
             }
          },
-         "defaultMonitor": "not-main-monitor"
+         "defaultMonitor": "not-main-monitor",
          "fullScreen": false,
          "popup": true,
          "position": "center",
@@ -61,7 +61,7 @@
                "width": 1920
             }
          },
-         "defaultMonitor": "not-main-monitor"
+         "defaultMonitor": "not-main-monitor",
          "fullScreen": false,
          "popup": true,
          "position": "center",
@@ -83,7 +83,7 @@
                "top": 0,
                "width": 1600
             }},
-         "defaultMonitor": "not-main-monitor"
+         "defaultMonitor": "not-main-monitor",
          "fullScreen": false,
          "popup": true,
          "position": "center",
