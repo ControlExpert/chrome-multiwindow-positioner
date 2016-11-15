@@ -1,6 +1,6 @@
 # Chrome MultiWindow Positioner
 
-Tool extension that enables seamless window placement/positioning in multi-monitor setups.
+Tool extension that enables effective window positioning/placement in multi-monitor setups.
 
 Features:
 * Flexible positioning options via Rules concept
