@@ -150,5 +150,45 @@
   "BOTTOM_HALF": {
     "message": "Bottom-Half",
     "description": ""
+  },
+  "DEFAULT_MONITOR": {
+    "message": "Default Monitor",
+    "description": ""
+  },
+  "MAIN_MONITOR": {
+    "message": "Main monitor",
+    "description": ""
+  },
+  "NOT_MAIN_MONITOR": {
+    "message": "Not main monitor",
+    "description": ""
+  },
+  "BIGGEST_RESOLUTION": {
+    "message": "Biggest Resolution",
+    "description": ""
+  },
+  "BIGGEST_HEIGHT": {
+    "message": "Biggest Height",
+    "description": ""
+  },
+  "BIGGEST_WIDTH": {
+    "message": "Biggest Width",
+    "description": ""
+  },
+  "SMALLEST_RESOLUTION": {
+    "message": "Smallest Resolution",
+    "description": ""
+  },
+  "SMALLEST_HEIGHT": {
+    "message": "Smallest Height",
+    "description": ""
+  },
+  "SMALLEST_WIDTH": {
+    "message": "Smallest Width",
+    "description": ""
+  },
+  "RULE_NAME_PLACEHOLDER": {
+    "message": "Type the tab rule name...",
+    "description": ""
   }
 }

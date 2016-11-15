@@ -37,6 +37,7 @@
             <th ng-if="showExtraOptions">{{::locale.URL}}</th>
             <th>{{::locale.REMEMBER}}</th>
             <th>{{::locale.MONITOR}}</th>
+            <th ng-if="showExtraOptions">{{::locale.DEFAULT_MONITOR}}</th>
             <th>{{::locale.POSITION}}</th>
             <th ng-if="showExtraOptions">{{::locale.PLAIN}}</th>
             <th></th>
@@ -61,8 +62,9 @@
               </checkbox>
             </td>
             <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
-              {{tabOption.monitor.name}} [{{tabOption.monitor.idx}}]
+              {{tabOption.monitor.name}}
             </td>
+            <td ng-if="showExtraOptions">{{localizeDefaultMonitor(tabOption.defaultMonitor)}}</td>
             <td>{{localizePosition(tabOption.position)}}</td>
             <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
             <td class="tab-action-bar">
@@ -191,6 +193,20 @@
                           class="form-control"
                           ng-options="option.name for option in MONITORS track by option.id"
                           ng-model="newTabOption.monitor"></select>
+
+                </div>
+              </div>
+
+              <div class="form-group margin-top-md">
+                <label for="inputDefaultMonitor"
+                       focus-on-for="focus-inputDefaultMonitor"
+                       class="col-md-4 col-lg-4">{{::locale.DEFAULT_MONITOR}}</label>
+                <div class="col-md-8 col-lg-8">
+                  <select name="mySelect" id="inputDefaultMonitor"
+                          focus-on="focus-inputDefaultMonitor"
+                          class="form-control"
+                          ng-options="option.name for option in DEFAULT_MONITORS track by option.id"
+                          ng-model="newTabOption.defaultMonitor"></select>
 
                 </div>
               </div>

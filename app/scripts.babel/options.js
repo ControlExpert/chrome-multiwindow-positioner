@@ -21,8 +21,20 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       BOTTOM_HALF: {id: 'bottom-half', name: vm.locale.BOTTOM_HALF}
     };
 
+    var DEFAULT_MONITORS = {
+      MAIN_MONITOR: {id: 'main-monitor', name: vm.locale.MAIN_MONITOR},
+      NOT_MAIN_MONITOR: {id: 'not-main-monitor', name: vm.locale.NOT_MAIN_MONITOR},
+      BIGGEST_RESOLUTION: {id: 'biggest-area', name: vm.locale.BIGGEST_RESOLUTION},
+      BIGGEST_HEIGHT: {id: 'biggest-height', name: vm.locale.BIGGEST_HEIGHT},
+      BIGGEST_WIDTH: {id: 'biggest-width', name: vm.locale.BIGGEST_WIDTH},
+      SMALLEST_RESOLUTION: {id: 'smallest-area', name: vm.locale.SMALLEST_RESOLUTION},
+      SMALLEST_HEIGHT: {id: 'smallest-height', name: vm.locale.SMALLEST_HEIGHT},
+      SMALLEST_WIDTH: {id: 'smallest-width', name: vm.locale.SMALLEST_WIDTH}
+    };
+
     vm.POSITIONS = POSITIONS;
     vm.MONITORS = MONITORS;
+    vm.DEFAULT_MONITORS = DEFAULT_MONITORS;
 
     vm.options = null;
     vm.showNewTabOption = false;
@@ -36,6 +48,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
     vm.templateUrl = '';
     vm.replaceAllTemplates = true;
 
+    vm.localizeDefaultMonitor = localizeDefaultMonitor;
     vm.localizePosition = localizePosition;
     vm.markAsDirty = markAsDirk;
     vm.saveOptions = saveOptions;
@@ -165,6 +178,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       vm.showEditTabOption = true;
       vm.newTabOption = angular.copy(tabOption);
       vm.newTabOption.position = findPositionById(tabOption.position);
+      vm.newTabOption.defaultMonitor = findDefaultMonitorById(tabOption.defaultMonitor);
       vm.newTabOption.monitor = getDisplayById(tabOption.monitor.id);
       vm.editTabOptionIdx = _.findIndex(vm.options.tabs, tabOption);
       vm.newTabOption.template = null;
@@ -177,7 +191,20 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         vm.newTabOption.code = vm.newTabOption.template.code;
         vm.newTabOption.active = vm.newTabOption.template.active;
         vm.newTabOption.remember = vm.newTabOption.template.remember;
+        if (vm.newTabOption.template.defaultMonitor) {
+          vm.newTabOption.defaultMonitor = findDefaultMonitorById(vm.newTabOption.template.defaultMonitor);
+        }
+        if (vm.newTabOption.template.position) {
+          vm.newTabOption.position = findPositionById(vm.newTabOption.template.position);
+        }
       }
+    }
+
+    function findDefaultMonitorById(defaultMonitorId) {
+      var key = _.findKey(DEFAULT_MONITORS, function (defaultMonitor) {
+        return defaultMonitor.id === defaultMonitorId;
+      });
+      return key ? DEFAULT_MONITORS[key] : null;
     }
 
     function findPositionById(positionId) {
@@ -203,7 +230,8 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         monitor: vm.newTabOption.monitor,
         fullScreen: vm.newTabOption.fullScreen,
         popup: vm.newTabOption.popup,
-        position: vm.newTabOption.position ? vm.newTabOption.position.id : 'center',
+        position: vm.newTabOption.position ? vm.newTabOption.position.id : MONITORS.CENTER.id,
+        defaultMonitor: vm.newTabOption.defaultMonitor ? vm.newTabOption.defaultMonitor.id : DEFAULT_MONITORS.MAIN_MONITOR.id,
         timestamp: new Date().toISOString()
       };
       vm.editTabOptionIdx = -1;
@@ -221,7 +249,8 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         monitor: vm.newTabOption.monitor,
         fullScreen: vm.newTabOption.fullScreen,
         popup: vm.newTabOption.popup,
-        position: vm.newTabOption.position ? vm.newTabOption.position.id : 'center',
+        position: vm.newTabOption.position ? vm.newTabOption.position.id : MONITORS.CENTER.id,
+        defaultMonitor: vm.newTabOption.defaultMonitor ? vm.newTabOption.defaultMonitor.id : DEFAULT_MONITORS.MAIN_MONITOR.id,
         timestamp: new Date().toISOString()
       });
       vm.showNewTabOption = false;
@@ -268,7 +297,84 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       validateOptions();
     }
 
-    function validateOptions() {
+    function getMappedDefaultMonitorById(defaultMonitors, defaultMonitorId) {
+      var found = null;
+      if (defaultMonitorId) {
+        for (var key in defaultMonitors) {
+          if (defaultMonitors.hasOwnProperty(key)) {
+            var defaultMonitor = defaultMonitors[key];
+            if (defaultMonitorId === defaultMonitor.id) {
+              found = defaultMonitor.monitor;
+              break;
+            }
+          }
+        }
+      }
+      return found;
+    }
+
+    function getDefaultMonitorsMapping() {
+      var defaultMonitors = angular.copy(DEFAULT_MONITORS);
+      _.forEach(vm.displayInfos, function (display, idx) {
+        if (display.isEnabled) {
+          var displayWorkArea = display.workArea;
+          var area = displayWorkArea.height * displayWorkArea.width;
+
+          if (display.isPrimary) {
+            defaultMonitors.MAIN_MONITOR.monitor = display;
+          }
+          if (!display.isPrimary) {
+            if (!defaultMonitors.NOT_MAIN_MONITOR.monitor) {
+              defaultMonitors.NOT_MAIN_MONITOR.monitor = display;
+            } else {
+              var notMainResolution = defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.height *
+                defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.width;
+              if (area > notMainResolution) {
+                defaultMonitors.NOT_MAIN_MONITOR.monitor = display;
+              }
+            }
+          }
+          if (!defaultMonitors.BIGGEST_RESOLUTION.monitor) {
+            defaultMonitors.BIGGEST_RESOLUTION.monitor = display;
+          } else {
+            var biggestResolution = defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.height *
+              defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.width;
+            if (area > biggestResolution) {
+              defaultMonitors.BIGGEST_RESOLUTION.monitor = display;
+            }
+          }
+          if (!defaultMonitors.BIGGEST_HEIGHT.monitor ||
+            displayWorkArea.height > defaultMonitors.BIGGEST_HEIGHT.monitor.workArea.height) {
+            defaultMonitors.BIGGEST_HEIGHT.monitor = display;
+          }
+          if (!defaultMonitors.BIGGEST_WIDTH.monitor ||
+            displayWorkArea.width > defaultMonitors.BIGGEST_WIDTH.monitor.workArea.width) {
+            defaultMonitors.BIGGEST_WIDTH.monitor = display;
+          }
+          if (!defaultMonitors.SMALLEST_RESOLUTION.monitor) {
+            defaultMonitors.SMALLEST_RESOLUTION.monitor = display;
+          } else {
+            var biggestResolution = defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.height *
+              defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.width;
+            if (area < biggestResolution) {
+              defaultMonitors.SMALLEST_RESOLUTION.monitor = display;
+            }
+          }
+          if (!defaultMonitors.SMALLEST_HEIGHT.monitor ||
+            displayWorkArea.height < defaultMonitors.SMALLEST_HEIGHT.monitor.workArea.height) {
+            defaultMonitors.SMALLEST_HEIGHT.monitor = display;
+          }
+          if (!defaultMonitors.SMALLEST_WIDTH.monitor ||
+            displayWorkArea.width < defaultMonitors.SMALLEST_WIDTH.monitor.workArea.width) {
+            defaultMonitors.SMALLEST_WIDTH.monitor = display;
+          }
+        }
+      });
+      return defaultMonitors;
+    }
+
+    function validateOptions(useDefaultMonitor) {
+      var defaultMonitors = getDefaultMonitorsMapping();
       var missing = false;
       _.forEach(vm.options.tabs, function (tab, idx) {
         var found = false;
@@ -279,8 +385,17 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
           }
         });
         if (!found) {
-          tab.inconsistentMonitor = true;
-          missing = true;
+          var defaultMonitor = null;
+          if (useDefaultMonitor) {
+            defaultMonitor = getMappedDefaultMonitorById(defaultMonitors, tab.defaultMonitor);
+            if (defaultMonitor) {
+              tab.monitor = angular.copy(defaultMonitor);
+            }
+          }
+          if (!useDefaultMonitor || !defaultMonitor) {
+            tab.inconsistentMonitor = true;
+            missing = true;
+          }
         } else {
           tab.inconsistentMonitor = false;
         }
@@ -330,9 +445,10 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         active: true,
         remember: false,
         code: 'custom',
-        name: 'Option Name Here',
+        name: vm.locale.RULE_NAME_PLACEHOLDER,
         url: 'http://any.url/',
         monitor: getPrimaryDisplay(),
+        defaultMonitor: DEFAULT_MONITORS.MAIN_MONITOR,
         fullScreen: false,
         popup: true,
         position: POSITIONS.CENTER
@@ -365,7 +481,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
                 mergeTemplates(vm.options.templates, response.data.templates);
               }
             }
-            validateOptions();
+            validateOptions(true);
           }
         });
       }
@@ -385,6 +501,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
             rule.url = template.url;
             rule.name = template.name;
             //rule.monitor = template.monitor;
+            rule.defaultMonitor = template.defaultMonitor;
             //rule.fullScreen = template.fullScreen;
             //rule.popup = template.popup;
             //rule.position = template.position ? template.position.id : 'center';
@@ -414,6 +531,8 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
             existingTemplate.remember = newTemplate.remember;
             existingTemplate.url = newTemplate.url;
             existingTemplate.name = newTemplate.name;
+            existingTemplate.defaultMonitor = newTemplate.defaultMonitor;
+            existingTemplate.position = newTemplate.position;
           }
         }
       }
@@ -454,7 +573,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       var optionsAsJson = angular.toJson(vm.options, 3);
       var blob = new Blob([optionsAsJson], {type: 'application/json'});
       var saveAs = window.saveAs;
-      saveAs(blob, 'tab-helper-options-export.json');
+      saveAs(blob, 'tab-helper-rule-export.json');
     }
 
     function getDefaultTemplates() {
@@ -464,42 +583,48 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
           remember: false,
           name: 'Google Search',
           url: 'https://www.google.com/',
-          code: 'google-search'
+          code: 'google-search',
+          defaultMonitor: 'main-monitor'
         },
         {
           active: true,
           remember: false,
           name: 'Facebook',
           url: 'https://www.facebook.com',
-          code: 'facebook'
+          code: 'facebook',
+          defaultMonitor: 'main-monitor'
         },
         {
           active: true,
           remember: false,
           name: 'YouTube',
           url: 'https://www.youtube.com/',
-          code: 'google-youtube'
+          code: 'google-youtube',
+          defaultMonitor: 'main-monitor'
         },
         {
           active: true,
           remember: false,
           name: 'Wikipedia',
           url: 'https://www.wikipedia.org/',
-          code: 'wikipedia'
+          code: 'wikipedia',
+          defaultMonitor: 'main-monitor'
         },
         {
           active: true,
           remember: false,
           name: 'Amazon',
           url: 'https://www.amazon.com/',
-          code: 'amazon-global'
+          code: 'amazon-global',
+          defaultMonitor: 'main-monitor'
         },
         {
           active: true,
           remember: false,
           name: 'Ebay',
           url: 'http://www.ebay.com/',
-          code: 'ebay-global'
+          code: 'ebay-global',
+          defaultMonitor: 'main-monitor'
         }
       ]
     }
@@ -564,6 +689,8 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       return {
         OPTIONS_TITLE: chrome.i18n.getMessage('OPTIONS_TITLE'),
         TAB_SETTINGS: chrome.i18n.getMessage('TAB_SETTINGS'),
+
+        //table columns
         ACTIVE: chrome.i18n.getMessage('ACTIVE'),
         NAME: chrome.i18n.getMessage('NAME'),
         URL: chrome.i18n.getMessage('URL'),
@@ -571,10 +698,14 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         MONITOR: chrome.i18n.getMessage('MONITOR'),
         POSITION: chrome.i18n.getMessage('POSITION'),
         PLAIN: chrome.i18n.getMessage('PLAIN'),
+
+        //table actions
         EDIT_TAB_RULE: chrome.i18n.getMessage('EDIT_TAB_RULE'),
         DELETE_TAB_RULE: chrome.i18n.getMessage('DELETE_TAB_RULE'),
         MOVE_UP: chrome.i18n.getMessage('MOVE_UP'),
         MOVE_DOWN: chrome.i18n.getMessage('MOVE_DOWN'),
+
+        //dialogs
         NEW_TAB_OPTION_TITLE: chrome.i18n.getMessage('NEW_TAB_OPTION_TITLE'),
         EDIT_TAB_OPTION_TITLE: chrome.i18n.getMessage('EDIT_TAB_OPTION_TITLE'),
         TEMPLATE: chrome.i18n.getMessage('TEMPLATE'),
@@ -584,6 +715,8 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         CANCEL: chrome.i18n.getMessage('CANCEL'),
         TEMPLATE_URL: chrome.i18n.getMessage('TEMPLATE_URL'),
         REPLACE_ALL_TEMPLATES: chrome.i18n.getMessage('REPLACE_ALL_TEMPLATES'),
+
+        //actions
         ADD_TAB_OPTION: chrome.i18n.getMessage('ADD_TAB_OPTION'),
         SAVE: chrome.i18n.getMessage('SAVE'),
         RELOAD: chrome.i18n.getMessage('RELOAD'),
@@ -593,12 +726,50 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
         VALIDATE_RULES: chrome.i18n.getMessage('VALIDATE_RULES'),
         DETECT_MONITORS: chrome.i18n.getMessage('DETECT_MONITORS'),
         AUTO_REPAIR_RULES: chrome.i18n.getMessage('AUTO_REPAIR_RULES'),
+
+        //window positions
         MAXIMIZED: chrome.i18n.getMessage('MAXIMIZED'),
         LEFT_HALF: chrome.i18n.getMessage('LEFT_HALF'),
         RIGHT_HALF: chrome.i18n.getMessage('RIGHT_HALF'),
         TOP_HALF: chrome.i18n.getMessage('TOP_HALF'),
         BOTTOM_HALF: chrome.i18n.getMessage('BOTTOM_HALF'),
+
+        //default monitors
+        DEFAULT_MONITOR: chrome.i18n.getMessage('DEFAULT_MONITOR'),
+        MAIN_MONITOR: chrome.i18n.getMessage('MAIN_MONITOR'),
+        NOT_MAIN_MONITOR: chrome.i18n.getMessage('NOT_MAIN_MONITOR'),
+        BIGGEST_RESOLUTION: chrome.i18n.getMessage('BIGGEST_RESOLUTION'),
+        BIGGEST_HEIGHT: chrome.i18n.getMessage('BIGGEST_HEIGHT'),
+        BIGGEST_WIDTH: chrome.i18n.getMessage('BIGGEST_WIDTH'),
+        SMALLEST_RESOLUTION: chrome.i18n.getMessage('SMALLEST_RESOLUTION'),
+        SMALLEST_HEIGHT: chrome.i18n.getMessage('SMALLEST_HEIGHT'),
+        SMALLEST_WIDTH: chrome.i18n.getMessage('SMALLEST_WIDTH'),
+
+        RULE_NAME_PLACEHOLDER: chrome.i18n.getMessage('RULE_NAME_PLACEHOLDER')
       };
+    }
+
+    function localizeDefaultMonitor(defaultMonitor) {
+      var localizedDefaultMonitor = defaultMonitor;
+      if (defaultMonitor === DEFAULT_MONITORS.MAIN_MONITOR.id) {
+        localizedDefaultMonitor = vm.locale.MAIN_MONITOR;
+      } else if (defaultMonitor === DEFAULT_MONITORS.NOT_MAIN_MONITOR.id) {
+        localizedDefaultMonitor = vm.locale.NOT_MAIN_MONITOR;
+      } else if (defaultMonitor === DEFAULT_MONITORS.BIGGEST_RESOLUTION.id) {
+        localizedDefaultMonitor = vm.locale.BIGGEST_RESOLUTION;
+      } else if (defaultMonitor === DEFAULT_MONITORS.BIGGEST_HEIGHT.id) {
+        localizedDefaultMonitor = vm.locale.BIGGEST_HEIGHT;
+      } else if (defaultMonitor === DEFAULT_MONITORS.BIGGEST_WIDTH.id) {
+        localizedDefaultMonitor = vm.locale.BIGGEST_WIDTH;
+      } else if (defaultMonitor === DEFAULT_MONITORS.SMALLEST_RESOLUTION.id) {
+        localizedDefaultMonitor = vm.locale.SMALLEST_RESOLUTION;
+      } else if (defaultMonitor === DEFAULT_MONITORS.SMALLEST_HEIGHT.id) {
+        localizedDefaultMonitor = vm.locale.SMALLEST_HEIGHT;
+      } else if (defaultMonitor === DEFAULT_MONITORS.SMALLEST_WIDTH.id) {
+        localizedDefaultMonitor = vm.locale.SMALLEST_WIDTH;
+      }
+
+      return localizedDefaultMonitor
     }
 
     function localizePosition(position) {

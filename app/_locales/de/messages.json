@@ -124,7 +124,7 @@
     "description": ""
   },
   "DETECT_MONITORS": {
-    "message": "Erkennen von Monitoren",
+    "message": "Monitore erkennen",
     "description": ""
   },
   "AUTO_REPAIR_RULES": {
@@ -149,6 +149,46 @@
   },
   "BOTTOM_HALF": {
     "message": "untere Hälfte",
+    "description": ""
+  },
+  "DEFAULT_MONITOR": {
+    "message": "Standardmonitor",
+    "description": ""
+  },
+  "MAIN_MONITOR": {
+    "message": "Hauptmonitor",
+    "description": ""
+  },
+  "NOT_MAIN_MONITOR": {
+    "message": "Nicht Hauptmonitor",
+    "description": ""
+  },
+  "BIGGEST_RESOLUTION": {
+    "message": "Größte Auflösung",
+    "description": ""
+  },
+  "BIGGEST_HEIGHT": {
+    "message": "Größte Höhe",
+    "description": ""
+  },
+  "BIGGEST_WIDTH": {
+    "message": "Größte Breite",
+    "description": ""
+  },
+  "SMALLEST_RESOLUTION": {
+    "message": "Kleinste Auflösung",
+    "description": ""
+  },
+  "SMALLEST_HEIGHT": {
+    "message": "Kleinste Höhe",
+    "description": ""
+  },
+  "SMALLEST_WIDTH": {
+    "message": "Kleinste Breite",
+    "description": ""
+  },
+  "RULE_NAME_PLACEHOLDER": {
+    "message": "Type the tab rule name...",
     "description": ""
   }
 }
