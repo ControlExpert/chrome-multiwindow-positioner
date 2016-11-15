@@ -1,12 +1,15 @@
-# Chrome Tab Helper
+# Chrome MultiWindow Positioner
 
-Utility extension that enables seamless tab placement in multi-monitor setups.
+Tool extension that enables seamless window placement/positioning in multi-monitor setups.
 
 Features:
-* Flexible placement options via Rules concept
+* Flexible positioning options via Rules concept
 * Multi-monitor support
 * Validation of rules configuration against existent Monitor.
 * Monitor detection
+* Configuration templates support. It enables user profiles and larger organization distributed environments.
+* Manual positioning detection that saves into rules.
+* Default monitor support.
 
 ## Getting Started
 
@@ -72,8 +75,8 @@ The sources written by es2015 is located at `scripts.babel` and runnable sources
 
 ## Contribute
 
-See the [contributing docs](https://github.com/ControlExpert/chrome-tab-helper/blob/master/contributing.md)
+See the [contributing docs](https://github.com/ControlExpert/chrome-multiwindow-positioner/blob/master/contributing.md)
 
 ## License
 
-[MIT license](https://github.com/ControlExpert/chrome-tab-helper/blob/master/LICENSE)
+[MIT license](https://github.com/ControlExpert/chrome-multiwindow-positioner/blob/master/LICENSE)

@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "tab-helper",
+    "message": "chrome-multiwindow-positioner",
     "description": ""
   },
   "appDescription": {
@@ -8,11 +8,11 @@
     "description": ""
   },
   "OPTIONS_TITLE": {
-    "message": "Tab Helper Konfiguration",
+    "message": "MultiWindow Positioner Konfiguration",
     "description": ""
   },
   "TAB_SETTINGS": {
-    "message": "Tab Einstellungen",
+    "message": "Regel Einstellungen",
     "description": ""
   },
   "ACTIVE": {
@@ -188,7 +188,7 @@
     "description": ""
   },
   "RULE_NAME_PLACEHOLDER": {
-    "message": "Type the tab rule name...",
+    "message": "Geben Sie einen Regelnamen ein...",
     "description": ""
   }
 }

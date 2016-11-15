@@ -1,7 +1,12 @@
 {
-  "name": "chrome-tab-helper",
+  "name": "chrome-multiwindow-positioner",
   "private": true,
   "version": "1.0.0",
+  "description": "Tool extension that enables seamless window placement/positioning in multi-monitor setups.",
+  "authors": [
+    "Control Expert"
+  ],
+  "license": "MIT",
   "dependencies": {
     "jquery": "~3.1.0",
     "lodash": "4.16.4",

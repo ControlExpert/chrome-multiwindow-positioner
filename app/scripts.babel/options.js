@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelperOptionsController',
+angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).controller('PositionerOptionsController',
   ['$scope', '$timeout', 'Upload', '$http', function ($scope, $timeout, Upload, $http) {
     var vm = $scope;
 
@@ -573,7 +573,7 @@ angular.module('tabHelper', ['ngFileUpload', 'ui.checkbox']).controller('TabHelp
       var optionsAsJson = angular.toJson(vm.options, 3);
       var blob = new Blob([optionsAsJson], {type: 'application/json'});
       var saveAs = window.saveAs;
-      saveAs(blob, 'tab-helper-rule-export.json');
+      saveAs(blob, 'multiwindow-positioner-rule-export.json');
     }
 
     function getDefaultTemplates() {

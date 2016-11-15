@@ -1,6 +1,9 @@
 {
-  "name": "chrome-tab-helper",
+  "name": "chrome-multiwindow-positioner",
   "private": true,
+  "authors": [
+    "Control Expert"
+  ],
   "engines": {
     "node": ">=0.8.0"
   },
