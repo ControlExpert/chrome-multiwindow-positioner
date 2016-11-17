@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "chrome-multiwindow-positioner",
+    "message": "MultiWindow Positioner",
     "description": ""
   },
   "appDescription": {
@@ -12,7 +12,7 @@
     "description": ""
   },
   "TAB_SETTINGS": {
-    "message": "Regel Einstellungen",
+    "message": "Regeln",
     "description": ""
   },
   "ACTIVE": {

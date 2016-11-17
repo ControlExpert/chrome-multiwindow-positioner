@@ -9,7 +9,7 @@ function showOptionsPage() {
 }
 
 //chrome.browserAction.setBadgeText({text: '\'Allo'});
-chrome.browserAction.onClicked.addListener(showOptionsPage);
+//chrome.browserAction.onClicked.addListener(showOptionsPage);
 
 //console.log('\'Allo \'Allo! Event Page for Browser Action');
 
@@ -304,12 +304,12 @@ function saveOptions(tabRuleOptions) {
 chrome.tabs.onCreated.addListener(onTabCreated);
 chrome.tabs.onUpdated.addListener(onTabUpdate);
 
-function onTabUpdate(tabId, changeInfo, tab) {
-  if (changeInfo.url && changeInfo.url !== '') {
-    console.log('Tab updated id:' + tab.id + ' url:' + changeInfo.url);
-    onTabCreated(tab, true);
-  }
-}
+// function onTabUpdate(tabId, changeInfo, tab) {
+//   if (changeInfo.url && changeInfo.url !== '') {
+//     console.log('Tab updated id:' + tab.id + ' url:' + changeInfo.url);
+//     onTabCreated(tab, true);
+//   }
+// }
 
 function onTabCreated(tab, disableCreationMessage) {
   if (!disableCreationMessage) {
