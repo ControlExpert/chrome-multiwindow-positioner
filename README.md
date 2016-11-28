@@ -23,7 +23,7 @@ Tool extension that enables effective window positioning/placement in multi-moni
  * Give the following URL: https://cdn.rawgit.com/ControlExpert/chrome-multiwindow-positioner/gh-pages/templates/default-template-options.json
  * Click **ADD** to complete the dialog. 
  * Finally click **SAVE** to save all the changes permanently.
-7. If you need to to use other monitors for specific rules/websites you may edit/add are rule.   
+7. If you need to to use other monitors for specific rules/websites you may edit/add a rule respectively.   
 8. In the edit or create rule dialog you may:
  * *Template*: List all available rule-templates.
  * *Active*: Tells if the rule is enabled and active.
@@ -34,7 +34,7 @@ Tool extension that enables effective window positioning/placement in multi-moni
  * *Default Monitor*: Will pre-select the target-monitor when importing a template (in case no matching monitor was given from the Rules template.)  
  * *Position*: The position within the *target-monitor* where the window will be placed.
  * *Popup*: Shows the web address
-9. Click to **UPDATE** to accept the dialog changes.
+9. Click **UPDATE** to accept the dialog changes.
 10. Finally, click **SAVE** to save the all changes.
 
 # Development
