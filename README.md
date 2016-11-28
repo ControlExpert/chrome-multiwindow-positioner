@@ -34,8 +34,8 @@ Tool extension that enables effective window positioning/placement in multi-moni
  * *Default Monitor*: Will pre-select the target-monitor when importing a template (in case no matching monitor was given from the Rules template.)  
  * *Position*: The position within the *target-monitor* where the window will be placed.
  * *Popup*: Shows the web address
-9. Click to **Update** to accept the dialog changes.
-10. Finally, click **Save** to save the all changes.
+9. Click to **UPDATE** to accept the dialog changes.
+10. Finally, click **SAVE** to save the all changes.
 
 # Development
 
