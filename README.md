@@ -2,7 +2,7 @@
 
 Tool extension that enables effective window positioning/placement in multi-monitor setups.
 
-Features:
+## Features
 * Flexible positioning options via Rules concept
 * Multi-monitor support
 * Validation of rules configuration against existent Monitor.
@@ -10,6 +10,34 @@ Features:
 * Configuration templates support. It enables user profiles and larger organization distributed environments.
 * Manual positioning detection that saves into rules.
 * Default monitor support.
+
+## Installation
+
+1. Under the following address (https://goo.gl/bHHTwN) you will find the *MultiWindow Positioner*
+2. Click the **ADD TO CHROME** button and then the **ADD EXTENSION** button.
+3. The extension installation will take some seconds and you need to configure it. The configuration is available under either:
+ * the following address: *chrome-extension://hmgehpjpfhobbnhhelhlggjfcaollidl/options.html*
+ * or goint to the chrome://extensions/  und opening the **Options** link. 
+4. You may, at first, import a rules template
+ * Click the **IMPORT TEMPLATE** icon
+ * Give the following URL: https://cdn.rawgit.com/ControlExpert/chrome-multiwindow-positioner/gh-pages/templates/default-template-options.json
+ * Click **ADD** to complete the dialog. 
+ * Finally click **SAVE** to save all the changes permanently.
+7. If you need to to use other monitors for specific rules/websites you may edit/add are rule.   
+8. In the edit or create rule dialog you may:
+ * *Template*: List all available rule-templates.
+ * *Active*: Tells if the rule is enabled and active.
+ * *Remember*: When enabled, automatically saves the target monitor when a window that matches to rule was re-position manually by the user. 
+ * *Name*: The rule name
+ * *URL*: The address that matches the rule. Its case sensitive. (should usually not change).
+ * *Monitor*: Target-Monitor of the rule. It lists all the available monitors.
+ * *Default Monitor*: Will pre-select the target-monitor when importing a template (in case no matching monitor was given from the Rules template.)  
+ * *Position*: The position within the *target-monitor* where the window will be placed.
+ * *Popup*: Shows the web address
+9. Click to **Update** to accept the dialog changes.
+10. Finally, click **Save** to save the all changes.
+
+# Development
 
 ## Getting Started
 
