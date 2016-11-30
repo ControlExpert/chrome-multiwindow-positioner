@@ -13,7 +13,7 @@ Tool extension that enables effective window positioning/placement in multi-moni
 
 ## Installation
 
-1. Under the following address (https://goo.gl/bHHTwN) you will find the *MultiWindow Positioner*
+1. Under the following address (https://goo.gl/bxuw3E) you will find the *MultiWindow Positioner*
 2. Click the **ADD TO CHROME** button and then the **ADD EXTENSION** button.
 3. The extension installation will take some seconds and you need to configure it. The configuration is available under either:
  * the following address: *chrome-extension://hmgehpjpfhobbnhhelhlggjfcaollidl/options.html*
