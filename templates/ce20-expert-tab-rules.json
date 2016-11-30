@@ -3,7 +3,7 @@
       {
          "active": true,
          "url": "/reportviewer/",
-         "name": "C€2.0 Pruefberichte",
+         "name": "C€2.0 Prüfberichte",
          "monitor": {
             "id": "111",
             "name": "PnP-Monitor (Standard)",			
@@ -21,7 +21,76 @@
          "timestamp": "2016-11-08T15:16:48.512Z",
          "inconsistentMonitor": false,
          "remember": true,
-		 "code": "ce20-report"
+         "code": "ce20-report"
+      },
+      {
+         "active": true,
+         "url": "/multimediaviewer/?type=pdf&title=MergedPdf_",
+         "name": "C€2.0 Merged",
+         "monitor": {
+            "id": "111",
+            "name": "PnP-Monitor (Standard)",			
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }
+         },
+         "defaultMonitor": "not-main-monitor",
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-08T15:16:48.512Z",
+         "inconsistentMonitor": false,
+         "remember": true,
+         "code": "ce20-merged-document"
+      },
+      {
+         "active": true,
+         "url": "/multimediaviewer/?type=pdf&title=Externer",
+         "name": "C€2.0 Externer Prüfbericht",
+         "monitor": {
+            "id": "111",
+            "name": "PnP-Monitor (Standard)",			
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }
+         },
+         "defaultMonitor": "not-main-monitor",
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-08T15:16:48.512Z",
+         "inconsistentMonitor": false,
+         "remember": true,
+         "code": "ce20-external-report",
+      },
+      {
+         "active": true,
+         "url": "/multimediaviewer/?type=pdf&title=Interner",
+         "name": "C€2.0 Interner Prüfbericht",
+         "monitor": {
+            "id": "111",
+            "name": "PnP-Monitor (Standard)",			
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }
+         },
+         "defaultMonitor": "not-main-monitor",
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-08T15:16:48.512Z",
+         "inconsistentMonitor": false,
+         "remember": true,
+         "code": "ce20-internal-report",
       },
       {
          "active": true,
@@ -140,9 +209,33 @@
       {
          "active": true,
          "remember": true,
-         "name": "C€2.0 Pruefberichte",
+         "name": "C€2.0 Prüfberichte",
          "url": "/reportviewer/",
          "code": "ce20-report",
+         "defaultMonitor": "not-main-monitor"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Merged",
+         "url": "/multimediaviewer/?type=pdf&title=MergedPdf_",
+         "code": "ce20-merged-document",
+         "defaultMonitor": "not-main-monitor"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Interner Prüfbericht",
+         "url": "/multimediaviewer/?type=pdf&title=Interner",
+         "code": "ce20-internal-report",
+         "defaultMonitor": "not-main-monitor"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "C€2.0 Externer Prüfbericht",
+         "url": "/multimediaviewer/?type=pdf&title=Externer",
+         "code": "ce20-external-report",
          "defaultMonitor": "not-main-monitor"
       },
       {
