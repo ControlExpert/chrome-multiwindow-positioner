@@ -112,6 +112,28 @@
          "timestamp": "2016-11-10T12:37:57.275Z",
          "inconsistentMonitor": false,
          "code": "ce20-expert-performance"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "url": "http://www.dat.de/VehicleRepairOnline/eventList/eventList.html?fabrikat=",
+         "name": "DAT-Vorgangsübersicht",
+         "monitor": {
+            "id": "111",
+            "name": "PnP-Monitor (Standard)",
+            "workArea": {
+               "height": 900,
+               "left": 1920,
+               "top": 0,
+               "width": 1600
+            }},
+         "defaultMonitor": "not-main-monitor",
+         "fullScreen": false,
+         "popup": true,
+         "position": "center",
+         "timestamp": "2016-11-10T12:38:57.275Z",
+         "inconsistentMonitor": false,
+         "code": "dat-invoice-overview"
       }
    ],
    "templates": [
