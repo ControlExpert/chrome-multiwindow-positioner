@@ -1,3 +1,9 @@
+<a name="1.0.2"></a>
+
+# 1.0.2 (2016-30-November)
+
+* Smoother transition when the options page is loading
+
 <a name="1.0.1"></a>
 
 # 1.0.1 (2016-17-November)
