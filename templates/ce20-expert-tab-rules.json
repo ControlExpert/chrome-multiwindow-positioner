@@ -154,6 +154,14 @@
          "url": "/cerep02/Reports",
          "code": "ce20-expert-performance",
          "defaultMonitor": "not-main-monitor"
+      },
+      {
+         "active": true,
+         "remember": true,
+         "name": "DAT-Vorgangsübersicht",
+         "url": "http://www.dat.de/VehicleRepairOnline/eventList/eventList.html?fabrikat=",
+         "code": "dat-invoice-overview",
+         "defaultMonitor": "not-main-monitor"
       }
    ]
 }
