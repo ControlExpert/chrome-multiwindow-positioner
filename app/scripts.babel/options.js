@@ -653,6 +653,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
       $http({
         method: 'get',
         url: callPath,
+        headers: { 'Cache-Control': 'no-cache' }
       })
         .success(function (data, status, headers, config) {
           var response =
