@@ -43,6 +43,7 @@
     }
   ],
   "web_accessible_resources": [
-    "images/icon-48.png"
+    "images/icon-48.png",
+    "images/options-loader.gif"
   ]
 }

@@ -2,13 +2,37 @@ body {
   padding: 20px;
 }
 
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(2);
+}
+
+.options-loader.centered {
+}
+
+.options-loader {
+  background: url(/images/options-loader.gif) no-repeat center center;
+  width: 200px;
+  height: 200px;
+}
+
 .wait-in-hidden {
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 1s;
 }
 
 .wait-in-hidden-done {
   opacity: 1;
+}
+
+.wait-in-show {
+  opacity: 1;
+  transition: opacity 1s;
+}
+.wait-in-show-done {
+  opacity: 0;
 }
 
 .tab-helper-options {
