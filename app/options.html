@@ -15,8 +15,11 @@
   <link href="styles/main.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
-<body ng-cloak>
-<div ng-controller="PositionerOptionsController">
+<body >
+<div
+  class="wait-in-hidden"
+  ng-class="{'wait-in-hidden-done': locale && locale.OPTIONS_TITLE && locale.OPTIONS_TITLE.length > 0}"
+  ng-controller="PositionerOptionsController">
   <h1>{{::locale.OPTIONS_TITLE}}</h1>
   <hr>
   <div class="row">

@@ -2,6 +2,15 @@ body {
   padding: 20px;
 }
 
+.wait-in-hidden {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.wait-in-hidden-done {
+  opacity: 1;
+}
+
 .tab-helper-options {
   width : 1280px;
   margin-left: auto;
