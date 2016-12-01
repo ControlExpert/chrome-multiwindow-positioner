@@ -5,7 +5,8 @@
 * Fixed when importing a template, unsaved changes hint was not being displayed.
 * Usability: Increased the delay when showing the monitor detection.
 * Usability: add ability to quickly change the main settings from an existent rule.
-* Fixed when in advanced more the options page would become wider, so that table fits. 
+* Fixed when in advanced more the options page would become wider, so that table fits.
+* Improve german translations. (thanks Pascal)
 
 # 1.0.2 (2016-30-November)
 
