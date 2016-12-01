@@ -107,6 +107,10 @@
     "message": "Speichern",
     "description": ""
   },
+  "UNDO": {
+    "message": "Rücksetzen",
+    "description": ""
+  },
   "RELOAD": {
     "message": "Neu laden",
     "description": ""

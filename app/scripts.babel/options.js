@@ -53,6 +53,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     vm.markAsDirty = markAsDirk;
     vm.saveOptions = saveOptions;
     vm.loadOptions = loadOptions;
+    vm.undoOptions = loadOptions;
     vm.reloadOptions = reloadOptions;
     vm.detectMonitors = detectMonitors;
     vm.showAdvancedOptions = showAdvancedOptions;
@@ -286,7 +287,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
         };
         markAsDirk();
       }
-      if (vm.options.templates) {
+      if (!vm.options.templates || vm.options.templates.length <= 0) {
         vm.options.templates = getDefaultTemplates();
       }
       return vm.options;
@@ -721,6 +722,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
         //actions
         ADD_TAB_OPTION: chrome.i18n.getMessage('ADD_TAB_OPTION'),
         SAVE: chrome.i18n.getMessage('SAVE'),
+        UNDO: chrome.i18n.getMessage('UNDO'),
         RELOAD: chrome.i18n.getMessage('RELOAD'),
         IMPORT_TEMPLATE: chrome.i18n.getMessage('IMPORT_TEMPLATE'),
         EXPORT_TEMPLATE: chrome.i18n.getMessage('EXPORT_TEMPLATE'),

@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
   <!-- build:css styles/options-vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-  <link rel="stylesheet" href="bower_components/select2/select2.css"/>
-  <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/select2/select2.css" />
+  <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css styles/main.css -->
@@ -359,13 +359,6 @@
            ng-disabled="showNewTabOption || showEditTabOption"
            title="{{::locale.ADD_TAB_OPTION}}"
            ng-click="addTabOption();"><i class="fa fa-plus"></i></label>
-    <label class="btn btn-default" type="button"
-           ng-class="{'btn-primary':dirty}"
-           title="{{::locale.SAVE}}"
-           ng-click="saveOptions();"><i class="fa fa-floppy-o"></i></label>
-    <label class="btn btn-default" type="button"
-           title="{{::locale.RELOAD}}"
-           ng-click="reloadOptions();"><i class="fa fa-refresh"></i></label>
     <!--<label class="btn btn-default" type="button"
           title="Import template"
           ngf-select="importTemplate($file)"><i class="fa fa-download"></i></label>-->
@@ -376,6 +369,21 @@
            ng-if="showExtraOptions"
            title="{{::locale.EXPORT_TEMPLATE}}"
            ng-click="exportTemplate();"><i class="fa fa-upload"></i></label>
+  </div>
+
+  <div class="btn-group margin-left-lg">
+    <label class="btn btn-default" type="button"
+           ng-class="{'btn-primary':dirty}"
+           title="{{::locale.SAVE}}"
+           ng-click="saveOptions();"><i class="fa fa-floppy-o"></i></label>
+    <label class="btn btn-default" type="button"
+           title="{{::locale.RELOAD}}"
+           ng-click="reloadOptions();"><i class="fa fa-refresh"></i></label>
+    <label class="btn btn-default" type="button"
+           ng-if="dirty"
+           ng-class="{'btn-primary':dirty}"
+           title="{{::locale.UNDO}}"
+           ng-click="undoOptions();"><i class="fa fa-undo"></i></label>
   </div>
 
   <div class="btn-group pull-right">

@@ -75,6 +75,10 @@ tr:hover .tab-action-bar .btn {
 
 }
 
+.margin-left-lg {
+  margin-left: 30px !important;
+}
+
 .margin-top-md {
   margin-top: 8px !important;
 }

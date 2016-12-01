@@ -1,3 +1,9 @@
+<a name="1.0.5"></a>
+# 1.0.5 (2016-01-December)
+
+* Usability: reorganize the toolbar, and include the undo button.
+* Fixed after template import and restarting the page, unexpected(default) rule templates are shown.
+
 <a name="1.0.4"></a>
 # 1.0.4 (2016-01-December)
 

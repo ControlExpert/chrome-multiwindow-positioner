@@ -107,6 +107,10 @@
     "message": "Save",
     "description": ""
   },
+  "UNDO": {
+    "message": "Undo",
+    "description": ""
+  },
   "RELOAD": {
     "message": "Re-load",
     "description": ""
