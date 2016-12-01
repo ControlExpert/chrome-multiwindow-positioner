@@ -4,11 +4,11 @@
     "description": ""
   },
   "appDescription": {
-    "message": "Erweiterung, die Fenster-Platzierung in Multi-Monitor-Setups ermöglicht",
+    "message": "Tool-Erweiterung die eine effektive Fensterpositionierung / Platzierung in Multi-Monitor Umgebung ermöglicht.",
     "description": ""
   },
   "OPTIONS_TITLE": {
-    "message": "MultiWindow Positioner Konfiguration",
+    "message": "MultiWindow Positioner - Optionen",
     "description": ""
   },
   "TAB_SETTINGS": {
@@ -189,6 +189,10 @@
   },
   "RULE_NAME_PLACEHOLDER": {
     "message": "Geben Sie einen Regelnamen ein...",
+    "description": ""
+  },
+  "DRAFT": {
+    "message": "Entwurf",
     "description": ""
   }
 }

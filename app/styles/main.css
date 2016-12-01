@@ -40,6 +40,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+.tab-helper-options.wider {
+  width : 1680px;
+}
 
 .missing-monitor {
   color: red;
@@ -62,6 +65,12 @@ tr:hover .tab-action-bar .btn {
   min-width: inherit !important
 }
 
+.fix-checkbox-mark {
+  width: 10px;
+  left: -1px;
+  padding-left: 5px;
+}
+
 .rule-dialog .form-group {
 
 }
@@ -72,4 +81,42 @@ tr:hover .tab-action-bar .btn {
 
 .margin-md {
   margin: 8px !important;
+}
+
+.hoverable-section {
+
+}
+
+.hoverable-section .show-when-hover {
+  display: none;
+}
+
+.hoverable-section:hover .show-when-hover {
+  display: block;
+}
+
+.hoverable-section .hide-when-hover {
+  display: block;
+}
+
+.hoverable-section:hover .hide-when-hover {
+  display: none;
+}
+
+.options-rule-row td {
+  line-height: 34px !important
+}
+
+.monitor-select {
+  max-width: 250px !important;
+  min-width: 250px !important;
+}
+
+.position-select {
+  max-width: 120px !important;
+  min-width: 120px !important;
+}
+
+.checkbox-cell {
+  padding-top: 14px !important;
 }

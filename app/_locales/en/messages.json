@@ -8,7 +8,7 @@
     "description": "The description of the application"
   },
   "OPTIONS_TITLE": {
-    "message": "MultiWindow Positioner Configuration",
+    "message": "MultiWindow Positioner - Options",
     "description": ""
   },
   "TAB_SETTINGS": {
@@ -189,6 +189,10 @@
   },
   "RULE_NAME_PLACEHOLDER": {
     "message": "Type a rule name...",
+    "description": ""
+  },
+  "DRAFT": {
+    "message": "Draft",
     "description": ""
   }
 }

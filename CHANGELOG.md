@@ -1,4 +1,11 @@
-<a name="1.0.2"></a>
+<a name="1.0.4"></a>
+# 1.0.4 (2016-01-December)
+
+* Usability: make more visible when changes are not saved.
+* Fixed when importing a template, unsaved changes hint was not being displayed.
+* Usability: Increased the delay when showing the monitor detection.
+* Usability: add ability to quickly change the main settings from an existent rule.
+* Fixed when in advanced more the options page would become wider, so that table fits. 
 
 # 1.0.2 (2016-30-November)
 

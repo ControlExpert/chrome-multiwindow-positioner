@@ -8,7 +8,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     var TAB_HELPER_TEMPLATE_URL = 'TAB_HELPER_TEMPLATE_URL';
 
     var PAGE_LOADING_OFFSET = 1100;
-    var PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
+    var PAGE_DETECTION_DISPLAY_INTERVAL = 5;//5 seconds
     var MONITORS = {};
 
     vm.locale = prepareLocale();
@@ -482,6 +482,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
               }
             }
             validateOptions(true);
+            markAsDirk();
           }
         });
       }
@@ -746,7 +747,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
         SMALLEST_HEIGHT: chrome.i18n.getMessage('SMALLEST_HEIGHT'),
         SMALLEST_WIDTH: chrome.i18n.getMessage('SMALLEST_WIDTH'),
 
-        RULE_NAME_PLACEHOLDER: chrome.i18n.getMessage('RULE_NAME_PLACEHOLDER')
+        RULE_NAME_PLACEHOLDER: chrome.i18n.getMessage('RULE_NAME_PLACEHOLDER'),
+
+        DRAFT: chrome.i18n.getMessage('DRAFT')
       };
     }
 

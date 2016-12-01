@@ -1,5 +1,8 @@
 <!doctype html>
-<html ng-app="multiWindowPositioner" class="tab-helper-options">
+<html class="tab-helper-options"
+      ng-app="multiWindowPositioner"
+      ng-controller="PositionerOptionsController"
+      ng-class="{'wider':showExtraOptions}">
 <head>
   <meta charset="utf-8"/>
 
@@ -19,7 +22,7 @@
   <link href="styles/main.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
-<body ng-controller="PositionerOptionsController">
+<body>
 <div class='uil-default-css centered wait-in-show'
      ng-class="{'wait-in-show-done': locale && locale.OPTIONS_TITLE && locale.OPTIONS_TITLE.length > 0}">
   <!-- generated from http://loading.io/-->
@@ -29,7 +32,7 @@
   class="wait-in-hidden"
   ng-class="{'wait-in-hidden-done': locale && locale.OPTIONS_TITLE && locale.OPTIONS_TITLE.length > 0}"
   >
-  <h1>{{::locale.OPTIONS_TITLE}}</h1>
+  <h1>{{::locale.OPTIONS_TITLE}} <span ng-if="dirty" style="color:orangered">[{{::locale.DRAFT}}]</span></h1>
   <hr>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -56,28 +59,48 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="tabOption in options.tabs track by tabOption.url">
-            <td>
+          <tr class="hoverable-section options-rule-row"
+            ng-repeat="tabOption in options.tabs track by tabOption.url">
+            <td class="checkbox-cell">
+              <span ng-style="styleicon"
+                    ng-if="tabOption.active"
+                    class="glyphicon glyphicon-ok hide-when-hover fix-checkbox-mark">
+              </span>
               <checkbox
-                class="fix-checkbox"
+                class="fix-checkbox show-when-hover"
                 ng-model="tabOption.active"
                 ng-change="markAsDirty()">
               </checkbox>
             </td>
             <td>{{tabOption.name}}</td>
             <td ng-if="showExtraOptions">{{tabOption.url}}</td>
-            <td>
+            <td class="checkbox-cell">
+              <span ng-style="styleicon"
+                    ng-if="tabOption.remember"
+                    class="glyphicon glyphicon-ok hide-when-hover fix-checkbox-mark">
+              </span>
               <checkbox
-                class="fix-checkbox"
+                class="fix-checkbox show-when-hover"
                 ng-model="tabOption.remember"
                 ng-change="markAsDirty()">
               </checkbox>
             </td>
             <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
-              {{tabOption.monitor.name}}
+              <span class="hide-when-hover monitor-select">{{tabOption.monitor.name}}</span>
+              <select class="form-control show-when-hover monitor-select"
+                      ng-options="option.name for option in MONITORS track by option.id"
+                      ng-change="markAsDirty()"
+                      ng-model="tabOption.monitor"></select>
             </td>
             <td ng-if="showExtraOptions">{{localizeDefaultMonitor(tabOption.defaultMonitor)}}</td>
-            <td>{{localizePosition(tabOption.position)}}</td>
+            <td>
+              <span class="hide-when-hover position-select">{{localizePosition(tabOption.position)}}</span>
+              <select class="form-control show-when-hover position-select"
+                      ng-model="tabOption.position"
+                      ng-change="markAsDirty()">
+                <option ng-repeat="option in POSITIONS" value="{{option.id}}">{{option.name}}</option>
+              </select>
+            </td>
             <td ng-if="showExtraOptions"><span ng-if="tabOption.popup"><i class="fa fa-check"></i></span></td>
             <td class="tab-action-bar">
                           <span class="btn btn-default"
