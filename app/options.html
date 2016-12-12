@@ -86,9 +86,9 @@
               </checkbox>
             </td>
             <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
-              <span class="hide-when-hover monitor-select">{{tabOption.monitor.name}}</span>
+              <span class="hide-when-hover monitor-select">{{tabOption.monitor.idx}} {{tabOption.monitor.name}}</span>
               <select class="form-control show-when-hover monitor-select"
-                      ng-options="option.name for option in MONITORS track by option.id"
+                      ng-options="(option.idx + ' ' + option.name) for option in MONITORS track by option.id"
                       ng-change="markAsDirty()"
                       ng-model="tabOption.monitor"></select>
             </td>

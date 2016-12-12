@@ -102,7 +102,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
           var monitor = {
             id: display.id,
             idx: display.idx,
-            name: display.idx + ' ' + display.name,
+            name: display.name, //display.idx + ' ' + display.name,
             workArea: display.workArea
           };
           MONITORS[monitor.id] = monitor;
@@ -441,7 +441,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
         target.workArea = angular.copy(sourceDisplay.workArea);
         target.id = sourceDisplay.id;
         var idx = _.findIndex(vm.displayInfos, sourceDisplay);
-        target.name = (idx + 1) + ' ' + sourceDisplay.name;
+        target.name = sourceDisplay.name;//(idx + 1) + ' ' + sourceDisplay.name;
+        target.idx = idx + 1;
       }
     }
 
