@@ -262,6 +262,10 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     function saveOptions() {
       localStorage[OPTIONS_KEY] = JSON.stringify(vm.options);
       markAsPristine();
+      //closeCurrentWindow();
+    }
+
+    function closeCurrentWindow() {
       chrome.tabs.getCurrent(function (tab) {
         chrome.tabs.remove(tab.id, function () {
         });
