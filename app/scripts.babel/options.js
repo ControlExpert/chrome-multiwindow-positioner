@@ -495,10 +495,13 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     }
 
     function mergeRules(existentRules, templateRules) {
+      cleanOrder(existentRules);
+      
       for (var i = 0; i < existentRules.length; i++) {
         var rule = existentRules[i];
         for (var k = 0; k < templateRules.length; k++) {
           var template = templateRules[k];
+          template.order = k + 1;
           if (rule.code === template.code) {
             //mark as merged
             template.merged = true;
@@ -512,6 +515,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
             //rule.fullScreen = template.fullScreen;
             //rule.popup = template.popup;
             //rule.position = template.position ? template.position.id : 'center';
+
+            rule.order = template.order; 
           }
         }
       }
@@ -523,13 +528,41 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
           existentRules.push(template);
         }
       }
+
+      sortByOrder(existentRules);
+    }
+
+    //clean any order value.
+    function cleanOrder(list) {
+      for (var i = 0; i < list.length; i++) {
+        delete list[i].order;
+      }
+    }
+
+    function sortByOrder(list) {
+      //sort items by order
+      for (var i = 0; i < list.length; i++) {
+        for (var k = 0; k < list.length - 1 - i; k++) {
+          var item1 = list[k];
+          var item2 = list[k+1];
+
+          if ((item1.order && item2.order && item1.order > item2.order) ||
+            (item1.order && !item2.order)) {
+            list[k] = item2;
+            list[k + 1] = item1;
+          }
+        }
+      }
     }
 
     function mergeTemplates(currentTemplates, newTemplates) {
+      cleanOrder(currentTemplates);
+
       for (var i = 0; i < currentTemplates.length; i++) {
         var existingTemplate = currentTemplates[i];
         for (var k = 0; k < newTemplates.length; k++) {
           var newTemplate = newTemplates[k];
+          newTemplate.order = k + 1;
           if (existingTemplate.code === newTemplate.code) {
             //mark as merged
             newTemplate.merged = true;
@@ -540,6 +573,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
             existingTemplate.name = newTemplate.name;
             existingTemplate.defaultMonitor = newTemplate.defaultMonitor;
             existingTemplate.position = newTemplate.position;
+
+            existingTemplate.order = newTemplate.order;
           }
         }
       }
@@ -551,6 +586,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
           currentTemplates.push(template);
         }
       }
+
+      //sort templates by order
+      sortByOrder(currentTemplates);
     }
 
     function cancelImportTemplateMenu() {
@@ -660,7 +698,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
       $http({
         method: 'get',
         url: callPath,
-        headers: { 'Cache-Control': 'no-cache' }
+        headers: {'Cache-Control': 'no-cache'}
       })
         .success(function (data, status, headers, config) {
           var response =
