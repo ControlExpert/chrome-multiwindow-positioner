@@ -8,7 +8,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     var TAB_HELPER_TEMPLATE_URL = 'TAB_HELPER_TEMPLATE_URL';
 
     var PAGE_LOADING_OFFSET = 1100;
-    var PAGE_DETECTION_DISPLAY_INTERVAL = 5;//5 seconds
+    var PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
     var MONITORS = {};
 
     vm.locale = prepareLocale();
