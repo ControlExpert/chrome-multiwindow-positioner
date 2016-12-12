@@ -1,3 +1,11 @@
+<a name="1.0.8"></a>
+# 1.0.8 (2016-12-December)
+
+* Fixes Name of "Monitor" does not always reflect the number.
+* Usability: Reduce duration of monitor detection to 3 seconds.
+* Fixes enforce order of rules when import template enhancement.
+* Usability: Save-Button does not close window.
+
 <a name="1.0.6"></a>
 # 1.0.6 (2016-01-December)
 
