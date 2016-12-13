@@ -1,3 +1,9 @@
+<a name="1.0.10"></a>
+# 1.0.10 (2016-13-December)
+
+* Add ability to do batch changes. For example, if you want to change the monitor or position to all rules.
+* Usability: Ability to close the monitor detection by pressing "Esc" key
+
 <a name="1.0.8"></a>
 # 1.0.8 (2016-12-December)
 

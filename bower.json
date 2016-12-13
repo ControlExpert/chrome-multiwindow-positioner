@@ -1,7 +1,7 @@
 {
   "name": "chrome-multiwindow-positioner",
   "private": true,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Tool extension that enables seamless window placement/positioning in multi-monitor setups.",
   "authors": [
     "Control Expert"
@@ -18,6 +18,7 @@
     "angular-bootstrap": "2.2.0",
     "file-saver": "1.3.3",
     "ng-file-upload": "~12.2.12",
+    "angular-uuid4": "0.3.1",
     "angular-bootstrap-checkbox": "0.4.0"
   },
   "devDependencies": {},

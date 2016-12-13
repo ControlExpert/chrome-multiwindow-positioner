@@ -406,6 +406,30 @@
            ng-click="detectMonitors();">
       <i class="fa fa-television"></i>
     </label>
+    <!-- Split button -->
+    <div class="btn-group dropup">
+      <!--<button type="button" class="btn btn-default"
+              title="{{::locale.DETECT_MONITORS}}"
+              ng-click="detectMonitors();">
+        <i class="fa fa-television"></i>
+      </button>-->
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li role="separator" clss="divider"></li>
+        <li class="dropdown-header">{{::locale.MONITOR}}</li>
+        <li role="menuitem" ng-repeat="option in MONITORS">
+          <a ng-click="applyMonitorToAll(option.id)" href="#">{{option.idx}} {{option.name}}</a>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li class="dropdown-header">{{::locale.POSITION}}</li>
+        <li role="menuitem" ng-repeat="option in POSITIONS">
+          <a ng-click="applyPositionToAll(option.id)" href="#">{{option.name}}</a>
+        </li>
+      </ul>
+    </div>
     <label class="btn btn-warning"
            type="button"
            ng-if="inconsistentOptions"
@@ -428,6 +452,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/file-saver/FileSaver.js"></script>
 <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/angular-uuid4/angular-uuid4.js"></script>
 <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
 <!-- endbower -->
 <!-- endbuild -->

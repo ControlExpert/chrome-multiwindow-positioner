@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).controller('PositionerOptionsController',
-  ['$scope', '$timeout', 'Upload', '$http', function ($scope, $timeout, Upload, $http) {
+angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']).controller('PositionerOptionsController',
+  ['$scope', '$timeout', 'Upload', '$http', 'uuid4', function ($scope, $timeout, Upload, $http, uuid4) {
     var vm = $scope;
 
     var OPTIONS_KEY = 'TAB_HELPER_OPTIONS';
@@ -36,6 +36,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     vm.MONITORS = MONITORS;
     vm.DEFAULT_MONITORS = DEFAULT_MONITORS;
 
+
+    vm.windowHandlers = {};
     vm.options = null;
     vm.showNewTabOption = false;
     vm.showEditTabOption = false;
@@ -63,6 +65,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     vm.editTabOption = editTabOption;
     vm.useTemplateAsOption = useTemplateAsOption;
 
+    vm.applyPositionToAll = applyPositionToAll;
+    vm.applyMonitorToAll = applyMonitorToAll;
+
     vm.autofixOptions = autofixOptions;
     vm.validateOptions = validateOptions;
 
@@ -87,6 +92,49 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     function activate() {
       loadOptions();
       loadDisplayInfos();
+      registerPostMessageListener();
+    }
+
+    function applyPositionToAll(positionId) {
+      _.forEach(vm.options.tabs, function (tab, idx) {
+        tab.position = positionId;
+      });
+      markAsDirk();
+    }
+
+    function applyMonitorToAll(displayId) {
+      var monitor = getDisplayById(displayId);
+      _.forEach(vm.options.tabs, function (tab, idx) {
+        tab.monitor = monitor;
+      });
+      markAsDirk();
+    }
+
+    function registerPostMessageListener() {
+      chrome.runtime.onMessageExternal.addListener(
+        function (request, sender, sendResponse) {
+          if (request.closePageGenerator) {
+            var groupId = request.closePageGenerator;
+            for (var key in vm.windowHandlers) {
+              if (vm.windowHandlers.hasOwnProperty(key)) {
+                var windowHandler = vm.windowHandlers[key];
+                if (windowHandler.groupId === groupId) {
+                  closeWindowByHandler(windowHandler);
+                }
+              }
+            }
+          }
+        }
+      );
+    }
+
+    function closeWindowByHandler(windowHandler) {
+      if (vm.windowHandlers[windowHandler.uuid]) {
+        chrome.windows.remove(windowHandler.id, function () {
+          delete vm.windowHandlers[windowHandler.uuid];
+          console.log('Removed window ' + windowHandler.id);
+        });
+      }
     }
 
     function showAdvancedOptions() {
@@ -114,11 +162,15 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
     }
 
     function detectMonitors() {
+      var groupId = uuid4.generate();
+
       _.forEach(vm.displayInfos, function (display, idx) {
         var detectionUrl =
           'https://igorlino.github.io/page-generator/? ' +
           'title=Monitor%20' + (idx + 1) +
           '&type=monitor&id=' + (idx + 1) +
+          '&groupid=' + groupId +
+          '&extid=' + chrome.runtime.id +
           '&delay=' + PAGE_DETECTION_DISPLAY_INTERVAL;
         var createData = {
           url: detectionUrl,
@@ -128,13 +180,19 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
           height: display.workArea.height,
           type: 'popup'
         };
-        chrome.windows.create(createData, function onWindowsCreated(window) {
+        var windowHandler = {
+          groupId: groupId,
+          uuid: uuid4.generate(),
+          handler: null
+        };
+        //close-page-generator'
+        windowHandler.handler = chrome.windows.create(createData, function onWindowsCreated(window) {
+          windowHandler.id = window.id;
+          vm.windowHandlers[windowHandler.uuid] = windowHandler;
           console.log('Window ' + window.id + ' created.');
           setTimeout(function () {
             console.log('Removing window ' + window.id);
-            chrome.windows.remove(window.id, function () {
-              console.log('Removed window ' + window.id);
-            });
+            closeWindowByHandler(windowHandler);
           }, (PAGE_DETECTION_DISPLAY_INTERVAL * 1000) + PAGE_LOADING_OFFSET); //+800ms to offset detect page loading
         });
       });
@@ -496,7 +554,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
 
     function mergeRules(existentRules, templateRules) {
       cleanOrder(existentRules);
-      
+
       for (var i = 0; i < existentRules.length; i++) {
         var rule = existentRules[i];
         for (var k = 0; k < templateRules.length; k++) {
@@ -516,7 +574,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
             //rule.popup = template.popup;
             //rule.position = template.position ? template.position.id : 'center';
 
-            rule.order = template.order; 
+            rule.order = template.order;
           }
         }
       }
@@ -544,7 +602,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox']).control
       for (var i = 0; i < list.length; i++) {
         for (var k = 0; k < list.length - 1 - i; k++) {
           var item1 = list[k];
-          var item2 = list[k+1];
+          var item2 = list[k + 1];
 
           if ((item1.order && item2.order && item1.order > item2.order) ||
             (item1.order && !item2.order)) {

@@ -124,3 +124,7 @@ tr:hover .tab-action-bar .btn {
 .checkbox-cell {
   padding-top: 14px !important;
 }
+
+.dropdown-header {
+  margin-bottom:15px;
+}
