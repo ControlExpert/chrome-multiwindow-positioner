@@ -2,18 +2,18 @@
 
 angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']).controller('PositionerOptionsController',
   ['$scope', '$timeout', 'Upload', '$http', 'uuid4', function ($scope, $timeout, Upload, $http, uuid4) {
-    var vm = $scope;
+    const vm = $scope;
 
-    var OPTIONS_KEY = 'TAB_HELPER_OPTIONS';
-    var TAB_HELPER_TEMPLATE_URL = 'TAB_HELPER_TEMPLATE_URL';
+    const OPTIONS_KEY = 'TAB_HELPER_OPTIONS';
+    const TAB_HELPER_TEMPLATE_URL = 'TAB_HELPER_TEMPLATE_URL';
 
-    var PAGE_LOADING_OFFSET = 1100;
-    var PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
-    var MONITORS = {};
+    const PAGE_LOADING_OFFSET = 1100;
+    const PAGE_DETECTION_DISPLAY_INTERVAL = 3;//3 seconds
+    const MONITORS = {};
 
     vm.locale = prepareLocale();
 
-    var POSITIONS = {
+    const POSITIONS = {
       CENTER: {id: 'center', name: vm.locale.MAXIMIZED},
       LEFT_HALF: {id: 'left-half', name: vm.locale.LEFT_HALF},
       RIGHT_HALF: {id: 'right-half', name: vm.locale.RIGHT_HALF},
@@ -21,7 +21,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
       BOTTOM_HALF: {id: 'bottom-half', name: vm.locale.BOTTOM_HALF}
     };
 
-    var DEFAULT_MONITORS = {
+    const DEFAULT_MONITORS = {
       MAIN_MONITOR: {id: 'main-monitor', name: vm.locale.MAIN_MONITOR},
       NOT_MAIN_MONITOR: {id: 'not-main-monitor', name: vm.locale.NOT_MAIN_MONITOR},
       BIGGEST_RESOLUTION: {id: 'biggest-area', name: vm.locale.BIGGEST_RESOLUTION},
@@ -45,6 +45,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     vm.inconsistentOptions = false;
     vm.dirty = false;
     vm.showExtraOptions = false;
+    vm.showsHelp = false;
     vm.isopen = true;
     vm.showImportTemplateDialog = false;
     vm.templateUrl = '';
@@ -84,15 +85,22 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
 
     vm.deleteTabOption = deleteTabOption;
 
+    vm.toggleHelp = toggleHelp;
+
     activate();
 
     //////////////////////////////////////////////////////////////////
 
 
     function activate() {
-      loadOptions();
-      loadDisplayInfos();
-      registerPostMessageListener();
+      try {
+        loadOptions();
+        loadDisplayInfos();
+        registerPostMessageListener();
+        doScrollToElement('top-section');
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     function applyPositionToAll(positionId) {
@@ -103,7 +111,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function applyMonitorToAll(displayId) {
-      var monitor = getDisplayById(displayId);
+      const monitor = getDisplayById(displayId);
       _.forEach(vm.options.tabs, function (tab, idx) {
         tab.monitor = monitor;
       });
@@ -111,29 +119,40 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function registerPostMessageListener() {
-      chrome.runtime.onMessageExternal.addListener(
-        function (request, sender, sendResponse) {
+      try {
+        chrome.runtime.onMessageExternal.addListener(onMessageExternalListener);
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
+      function onMessageExternalListener(request, sender, sendResponse) {
+        try {
           if (request.closePageGenerator) {
-            var groupId = request.closePageGenerator;
-            for (var key in vm.windowHandlers) {
+            const groupId = request.closePageGenerator;
+            for (const key in vm.windowHandlers) {
               if (vm.windowHandlers.hasOwnProperty(key)) {
-                var windowHandler = vm.windowHandlers[key];
+                const windowHandler = vm.windowHandlers[key];
                 if (windowHandler.groupId === groupId) {
                   closeWindowByHandler(windowHandler);
                 }
               }
             }
           }
+        } catch(err) {
+          (console.error || console.log).call(console, err.stack || err);
         }
-      );
+      }
     }
 
     function closeWindowByHandler(windowHandler) {
-      if (vm.windowHandlers[windowHandler.uuid]) {
-        chrome.windows.remove(windowHandler.id, function () {
-          delete vm.windowHandlers[windowHandler.uuid];
-          console.log('Removed window ' + windowHandler.id);
-        });
+      try {
+        if (vm.windowHandlers[windowHandler.uuid]) {
+          chrome.windows.remove(windowHandler.id, function () {
+            delete vm.windowHandlers[windowHandler.uuid];
+            console.log('Removed window ' + windowHandler.id);
+          });
+        }
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
       }
     }
 
@@ -143,63 +162,71 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
 
     function loadDisplayInfos() {
       chrome.system.display.getInfo(function (displayInfos) {
-        vm.displayInfos = angular.copy(displayInfos);
-        console.table(displayInfos);
-        _.forEach(vm.displayInfos, function (display, idx) {
-          display.idx = idx + 1;
-          var monitor = {
-            id: display.id,
-            idx: display.idx,
-            name: display.name, //display.idx + ' ' + display.name,
-            workArea: display.workArea
-          };
-          MONITORS[monitor.id] = monitor;
-        });
-        $timeout(function () {
-          validateOptions();
-        });
+        try {
+          vm.displayInfos = angular.copy(displayInfos);
+          console.table(displayInfos);
+          _.forEach(vm.displayInfos, function (display, idx) {
+            display.idx = idx + 1;
+            const monitor = {
+              id: display.id,
+              idx: display.idx,
+              name: display.name, //display.idx + ' ' + display.name,
+              workArea: display.workArea
+            };
+            MONITORS[monitor.id] = monitor;
+          });
+          $timeout(function () {
+            validateOptions();
+          });
+        } catch(err) {
+          (console.error || console.log).call(console, err.stack || err);
+        }
       });
     }
 
     function detectMonitors() {
-      var groupId = uuid4.generate();
+      try {
+        const groupId = uuid4.generate();
 
-      _.forEach(vm.displayInfos, function (display, idx) {
-        var detectionUrl =
-          'https://igorlino.github.io/page-generator/? ' +
-          'title=Monitor%20' + (idx + 1) +
-          '&type=monitor&id=' + (idx + 1) +
-          '&groupid=' + groupId +
-          '&extid=' + chrome.runtime.id +
-          '&delay=' + PAGE_DETECTION_DISPLAY_INTERVAL;
-        var createData = {
-          url: detectionUrl,
-          left: display.workArea.left,
-          top: display.workArea.top,
-          width: display.workArea.width,
-          height: display.workArea.height,
-          type: 'popup'
-        };
-        var windowHandler = {
-          groupId: groupId,
-          uuid: uuid4.generate(),
-          handler: null
-        };
-        //close-page-generator'
-        windowHandler.handler = chrome.windows.create(createData, function onWindowsCreated(window) {
-          windowHandler.id = window.id;
-          vm.windowHandlers[windowHandler.uuid] = windowHandler;
-          console.log('Window ' + window.id + ' created.');
-          setTimeout(function () {
-            console.log('Removing window ' + window.id);
-            closeWindowByHandler(windowHandler);
-          }, (PAGE_DETECTION_DISPLAY_INTERVAL * 1000) + PAGE_LOADING_OFFSET); //+800ms to offset detect page loading
+        _.forEach(vm.displayInfos, function (display, idx) {
+          const detectionUrl =
+            'https://igorlino.github.io/page-generator/? ' +
+            'title=Monitor%20' + (idx + 1) +
+            '&type=monitor&id=' + (idx + 1) +
+            '&groupid=' + groupId +
+            '&extid=' + chrome.runtime.id +
+            '&delay=' + PAGE_DETECTION_DISPLAY_INTERVAL;
+          const createData = {
+            url: detectionUrl,
+            left: display.workArea.left,
+            top: display.workArea.top,
+            width: display.workArea.width,
+            height: display.workArea.height,
+            type: 'popup'
+          };
+          const windowHandler = {
+            groupId: groupId,
+            uuid: uuid4.generate(),
+            handler: null
+          };
+          //close-page-generator'
+          windowHandler.handler = chrome.windows.create(createData, function onWindowsCreated(window) {
+            windowHandler.id = window.id;
+            vm.windowHandlers[windowHandler.uuid] = windowHandler;
+            console.log('Window ' + window.id + ' created.');
+            setTimeout(function () {
+              console.log('Removing window ' + window.id);
+              closeWindowByHandler(windowHandler);
+            }, (PAGE_DETECTION_DISPLAY_INTERVAL * 1000) + PAGE_LOADING_OFFSET); //+800ms to offset detect page loading
+          });
         });
-      });
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     function getPrimaryDisplay() {
-      var found = null;
+      let found = null;
       _.forEach(vm.displayInfos, function (display, idx) {
         if (display.isPrimary) {
           found = display;
@@ -210,7 +237,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function getDisplayById(id) {
-      var found = null;
+      let found = null;
       _.forEach(vm.displayInfos, function (display, idx) {
         if (display.id === id) {
           found = display;
@@ -260,14 +287,14 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function findDefaultMonitorById(defaultMonitorId) {
-      var key = _.findKey(DEFAULT_MONITORS, function (defaultMonitor) {
+      const key = _.findKey(DEFAULT_MONITORS, function (defaultMonitor) {
         return defaultMonitor.id === defaultMonitorId;
       });
       return key ? DEFAULT_MONITORS[key] : null;
     }
 
     function findPositionById(positionId) {
-      var positionKey = _.findKey(POSITIONS, function (position) {
+      const positionKey = _.findKey(POSITIONS, function (position) {
         return position.id === positionId;
       });
       return positionKey ? POSITIONS[positionKey] : null;
@@ -299,22 +326,26 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function saveTabOption() {
-      vm.options.tabs.push({
-        active: vm.newTabOption.active,
-        code: vm.newTabOption.code,
-        remember: vm.newTabOption.remember,
-        url: vm.newTabOption.url,
-        name: vm.newTabOption.name,
-        monitor: vm.newTabOption.monitor,
-        fullScreen: vm.newTabOption.fullScreen,
-        popup: vm.newTabOption.popup,
-        position: vm.newTabOption.position ? vm.newTabOption.position.id : MONITORS.CENTER.id,
-        defaultMonitor: vm.newTabOption.defaultMonitor ? vm.newTabOption.defaultMonitor.id : DEFAULT_MONITORS.MAIN_MONITOR.id,
-        timestamp: new Date().toISOString()
-      });
-      vm.showNewTabOption = false;
-      validateOptions();
-      markAsDirk();
+      try {
+        vm.options.tabs.push({
+          active: vm.newTabOption.active,
+          code: vm.newTabOption.code,
+          remember: vm.newTabOption.remember,
+          url: vm.newTabOption.url,
+          name: vm.newTabOption.name,
+          monitor: vm.newTabOption.monitor,
+          fullScreen: vm.newTabOption.fullScreen,
+          popup: vm.newTabOption.popup,
+          position: vm.newTabOption.position ? vm.newTabOption.position.id : MONITORS.CENTER.id,
+          defaultMonitor: vm.newTabOption.defaultMonitor ? vm.newTabOption.defaultMonitor.id : DEFAULT_MONITORS.MAIN_MONITOR.id,
+          timestamp: new Date().toISOString()
+        });
+        vm.showNewTabOption = false;
+        validateOptions();
+        markAsDirk();
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     function saveOptions() {
@@ -339,18 +370,26 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function loadOptions() {
-      var tabRuleOptions = localStorage[OPTIONS_KEY];
-      if (tabRuleOptions) {
-        vm.options = JSON.parse(tabRuleOptions);
-        markAsPristine();
-      } else {
-        vm.options = {
-          tabs: []
-        };
-        markAsDirk();
+      try {
+        const tabRuleOptions = localStorage[OPTIONS_KEY];
+        if (tabRuleOptions) {
+          vm.options = JSON.parse(tabRuleOptions);
+          markAsPristine();
+        } else {
+          vm.options = {
+            tabs: []
+          };
+          markAsDirk();
+        }
+        if (!vm.options.templates || vm.options.templates.length <= 0) {
+          vm.options.templates = getDefaultTemplates();
+        }
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
       }
-      if (!vm.options.templates || vm.options.templates.length <= 0) {
-        vm.options.templates = getDefaultTemplates();
+      //show help by default if no rule has yet been set
+      if (!vm.showsHelp && vm.options.tabs.length === 0) {
+        vm.showsHelp = true;
       }
       return vm.options;
     }
@@ -361,144 +400,160 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function getMappedDefaultMonitorById(defaultMonitors, defaultMonitorId) {
-      var found = null;
-      if (defaultMonitorId) {
-        for (var key in defaultMonitors) {
-          if (defaultMonitors.hasOwnProperty(key)) {
-            var defaultMonitor = defaultMonitors[key];
-            if (defaultMonitorId === defaultMonitor.id) {
-              found = defaultMonitor.monitor;
-              break;
+      let found = null;
+      try {
+        if (defaultMonitorId) {
+          for (const key in defaultMonitors) {
+            if (defaultMonitors.hasOwnProperty(key)) {
+              const defaultMonitor = defaultMonitors[key];
+              if (defaultMonitorId === defaultMonitor.id) {
+                found = defaultMonitor.monitor;
+                break;
+              }
             }
           }
         }
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
       }
       return found;
     }
 
     function getDefaultMonitorsMapping() {
-      var defaultMonitors = angular.copy(DEFAULT_MONITORS);
-      _.forEach(vm.displayInfos, function (display, idx) {
-        if (display.isEnabled) {
-          var displayWorkArea = display.workArea;
-          var area = displayWorkArea.height * displayWorkArea.width;
+      const defaultMonitors = angular.copy(DEFAULT_MONITORS);
+      try {
+        _.forEach(vm.displayInfos, function (display, idx) {
+          if (display.isEnabled) {
+            const displayWorkArea = display.workArea;
+            const area = displayWorkArea.height * displayWorkArea.width;
 
-          if (display.isPrimary) {
-            defaultMonitors.MAIN_MONITOR.monitor = display;
-          }
-          if (!display.isPrimary) {
-            if (!defaultMonitors.NOT_MAIN_MONITOR.monitor) {
-              defaultMonitors.NOT_MAIN_MONITOR.monitor = display;
-            } else {
-              var notMainResolution = defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.height *
-                defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.width;
-              if (area > notMainResolution) {
+            if (display.isPrimary) {
+              defaultMonitors.MAIN_MONITOR.monitor = display;
+            }
+            if (!display.isPrimary) {
+              if (!defaultMonitors.NOT_MAIN_MONITOR.monitor) {
                 defaultMonitors.NOT_MAIN_MONITOR.monitor = display;
+              } else {
+                const notMainResolution = defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.height *
+                  defaultMonitors.NOT_MAIN_MONITOR.monitor.workArea.width;
+                if (area > notMainResolution) {
+                  defaultMonitors.NOT_MAIN_MONITOR.monitor = display;
+                }
               }
             }
-          }
-          if (!defaultMonitors.BIGGEST_RESOLUTION.monitor) {
-            defaultMonitors.BIGGEST_RESOLUTION.monitor = display;
-          } else {
-            var biggestResolution = defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.height *
-              defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.width;
-            if (area > biggestResolution) {
+            if (!defaultMonitors.BIGGEST_RESOLUTION.monitor) {
               defaultMonitors.BIGGEST_RESOLUTION.monitor = display;
+            } else {
+              const biggestResolution = defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.height *
+                defaultMonitors.BIGGEST_RESOLUTION.monitor.workArea.width;
+              if (area > biggestResolution) {
+                defaultMonitors.BIGGEST_RESOLUTION.monitor = display;
+              }
             }
-          }
-          if (!defaultMonitors.BIGGEST_HEIGHT.monitor ||
-            displayWorkArea.height > defaultMonitors.BIGGEST_HEIGHT.monitor.workArea.height) {
-            defaultMonitors.BIGGEST_HEIGHT.monitor = display;
-          }
-          if (!defaultMonitors.BIGGEST_WIDTH.monitor ||
-            displayWorkArea.width > defaultMonitors.BIGGEST_WIDTH.monitor.workArea.width) {
-            defaultMonitors.BIGGEST_WIDTH.monitor = display;
-          }
-          if (!defaultMonitors.SMALLEST_RESOLUTION.monitor) {
-            defaultMonitors.SMALLEST_RESOLUTION.monitor = display;
-          } else {
-            var biggestResolution = defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.height *
-              defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.width;
-            if (area < biggestResolution) {
+            if (!defaultMonitors.BIGGEST_HEIGHT.monitor ||
+              displayWorkArea.height > defaultMonitors.BIGGEST_HEIGHT.monitor.workArea.height) {
+              defaultMonitors.BIGGEST_HEIGHT.monitor = display;
+            }
+            if (!defaultMonitors.BIGGEST_WIDTH.monitor ||
+              displayWorkArea.width > defaultMonitors.BIGGEST_WIDTH.monitor.workArea.width) {
+              defaultMonitors.BIGGEST_WIDTH.monitor = display;
+            }
+            if (!defaultMonitors.SMALLEST_RESOLUTION.monitor) {
               defaultMonitors.SMALLEST_RESOLUTION.monitor = display;
+            } else {
+              const biggestResolution = defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.height *
+                defaultMonitors.SMALLEST_RESOLUTION.monitor.workArea.width;
+              if (area < biggestResolution) {
+                defaultMonitors.SMALLEST_RESOLUTION.monitor = display;
+              }
+            }
+            if (!defaultMonitors.SMALLEST_HEIGHT.monitor ||
+              displayWorkArea.height < defaultMonitors.SMALLEST_HEIGHT.monitor.workArea.height) {
+              defaultMonitors.SMALLEST_HEIGHT.monitor = display;
+            }
+            if (!defaultMonitors.SMALLEST_WIDTH.monitor ||
+              displayWorkArea.width < defaultMonitors.SMALLEST_WIDTH.monitor.workArea.width) {
+              defaultMonitors.SMALLEST_WIDTH.monitor = display;
             }
           }
-          if (!defaultMonitors.SMALLEST_HEIGHT.monitor ||
-            displayWorkArea.height < defaultMonitors.SMALLEST_HEIGHT.monitor.workArea.height) {
-            defaultMonitors.SMALLEST_HEIGHT.monitor = display;
-          }
-          if (!defaultMonitors.SMALLEST_WIDTH.monitor ||
-            displayWorkArea.width < defaultMonitors.SMALLEST_WIDTH.monitor.workArea.width) {
-            defaultMonitors.SMALLEST_WIDTH.monitor = display;
-          }
-        }
-      });
+        });
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
       return defaultMonitors;
     }
 
     function validateOptions(useDefaultMonitor) {
-      var defaultMonitors = getDefaultMonitorsMapping();
-      var missing = false;
-      _.forEach(vm.options.tabs, function (tab, idx) {
-        var found = false;
-        _.forEach(vm.displayInfos, function (display, idx) {
-          if (display.isEnabled && tab.monitor.id === display.id) {
-            found = true;
-            return false;
+      try {
+        const defaultMonitors = getDefaultMonitorsMapping();
+        let missing = false;
+        _.forEach(vm.options.tabs, function (tab, idx) {
+          let found = false;
+          _.forEach(vm.displayInfos, function (display, idx) {
+            if (display.isEnabled && tab.monitor.id === display.id) {
+              found = true;
+              return false;
+            }
+          });
+          if (!found) {
+            let defaultMonitor = null;
+            if (useDefaultMonitor) {
+              defaultMonitor = getMappedDefaultMonitorById(defaultMonitors, tab.defaultMonitor);
+              if (defaultMonitor) {
+                tab.monitor = angular.copy(defaultMonitor);
+              }
+            }
+            if (!useDefaultMonitor || !defaultMonitor) {
+              tab.inconsistentMonitor = true;
+              missing = true;
+            }
+          } else {
+            tab.inconsistentMonitor = false;
           }
         });
-        if (!found) {
-          var defaultMonitor = null;
-          if (useDefaultMonitor) {
-            defaultMonitor = getMappedDefaultMonitorById(defaultMonitors, tab.defaultMonitor);
-            if (defaultMonitor) {
-              tab.monitor = angular.copy(defaultMonitor);
-            }
-          }
-          if (!useDefaultMonitor || !defaultMonitor) {
-            tab.inconsistentMonitor = true;
-            missing = true;
-          }
-        } else {
-          tab.inconsistentMonitor = false;
-        }
-      });
-      vm.inconsistentOptions = missing;
+        vm.inconsistentOptions = missing;
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     function autofixOptions() {
-      var primaryDisplay = getPrimaryDisplay();
-      _.forEach(vm.options.tabs, function (tab, idx) {
-        var found = false;
-        var closestMatch = null;
-        _.forEach(vm.displayInfos, function (display, idx) {
-          if (display.isEnabled && display.workArea &&
-            display.workArea.height === tab.monitor.workArea.height &&
-            display.workArea.width === tab.monitor.workArea.width) {
-            closestMatch = display;
-          }
-          if (tab.monitor.id === display.id) {
-            found = true;
-            return false;
+      try {
+        const primaryDisplay = getPrimaryDisplay();
+        _.forEach(vm.options.tabs, function (tab, idx) {
+          let found = false;
+          let closestMatch = null;
+          _.forEach(vm.displayInfos, function (display, idx) {
+            if (display.isEnabled && display.workArea &&
+              display.workArea.height === tab.monitor.workArea.height &&
+              display.workArea.width === tab.monitor.workArea.width) {
+              closestMatch = display;
+            }
+            if (tab.monitor.id === display.id) {
+              found = true;
+              return false;
+            }
+          });
+          if (!found) {
+            if (closestMatch) {
+              replaceMonitor(tab.monitor, closestMatch);
+            } else if (primaryDisplay) {
+              replaceMonitor(tab.monitor, primaryDisplay);
+            }
+            //monitor: vm.newTabOption.monitor,
+            //position: vm.newTabOption.position.id,
           }
         });
-        if (!found) {
-          if (closestMatch) {
-            replaceMonitor(tab.monitor, closestMatch);
-          } else if (primaryDisplay) {
-            replaceMonitor(tab.monitor, primaryDisplay);
-          }
-          //monitor: vm.newTabOption.monitor,
-          //position: vm.newTabOption.position.id,
-        }
-      });
 
-      validateOptions();
+        validateOptions();
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
 
       function replaceMonitor(target, sourceDisplay) {
         target.workArea = angular.copy(sourceDisplay.workArea);
         target.id = sourceDisplay.id;
-        var idx = _.findIndex(vm.displayInfos, sourceDisplay);
+        const idx = _.findIndex(vm.displayInfos, sourceDisplay);
         target.name = sourceDisplay.name;//(idx + 1) + ' ' + sourceDisplay.name;
         target.idx = idx + 1;
       }
@@ -520,7 +575,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function openImportTemplateMenu() {
-      var templateUrl = localStorage[TAB_HELPER_TEMPLATE_URL];
+      const templateUrl = localStorage[TAB_HELPER_TEMPLATE_URL];
       if (templateUrl) {
         vm.templateUrl = templateUrl;
       }
@@ -528,81 +583,89 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function acceptImportTemplateMenu(templateUrl) {
-      vm.showImportTemplateDialog = false;
-      if (templateUrl && templateUrl !== '') {
-        localStorage[TAB_HELPER_TEMPLATE_URL] = templateUrl;
-        vm.templateUrl = templateUrl;
+      try {
+        vm.showImportTemplateDialog = false;
+        if (templateUrl && templateUrl !== '') {
+          localStorage[TAB_HELPER_TEMPLATE_URL] = templateUrl;
+          vm.templateUrl = templateUrl;
 
-        callHttpByGet(templateUrl, function onResponse(response) {
-          if (response.success && response.data) {
-            if (response.data.tabs) {
-              mergeRules(vm.options.tabs, response.data.tabs);
-            }
-            if (response.data.templates) {
-              if (vm.replaceAllTemplates) {
-                vm.options.templates = response.data.templates;
-              } else {
-                mergeTemplates(vm.options.templates, response.data.templates);
+          callHttpByGet(templateUrl, function onResponse(response) {
+            if (response.success && response.data) {
+              if (response.data.tabs) {
+                mergeRules(vm.options.tabs, response.data.tabs);
               }
+              if (response.data.templates) {
+                if (vm.replaceAllTemplates) {
+                  vm.options.templates = response.data.templates;
+                } else {
+                  mergeTemplates(vm.options.templates, response.data.templates);
+                }
+              }
+              validateOptions(true);
+              markAsDirk();
             }
-            validateOptions(true);
-            markAsDirk();
-          }
-        });
+          });
+        }
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
       }
     }
 
     function mergeRules(existentRules, templateRules) {
-      cleanOrder(existentRules);
+      try {
+        cleanOrder(existentRules);
 
-      for (var i = 0; i < existentRules.length; i++) {
-        var rule = existentRules[i];
-        for (var k = 0; k < templateRules.length; k++) {
-          var template = templateRules[k];
-          template.order = k + 1;
-          if (rule.code === template.code) {
-            //mark as merged
-            template.merged = true;
-            //rule.active = template.active;
-            //rule.code = template.code;
-            //rule.remember = template.remember;
-            rule.url = template.url;
-            rule.name = template.name;
-            //rule.monitor = template.monitor;
-            rule.defaultMonitor = template.defaultMonitor;
-            //rule.fullScreen = template.fullScreen;
-            //rule.popup = template.popup;
-            //rule.position = template.position ? template.position.id : 'center';
+        for (let i = 0; i < existentRules.length; i++) {
+          const rule = existentRules[i];
+          for (let k = 0; k < templateRules.length; k++) {
+            const template = templateRules[k];
+            template.order = k + 1;
+            if (rule.code === template.code) {
+              //mark as merged
+              template.merged = true;
+              //rule.active = template.active;
+              //rule.code = template.code;
+              //rule.remember = template.remember;
+              rule.url = template.url;
+              rule.name = template.name;
+              //rule.monitor = template.monitor;
+              rule.defaultMonitor = template.defaultMonitor;
+              //rule.fullScreen = template.fullScreen;
+              //rule.popup = template.popup;
+              //rule.position = template.position ? template.position.id : 'center';
 
-            rule.order = template.order;
+              rule.order = template.order;
+            }
           }
         }
-      }
 
-      //add new templates
-      for (var k = 0; k < templateRules.length; k++) {
-        var template = templateRules[k];
-        if (!template.merged) {
-          existentRules.push(template);
+        //add new templates
+        for (let k = 0; k < templateRules.length; k++) {
+          const template = templateRules[k];
+          if (!template.merged) {
+            existentRules.push(template);
+          }
         }
-      }
 
-      sortByOrder(existentRules);
+        sortByOrder(existentRules);
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     //clean any order value.
     function cleanOrder(list) {
-      for (var i = 0; i < list.length; i++) {
+      for (let i = 0; i < list.length; i++) {
         delete list[i].order;
       }
     }
 
     function sortByOrder(list) {
       //sort items by order
-      for (var i = 0; i < list.length; i++) {
-        for (var k = 0; k < list.length - 1 - i; k++) {
-          var item1 = list[k];
-          var item2 = list[k + 1];
+      for (let i = 0; i < list.length; i++) {
+        for (let k = 0; k < list.length - 1 - i; k++) {
+          const item1 = list[k];
+          const item2 = list[k + 1];
 
           if ((item1.order && item2.order && item1.order > item2.order) ||
             (item1.order && !item2.order)) {
@@ -614,39 +677,43 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function mergeTemplates(currentTemplates, newTemplates) {
-      cleanOrder(currentTemplates);
+      try {
+        cleanOrder(currentTemplates);
 
-      for (var i = 0; i < currentTemplates.length; i++) {
-        var existingTemplate = currentTemplates[i];
-        for (var k = 0; k < newTemplates.length; k++) {
-          var newTemplate = newTemplates[k];
-          newTemplate.order = k + 1;
-          if (existingTemplate.code === newTemplate.code) {
-            //mark as merged
-            newTemplate.merged = true;
-            existingTemplate.active = newTemplate.active;
-            existingTemplate.code = newTemplate.code;
-            existingTemplate.remember = newTemplate.remember;
-            existingTemplate.url = newTemplate.url;
-            existingTemplate.name = newTemplate.name;
-            existingTemplate.defaultMonitor = newTemplate.defaultMonitor;
-            existingTemplate.position = newTemplate.position;
+        for (let i = 0; i < currentTemplates.length; i++) {
+          const existingTemplate = currentTemplates[i];
+          for (let k = 0; k < newTemplates.length; k++) {
+            const newTemplate = newTemplates[k];
+            newTemplate.order = k + 1;
+            if (existingTemplate.code === newTemplate.code) {
+              //mark as merged
+              newTemplate.merged = true;
+              existingTemplate.active = newTemplate.active;
+              existingTemplate.code = newTemplate.code;
+              existingTemplate.remember = newTemplate.remember;
+              existingTemplate.url = newTemplate.url;
+              existingTemplate.name = newTemplate.name;
+              existingTemplate.defaultMonitor = newTemplate.defaultMonitor;
+              existingTemplate.position = newTemplate.position;
 
-            existingTemplate.order = newTemplate.order;
+              existingTemplate.order = newTemplate.order;
+            }
           }
         }
-      }
 
-      //add new templates
-      for (var k = 0; k < newTemplates.length; k++) {
-        var template = newTemplates[k];
-        if (!newTemplate.merged) {
-          currentTemplates.push(template);
+        //add new templates
+        for (let k = 0; k < newTemplates.length; k++) {
+          const template = newTemplates[k];
+          if (!newTemplate.merged) {
+            currentTemplates.push(template);
+          }
         }
-      }
 
-      //sort templates by order
-      sortByOrder(currentTemplates);
+        //sort templates by order
+        sortByOrder(currentTemplates);
+      } catch(err) {
+        (console.error || console.log).call(console, err.stack || err);
+      }
     }
 
     function cancelImportTemplateMenu() {
@@ -663,7 +730,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
       }, function (resp) {
         console.log('Error status: ' + resp.status);
       }, function (evt) {
-        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        const progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
         if (evt.config.data.file.name) {
           console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         } else {
@@ -673,9 +740,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function exportTemplate() {
-      var optionsAsJson = angular.toJson(vm.options, 3);
-      var blob = new Blob([optionsAsJson], {type: 'application/json'});
-      var saveAs = window.saveAs;
+      const optionsAsJson = angular.toJson(vm.options, 3);
+      const blob = new Blob([optionsAsJson], {type: 'application/json'});
+      const saveAs = window.saveAs;
       saveAs(blob, 'multiwindow-positioner-rule-export.json');
     }
 
@@ -747,7 +814,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function swap(list, idx1, idx2) {
-      var tmp = list[idx1];
+      const tmp = list[idx1];
       list[idx1] = list[idx2];
       list[idx2] = tmp;
     }
@@ -757,24 +824,26 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         method: 'get',
         url: callPath,
         headers: {'Cache-Control': 'no-cache'}
-      })
-        .success(function (data, status, headers, config) {
-          var response =
+      }).then(onSuccess, onError);
+
+      function onError(response) {
+        const result = handleHttpError(response.data, callPath);
+        callback(result);
+      }
+
+      function onSuccess(response) {
+        const result =
           {
             success: true,
-            data: data
+            data: response.data
           };
 
-          callback(response);
-        })
-        .error(function (data, status, headers, config) {
-          var response = handleHttpError(data, callPath);
-          callback(response);
-        });
+        callback(result);
+      }
     }
 
     function handleHttpError(data, callPath) {
-      var response = {success: false};
+      const response = {success: false};
       if (data) {
         response.error = data;
       }
@@ -785,7 +854,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function dateNow() {
-      var d = new Date();
+      const d = new Date();
       return d.toLocaleString();
     }
 
@@ -857,7 +926,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function localizeDefaultMonitor(defaultMonitor) {
-      var localizedDefaultMonitor = defaultMonitor;
+      let localizedDefaultMonitor = defaultMonitor;
       if (defaultMonitor === DEFAULT_MONITORS.MAIN_MONITOR.id) {
         localizedDefaultMonitor = vm.locale.MAIN_MONITOR;
       } else if (defaultMonitor === DEFAULT_MONITORS.NOT_MAIN_MONITOR.id) {
@@ -880,7 +949,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     }
 
     function localizePosition(position) {
-      var localizedPosition = position;
+      let localizedPosition = position;
       if (position === POSITIONS.CENTER.id) {
         localizedPosition = vm.locale.MAXIMIZED;
       } else if (position === POSITIONS.LEFT_HALF.id) {
@@ -894,6 +963,34 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
       }
 
       return localizedPosition
+    }
+
+    function toggleHelp() {
+      vm.showsHelp = !vm.showsHelp;
+      if (vm.showsHelp) {
+        doScrollToElement('quick-info-section');
+      } else {
+        doScrollToElement('top-section');
+      }
+    }
+
+    function doScrollToElement(elementId, notifyScroll, duration, offset) {
+      var defaultDuration = angular.isDefined(duration) ? duration : 0; //milliseconds
+      var defaultOffset = angular.isDefined(offset) ? offset : 0; //pixels; adjust for floating menu, context etc
+      //Scroll to #some-id with 30 px "padding"
+      //Note: Use this in a directive, not with document.getElementById
+
+      var container = jQuery('html, body');
+      container.stop();
+
+      var elementToScroll = jQuery('#' + elementId);
+      if (elementToScroll && elementToScroll.length > 0) {
+        $timeout(function () {
+          container.animate({
+            scrollTop: jQuery('#' + elementId).offset().top + defaultOffset
+          }, 800);
+        }, 100, false);
+      }
     }
 
   }]);

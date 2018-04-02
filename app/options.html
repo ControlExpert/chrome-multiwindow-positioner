@@ -10,7 +10,7 @@
   <style type='text/css'>@-webkit-keyframes uil-default-anim { 0% { opacity: 1} 100% {opacity: 0} }@keyframes uil-default-anim { 0% { opacity: 1} 100% {opacity: 0} }.uil-default-css > div:nth-of-type(1){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.5s;animation-delay: -0.5s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(2){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.4166666666666667s;animation-delay: -0.4166666666666667s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(3){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.33333333333333337s;animation-delay: -0.33333333333333337s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(4){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.25s;animation-delay: -0.25s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(5){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.16666666666666669s;animation-delay: -0.16666666666666669s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(6){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.08333333333333331s;animation-delay: -0.08333333333333331s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(7){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0s;animation-delay: 0s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(8){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.08333333333333337s;animation-delay: 0.08333333333333337s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(9){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.16666666666666663s;animation-delay: 0.16666666666666663s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(10){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.25s;animation-delay: 0.25s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(11){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.33333333333333337s;animation-delay: 0.33333333333333337s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}.uil-default-css > div:nth-of-type(12){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.41666666666666663s;animation-delay: 0.41666666666666663s;}.uil-default-css { position: relative;background:none;width:200px;height:200px;}</style>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!-- build:css styles/options-vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -22,7 +22,7 @@
   <link href="styles/main.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
-<body>
+<body id="top-section">
 <div class='uil-default-css centered wait-in-show'
      ng-class="{'wait-in-show-done': locale && locale.OPTIONS_TITLE && locale.OPTIONS_TITLE.length > 0}">
   <!-- generated from http://loading.io/-->
@@ -32,7 +32,20 @@
   class="wait-in-hidden"
   ng-class="{'wait-in-hidden-done': locale && locale.OPTIONS_TITLE && locale.OPTIONS_TITLE.length > 0}"
   >
-  <h1>{{::locale.OPTIONS_TITLE}} <span ng-if="dirty" style="color:orangered">[{{::locale.DRAFT}}]</span></h1>
+  <div class="btn-group help-button-container">
+    <label class="btn btn-default btn-lg"
+           type="button"
+           title="{{::locale.HELP}}"
+           ng-click="toggleHelp();">
+      <i class="fa fa-question"></i>
+    </label>
+  </div>
+  <h1>
+    <a class="logo-wrapper" target="_blank" href="http://www.controlexpert.com">
+      <img src="http://www2.controlexpert.com/fileadmin/templates/images/ce_logo_4c.svg" class="img-responsive">
+    </a>
+    &nbsp;-&nbsp; <a target="_blank" href="https://chrome.google.com/webstore/detail/multiwindow-positioner/hmgehpjpfhobbnhhelhlggjfcaollidl" style="color: inherit;">{{::locale.OPTIONS_TITLE}}</a>
+    <span ng-if="dirty" style="color:orangered">[{{::locale.DRAFT}}]</span></h1>
   <hr>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -295,61 +308,63 @@
     </div>
   </div>
 
-  <hr>
+  <div ng-if="showImportTemplateDialog">
+    <hr>
+    <div class="row">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      </div>
+      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 rule-dialog">
+        <div class="panel default panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">
+            {{::locale.IMPORT_TEMPLATE}}
+          </div>
+          <div class="panel-body">
+            <div class="row">
 
-  <div class="row" ng-if="showImportTemplateDialog">
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-    </div>
-    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 rule-dialog">
-      <div class="panel default panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">
-          {{::locale.IMPORT_TEMPLATE}}
-        </div>
-        <div class="panel-body">
-          <div class="row">
-
-            <div class="form-group">
-              <label for="inputTemplateUrl"
-                     focus-on-for="focus-inputTemplateUrl"
-                     class="col-md-2 col-lg-2">{{::locale.IMPORT_TEMPLATE}}</label>
-              <div class="col-md-10 col-lg-10">
-                <input id="inputTemplateUrl" type="text"
-                       focus-on="focus-inputTemplateUrl"
-                       class="form-control"
-                       ng-model="templateUrl"
-                />
+              <div class="form-group">
+                <label for="inputTemplateUrl"
+                       focus-on-for="focus-inputTemplateUrl"
+                       class="col-md-2 col-lg-2">{{::locale.IMPORT_TEMPLATE}}</label>
+                <div class="col-md-10 col-lg-10">
+                  <input id="inputTemplateUrl" type="text"
+                         focus-on="focus-inputTemplateUrl"
+                         class="form-control"
+                         ng-model="templateUrl"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="inputReplaceAllTemplates"
-                     focus-on-for="focus-inputReplaceAllTemplates"
-                     class="col-md-2 col-lg-2 margin-top-md">{{::locale.REPLACE_ALL_TEMPLATES}}</label>
-              <div class="col-md-10 col-lg-10 margin-top-md">
-                <checkbox
-                  id="inputReplaceAllTemplates"
-                  class="fix-checkbox"
-                  ng-model="replaceAllTemplates">
-                </checkbox>
+              <div class="form-group">
+                <label for="inputReplaceAllTemplates"
+                       focus-on-for="focus-inputReplaceAllTemplates"
+                       class="col-md-2 col-lg-2 margin-top-md">{{::locale.REPLACE_ALL_TEMPLATES}}</label>
+                <div class="col-md-10 col-lg-10 margin-top-md">
+                  <checkbox
+                    id="inputReplaceAllTemplates"
+                    class="fix-checkbox"
+                    ng-model="replaceAllTemplates">
+                  </checkbox>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <hr>
+          <hr>
 
-        <div class="btn-group margin-md">
+          <div class="btn-group margin-md">
           <span class="btn btn-default"
                 ng-class="{'btn-primary': templateUrl && templateUrl !== ''}"
                 ng-disabled="!templateUrl || templateUrl === ''"
                 type="button" ng-click="acceptImportTemplateMenu(templateUrl);">
                   {{::locale.ADD}}
                 </span>
-          <span class="btn btn-default" type="button" ng-click="cancelImportTemplateMenu();">{{::locale.CANCEL}}</span>
+            <span class="btn btn-default" type="button" ng-click="cancelImportTemplateMenu();">{{::locale.CANCEL}}</span>
+          </div>
         </div>
       </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      </div>
     </div>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-    </div>
+
   </div>
 
   <hr>
@@ -437,6 +452,107 @@
            ng-click="autofixOptions();">
       <i class="fa fa-wrench"></i>
     </label>
+  </div>
+
+  <hr>
+
+  <div class="row" id="quick-info-section">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="quick-info-section">
+        <div class="col-md-2">
+          <h4>Quick Info</h4>
+        </div>
+        <div class="col-md-10">
+          <ul>
+            <li>
+              Help and getting started click &nbsp;
+              <label class="btn btn-default btn-xs"
+                     type="button"
+                     title="{{::locale.HELP}}"
+                     ng-click="toggleHelp();">
+                <i class="fa fa-question"></i>
+              </label>
+            </li>
+            <li>
+              You are happy for the extension and would like to give a good review/feedback/rating, then click
+              <a target="_blank" href="https://chrome.google.com/webstore/detail/multiwindow-positioner/hmgehpjpfhobbnhhelhlggjfcaollidl/reviews">
+                here
+              </a>
+            </li>
+            <li>
+              Support questions may be raised
+              <a target="_blank" href="https://chrome.google.com/webstore/detail/multiwindow-positioner/hmgehpjpfhobbnhhelhlggjfcaollidl/support">
+                here
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-if="showsHelp">
+    <hr>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="help-section">
+          <div class="btn help-section-close"
+                 type="button"
+                 title="{{::locale.HELP}}"
+                 ng-click="toggleHelp();">
+            <i class="fa fa-close"></i>
+          </div>
+          <div class="col-md-2">
+            <h4>Help - Getting Started</h4>
+          </div>
+          <div class="col-md-10">
+            <ol>
+              <li>
+                You may, at first, import a rules template
+                <ul>
+                  <li>
+                    Click the <b>IMPORT TEMPLATE</b> <span class="btn btn-info btn-xs"><i class="fa fa-download"></i></span> icon
+                  </li>
+                  <li>
+                    Give the following URL: https://cdn.rawgit.com/ControlExpert/chrome-multiwindow-positioner/gh-pages/templates/default-template-options.json
+                  </li>
+                  <li>
+                    Click the button <span class="btn btn-default btn-xs">ADD</span> to complete the dialog.
+                  </li>
+                  <li>
+                    Finally click <b>SAVE</b> <span class="btn btn-info btn-xs"><i class="fa fa-floppy-o"></i></span> to save all the changes permanently.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                If you need to to use other monitors for specific rules/websites you may edit/add a rule respectively.
+              </li>
+              <li>
+                In the edit <span class="btn btn-default btn-xs"><i class="fa fa-edit"></i></span> or create <span class="btn btn-default btn-xs"><i class="fa fa-plus"></i></span> rule dialog you may:
+                <ul>
+                  <li><b>Template</b>: List all available rule-templates.</li>
+                  <li><b>Active</b>: Tells if the rule is enabled and active.</li>
+                  <li><b>Remember</b>: (experimental) When enabled, automatically saves the target monitor when a window that matches to rule was re-position manually by the user.</li>
+                  <li><b>Name</b>: The rule name</li>
+                  <li><b>URL</b>: The address that matches the rule. Its case sensitive. (should usually not change).</li>
+                  <li><b>Monitor</b>: Target-Monitor of the rule. It lists all the available monitors.</li>
+                  <li><b>Default Monitor</b>: Will pre-select the target-monitor when importing a template (in case no matching monitor was given from the Rules template.)</li>
+                  <li><b>Position</b>: The position within the <b>target-monitor</b> where the window will be placed.</li>
+                  <li><b>Popup</b>: Shows the web address</li>
+                </ul>
+              </li>
+              <li>
+                Click the button <span class="btn btn-default btn-xs">UPDATE</span> to accept the dialog changes.
+              </li>
+              <li>
+                Finally, click <span class="btn btn-info btn-xs"><i class="fa fa-floppy-o"></i></span> to save the all changes.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

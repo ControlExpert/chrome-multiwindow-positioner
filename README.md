@@ -17,25 +17,25 @@ Tool extension that enables effective window positioning/placement in multi-moni
 2. Click the **ADD TO CHROME** button and then the **ADD EXTENSION** button.
 3. The extension installation will take some seconds and you need to configure it. The configuration is available under either:
  * the following address: *chrome-extension://hmgehpjpfhobbnhhelhlggjfcaollidl/options.html*
- * or goint to the chrome://extensions/  und opening the **Options** link. 
+ * or goint to the chrome://extensions/  und opening the **Options** link.
 4. You may, at first, import a rules template
  * Click the **IMPORT TEMPLATE** icon
  * Give the following URL: https://cdn.rawgit.com/ControlExpert/chrome-multiwindow-positioner/gh-pages/templates/default-template-options.json
  * Click **ADD** to complete the dialog. 
  * Finally click **SAVE** to save all the changes permanently.
-7. If you need to to use other monitors for specific rules/websites you may edit/add a rule respectively.   
-8. In the edit or create rule dialog you may:
+5. If you need to to use other monitors for specific rules/websites you may edit/add a rule respectively.   
+6. In the edit or create rule dialog you may:
  * *Template*: List all available rule-templates.
  * *Active*: Tells if the rule is enabled and active.
- * *Remember*: When enabled, automatically saves the target monitor when a window that matches to rule was re-position manually by the user. 
+ * *Remember*: (experimental) When enabled, automatically saves the target monitor when a window that matches to rule was re-position manually by the user. 
  * *Name*: The rule name
  * *URL*: The address that matches the rule. Its case sensitive. (should usually not change).
  * *Monitor*: Target-Monitor of the rule. It lists all the available monitors.
  * *Default Monitor*: Will pre-select the target-monitor when importing a template (in case no matching monitor was given from the Rules template.)  
  * *Position*: The position within the *target-monitor* where the window will be placed.
  * *Popup*: Shows the web address
-9. Click **UPDATE** to accept the dialog changes.
-10. Finally, click **SAVE** to save the all changes.
+7. Click **UPDATE** to accept the dialog changes.
+8. Finally, click **SAVE** to save the all changes.
 
 # Development
 
@@ -46,7 +46,7 @@ Tool extension that enables effective window positioning/placement in multi-moni
 npm install
 
 # Transform updated source written by ES2015 (default option)
-gulp babel
+/
 
 # or Using watch to update source continuously
 gulp watch

@@ -1,3 +1,25 @@
+<a name="1.0.11"></a>
+# 1.0.11 (2018-2-April)
+
+* Usability improvements
+** Easy help button
+** Quick info section
+** Help / Getting started section
+* Corporate branding
+* More error handling in internal code.
+* Use newer features of JavaScript ES5.
+* Upgrade internal libraries. That include webkit bugfixes. 
+** jquery: ~3.1.0 -> ~3.3.1,
+** lodash: 4.16.4 -> 4.17.5,
+** angular: 1.5.8 -> ~1.6.9,
+** angular-resource: 1.5.8 -> ~1.6.9,
+** font-awesome: ~4.6.3 -> ~4.7.0,
+** angular-bootstrap: 2.2.0 -> ~2.5.0,
+** file-saver: 1.3.3 -> ~1.3.8,
+** angular-bootstrap-checkbox: 0.4.0 -> ~0.5.1
+** angular-intro.js: ~3.3.0
+ 
+
 <a name="1.0.10"></a>
 # 1.0.10 (2016-13-December)
 

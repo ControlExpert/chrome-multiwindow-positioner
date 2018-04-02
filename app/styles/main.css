@@ -128,3 +128,49 @@ tr:hover .tab-action-bar .btn {
 .dropdown-header {
   margin-bottom:15px;
 }
+
+.help-section {
+  padding: 8px !important;
+  border: 9px #2e6da4 solid;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+.quick-info-section {
+  padding: 8px !important;
+  border: 9px darkgrey solid;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+.logo-wrapper {
+  float: left;
+  width: 289px;
+}
+.logo-wrapper > img {
+  max-width: 274px;
+  float: left;
+  margin-right: 12px;
+  margin-top: -2px;
+}
+
+.help-button-container {
+  position: fixed;
+  right: 18px;
+  top: 40px;
+}
+
+.help-section-close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  color: darkgrey;
+  cursor:pointer;
+  z-index: 10;
+}
+
+.help-section-close:hover {
+  color: inherit;
+}
