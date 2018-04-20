@@ -1,0 +1,294 @@
+{
+   "tabs": [{
+      "active": true,
+      "url": "/reportviewer/",
+      "name": "C€2.0 Prüfberichte",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-08T15:16:48.512Z",
+      "inconsistentMonitor": false,
+      "remember": true,
+      "code": "ce20-report"
+   }, {
+      "active": true,
+      "url": "/multimediaviewer/?type=pdf&filename=MergedPdf_",
+      "name": "C€2.0 Merged",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-08T15:16:48.512Z",
+      "inconsistentMonitor": false,
+      "remember": true,
+      "code": "ce20-merged-document"
+   }, {
+      "active": true,
+      "url": "/multimediaviewer/?type=pdf&filename=Externer",
+      "name": "C€2.0 Externer Prüfbericht",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-08T15:16:48.512Z",
+      "inconsistentMonitor": false,
+      "remember": true,
+      "code": "ce20-external-report"
+   }, {
+      "active": true,
+      "url": "/multimediaviewer/?type=pdf&filename=Interner",
+      "name": "C€2.0 Interner Prüfbericht",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-08T15:16:48.512Z",
+      "inconsistentMonitor": false,
+      "remember": true,
+      "code": "ce20-internal-report"
+   }, {
+      "active": true,
+      "url": "/multimediaviewer/?type=image",
+      "name": "C€2.0 Bilder",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 1080,
+            "left": -1920,
+            "top": 0,
+            "width": 1920
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-08T15:17:07.263Z",
+      "inconsistentMonitor": false,
+      "remember": true,
+      "code": "ce20-image"
+   }, {
+      "active": true,
+      "remember": true,
+      "url": "/multimediaviewer/?type=pdf",
+      "name": "C€2.0 Dokumente",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 1080,
+            "left": -1920,
+            "top": 0,
+            "width": 1920
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-09T14:10:47.083Z",
+      "inconsistentMonitor": false,
+      "code": "ce20-document"
+   }, {
+      "active": true,
+      "remember": true,
+      "url": "Common.ArchiveDocumentViewer",
+      "name": "C€2.0 Archive",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-10T12:37:57.275Z",
+      "inconsistentMonitor": false,
+      "code": "ce20-archive"
+   }, {
+      "active": true,
+      "remember": true,
+      "url": "/cerep02/Reports",
+      "name": "C€ Prüferleistung",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-10T12:37:57.275Z",
+      "inconsistentMonitor": false,
+      "code": "ce20-expert-performance"
+   }, {
+      "active": true,
+      "remember": true,
+      "url": "http://www.dat.de/VehicleRepairOnline/eventList/eventList.html?fabrikat=",
+      "name": "DAT-Vorgangsübersicht",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2016-11-10T12:38:57.275Z",
+      "inconsistentMonitor": false,
+      "code": "dat-invoice-overview"
+   }, {
+      "active": true,
+      "remember": true,
+      "url": "http://ceappint/IntTecReact/silverDat",
+      "name": "DAT2-Vorgangsübersicht",
+      "monitor": {
+         "id": "111",
+         "name": "PnP-Monitor (Standard)",
+         "workArea": {
+            "height": 900,
+            "left": 1920,
+            "top": 0,
+            "width": 1600
+         }
+      },
+      "defaultMonitor": "not-main-monitor",
+      "fullScreen": false,
+      "popup": true,
+      "position": "center",
+      "timestamp": "2018-04-20T12:38:57.275Z",
+      "inconsistentMonitor": false,
+      "code": "dat2-invoice-overview"
+   }],
+   "templates": [{
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Prüfberichte",
+      "url": "/reportviewer/",
+      "code": "ce20-report",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Merged",
+      "url": "/multimediaviewer/?type=pdf&filename=MergedPdf_",
+      "code": "ce20-merged-document",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Interner Prüfbericht",
+      "url": "/multimediaviewer/?type=pdf&filename=Interner",
+      "code": "ce20-internal-report",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Externer Prüfbericht",
+      "url": "/multimediaviewer/?type=pdf&filename=Externer",
+      "code": "ce20-external-report",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Dokumente",
+      "url": "/multimediaviewer/?type=pdf",
+      "code": "ce20-document",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Bilder",
+      "url": "/multimediaviewer/?type=image",
+      "code": "ce20-image",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€2.0 Archive",
+      "url": "/Common.ArchiveDocumentViewer",
+      "code": "ce20-archive",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "C€ Prüferleistung",
+      "url": "/cerep02/Reports",
+      "code": "ce20-expert-performance",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "DAT-Vorgangsübersicht",
+      "url": "http://www.dat.de/VehicleRepairOnline/eventList/eventList.html?fabrikat=",
+      "code": "dat-invoice-overview",
+      "defaultMonitor": "not-main-monitor"
+   }, {
+      "active": true,
+      "remember": true,
+      "name": "DAT2-Vorgangsübersicht",
+      "url": "http://ceappint/IntTecReact/silverDat",
+      "code": "dat2-invoice-overview",
+      "defaultMonitor": "not-main-monitor"
+   }]
+}
