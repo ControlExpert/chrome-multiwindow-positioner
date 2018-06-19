@@ -1,3 +1,9 @@
+<a name="1.0.12"></a>
+# 1.0.12 (2018-20-June)
+
+* New: custom positions can be set. Click the 'more options' to create additional custom positions, and select them if needed.
+* Fixed maximized mode.
+
 <a name="1.0.11"></a>
 # 1.0.11 (2018-2-April)
 

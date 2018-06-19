@@ -1,8 +1,6 @@
 {
   "directory": "app/bower_components",
   "strict-ssl": false,
-  "proxy":"http://10.100.255.40:8080",
-  "https-proxy":"http://10.100.255.40:8080",
   "registry": {
     "search": [
       "https://bower.herokuapp.com"

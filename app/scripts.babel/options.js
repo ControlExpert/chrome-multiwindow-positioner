@@ -39,8 +39,10 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
 
     vm.windowHandlers = {};
     vm.options = null;
+
     vm.showNewTabOption = false;
     vm.showEditTabOption = false;
+
     vm.showImportTemplateDialog = false;
     vm.inconsistentOptions = false;
     vm.dirty = false;
@@ -66,6 +68,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     vm.editTabOption = editTabOption;
     vm.useTemplateAsOption = useTemplateAsOption;
 
+    vm.addPosition = addPosition;
+    vm.setCustomPositionAsMonitor = setCustomPositionAsMonitor;
+
     vm.applyPositionToAll = applyPositionToAll;
     vm.applyMonitorToAll = applyMonitorToAll;
 
@@ -84,6 +89,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
     vm.cancelTabOption = cancelTabOption;
 
     vm.deleteTabOption = deleteTabOption;
+
+    vm.deletePositionOption = deletePositionOption;
 
     vm.toggleHelp = toggleHelp;
 
@@ -254,10 +261,35 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
       markAsDirk();
     }
 
+    function deletePositionOption(positionToDelete) {
+      _.remove(vm.options.positions, function (position) {
+        return positionToDelete.name === position.name;
+      });
+      markAsDirk();
+    }
+
     function addTabOption() {
       vm.showNewTabOption = true;
       vm.newTabOption = createNewOption();
       vm.newTabOption.template = null;
+    }
+
+    function setCustomPositionAsMonitor(position, monitor) {
+      position.x = monitor.workArea.left;
+      position.y = monitor.workArea.top;
+      position.width = monitor.workArea.width;
+      position.height = monitor.workArea.height;
+    }
+
+    function addPosition() {
+      vm.options.positions.push({
+        name: 'CustomPosition' + vm.options.positions.length,
+        x: 0,
+        y: 0,
+        height: 10,
+        width: 10
+      });
+      markAsDirk();
     }
 
     function editTabOption(tabOption) {
@@ -374,10 +406,17 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         const tabRuleOptions = localStorage[OPTIONS_KEY];
         if (tabRuleOptions) {
           vm.options = JSON.parse(tabRuleOptions);
+          if (!vm.options.tabs) {
+            vm.options.tabs = [];
+          }
+          if (!vm.options.positions) {
+            vm.options.positions = [];
+          }
           markAsPristine();
         } else {
           vm.options = {
-            tabs: []
+            tabs: [],
+            positions: []
           };
           markAsDirk();
         }
@@ -488,14 +527,31 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         const defaultMonitors = getDefaultMonitorsMapping();
         let missing = false;
         _.forEach(vm.options.tabs, function (tab, idx) {
-          let found = false;
+          //verify custom
+          tab.inconsistentCustom = false;
+          if (tab.custom && tab.custom !== '') {
+            let customMatch = false;
+            _.forEach(vm.options.positions, function (customPosition, idx) {
+              if (customPosition.name === tab.custom) {
+                tab.inconsistentCustom = true;
+                customMatch = true;
+                return false;
+              }
+            });
+            if (!customMatch) {
+              missing = true;
+            }
+          }        
+
+          //verify display
+          let displayMatch = false;
           _.forEach(vm.displayInfos, function (display, idx) {
             if (display.isEnabled && tab.monitor.id === display.id) {
-              found = true;
+              displayMatch = true;
               return false;
             }
           });
-          if (!found) {
+          if (!displayMatch) {
             let defaultMonitor = null;
             if (useDefaultMonitor) {
               defaultMonitor = getMappedDefaultMonitorById(defaultMonitors, tab.defaultMonitor);
@@ -863,6 +919,14 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         OPTIONS_TITLE: chrome.i18n.getMessage('OPTIONS_TITLE'),
         TAB_SETTINGS: chrome.i18n.getMessage('TAB_SETTINGS'),
 
+        //custom positions
+        TAB_POSITIONS: chrome.i18n.getMessage('TAB_POSITIONS'),
+        CUSTOM: chrome.i18n.getMessage('CUSTOM'),
+        WIDTH: chrome.i18n.getMessage('WIDTH'),
+        HEIGHT: chrome.i18n.getMessage('HEIGHT'),
+        ADD_POSITION: chrome.i18n.getMessage('ADD_POSITION'),
+        REMOVE_POSITION: chrome.i18n.getMessage('REMOVE_POSITION'),
+        
         //table columns
         ACTIVE: chrome.i18n.getMessage('ACTIVE'),
         NAME: chrome.i18n.getMessage('NAME'),

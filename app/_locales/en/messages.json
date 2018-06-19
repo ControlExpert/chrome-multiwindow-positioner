@@ -15,6 +15,22 @@
     "message": "Rules",
     "description": ""
   },
+  "TAB_POSITIONS": {
+    "message": "Custom Positions",
+    "description": ""
+  },
+  "CUSTOM": {
+    "message": "Custom",
+    "description": ""
+  },
+  "WIDTH": {
+    "message": "Width",
+    "description": ""
+  },
+  "HEIGHT": {
+    "message": "Height",
+    "description": ""
+  },
   "ACTIVE": {
     "message": "Active",
     "description": ""
@@ -198,5 +214,15 @@
   "DRAFT": {
     "message": "Draft",
     "description": ""
+  },
+  "ADD_POSITION": {
+    "message": "Add custom position",
+    "description": ""
+  },
+  "REMOVE_POSITION": {
+    "message": "Remove custom position",
+    "description": ""
   }
+
+
 }

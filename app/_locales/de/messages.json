@@ -15,6 +15,22 @@
     "message": "Regeln",
     "description": ""
   },
+  "TAB_POSITIONS": {
+    "message": "Benutzerdefinierte Positionen",
+    "description": ""
+  },
+  "CUSTOM": {
+    "message": "Benutzerdefinierte",
+    "description": ""
+  },
+  "WIDTH": {
+    "message": "Lange",
+    "description": ""
+  },
+  "HEIGHT": {
+    "message": "Hohe",
+    "description": ""
+  },
   "ACTIVE": {
     "message": "Aktiv",
     "description": ""
@@ -197,6 +213,14 @@
   },
   "DRAFT": {
     "message": "Entwurf",
+    "description": ""
+  },
+  "ADD_POSITION": {
+    "message": "Fügen Sie eine benutzerdefinierte Position hinzu",
+    "description": ""
+  },
+  "REMOVE_POSITION": {
+    "message": "Entfernen Sie die benutzerdefinierte Position",
     "description": ""
   }
 }

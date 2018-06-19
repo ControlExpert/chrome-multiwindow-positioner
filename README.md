@@ -44,6 +44,8 @@ Tool extension that enables effective window positioning/placement in multi-moni
 ```sh
 # Install dependencies
 npm install
+npm -g install bower
+bower install
 
 # Transform updated source written by ES2015 (default option)
 /

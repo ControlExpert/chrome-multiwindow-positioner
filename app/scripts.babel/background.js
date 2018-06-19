@@ -324,6 +324,24 @@ function findTabRuleMatch(tabRuleOptions, tab) {
   return match;
 }
 
+function findCustomPositionMatch(tabRuleOptions, custom) {
+  let match = null;
+  try {
+    if (custom) {
+      for (let idx = 0; idx < tabRuleOptions.positions.length; idx++) {
+        const customPosition = tabRuleOptions.positions[idx];
+        if (customPosition.name && customPosition.name !== '' && customPosition.name === custom) {
+          match = customPosition;
+          break;
+        }
+      }
+    }
+  } catch(err) {
+    (console.error || console.log).call(console, err.stack || err);
+  }
+  return match;
+}
+
 function calculateWorkAreaByPosition(monitorWorkArea, position) {
   const workarea = {
     left: monitorWorkArea.left,
@@ -357,6 +375,9 @@ function loadOptions() {
     tabRuleOptions = tabRuleOptions ? JSON.parse(tabRuleOptions) : {
       tabs: []
     };
+    if (!tabRuleOptions.options) {
+      tabRuleOptions.options = [];
+    }
   } catch(err) {
     (console.error || console.log).call(console, err.stack || err);
   }
@@ -380,6 +401,20 @@ try {
 //     onTabCreated(tab, true);
 //   }
 // }
+
+function getInt(value) {
+  let intValue = 0;
+  try {
+    if (typeof(value) === 'string') {   
+      intValue = parseInt(value, 10);
+    } else if (typeof(value) === 'number') {
+      intValue = value;
+    }
+  } catch(err) {
+    (console.error || console.log).call(console, err.stack || err);
+  }
+  return intValue;
+}
 
 function onTabCreated(tab, disableCreationMessage) {
   try {
@@ -406,7 +441,24 @@ function onTabCreated(tab, disableCreationMessage) {
       const tabRule = findTabRuleMatch(tabRuleOptions, tab);
       if (tabRule) {
         console.log('Tab matched ' + tab.id + ' moving tab with url:' + tab.url);
-        const createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
+        let createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
+        
+        if (tabRule.position === POSITIONS.CENTER.id) {
+          createData = {state:'maximized'};
+        }
+
+        if (tabRule.custom && tabRuleOptions.positions && tabRuleOptions.positions.length > 0) {
+          const customPosition = findCustomPositionMatch(tabRuleOptions, tabRule.custom);
+          if (customPosition) {
+            createData = {
+              left: getInt(customPosition.x),
+              top: getInt(customPosition.y),
+              width: getInt(customPosition.width),
+              height: getInt(customPosition.height)
+            };
+          }
+        }
+
         createData.tabId = tab.id;
         if (tabRule.popup) {
           createData.type = 'popup';

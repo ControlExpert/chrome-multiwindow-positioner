@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="bower_components/select2/select2.css" />
   <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/intro.js/introjs.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css styles/main.css -->
@@ -51,7 +52,10 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">{{::locale.TAB_SETTINGS}}</div>
+        <div class="panel-heading">{{::locale.TAB_SETTINGS}} <label class="btn btn-default" type="button"
+          ng-disabled="showNewTabOption || showEditTabOption"
+          title="{{::locale.ADD_TAB_OPTION}}"
+          ng-click="addTabOption();"><i class="fa fa-plus"></i></label></div>
         <!--<div class="panel-body">
             <p>Panel body ...</p>
         </div>-->
@@ -64,6 +68,7 @@
             <th>{{::locale.NAME}}</th>
             <th ng-if="showExtraOptions">{{::locale.URL}}</th>
             <th>{{::locale.REMEMBER}}</th>
+            <th ng-if="showExtraOptions || (options.positions && options.positions.length > 0)">{{::locale.CUSTOM}}</th>
             <th>{{::locale.MONITOR}}</th>
             <th ng-if="showExtraOptions">{{::locale.DEFAULT_MONITOR}}</th>
             <th>{{::locale.POSITION}}</th>
@@ -97,6 +102,17 @@
                 ng-model="tabOption.remember"
                 ng-change="markAsDirty()">
               </checkbox>
+            </td>
+            <td 
+            ng-class="{'missing-custom':tabOption.inconsistentCustom}"
+            ng-if="showExtraOptions  || (options.positions && options.positions.length > 0)">
+              <span class="hide-when-hover custom-select">{{tabOption.custom}}</span>
+              <select class="form-control show-when-hover custom-select"
+                      ng-model="tabOption.custom"
+                      ng-change="markAsDirty()">
+                <option value="">select custom</option>
+                <option ng-repeat="position in options.positions" value="{{position.name}}">{{position.name}}</option>
+              </select>
             </td>
             <td ng-class="{'missing-monitor':tabOption.inconsistentMonitor}">
               <span class="hide-when-hover monitor-select">{{tabOption.monitor.idx}} {{tabOption.monitor.name}}</span>
@@ -146,6 +162,76 @@
     </div>
   </div>
 
+  <div class="row" ng-if="showExtraOptions">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">{{::locale.TAB_POSITIONS}} <label class="btn btn-default" type="button"
+            title="{{::locale.ADD_POSITION}}"
+            ng-click="addPosition();"><i class="fa fa-plus"></i></label></div>
+          <!--<div class="panel-body">
+              <p>Panel body ...</p>
+          </div>-->
+  
+          <!-- Table -->
+          <table class="table">
+            <thead>
+            <tr>
+              <th>{{::locale.NAME}}</th>
+              <th>X</th>
+              <th>Y</th>
+              <th>{{::locale.WIDTH}}</th>
+              <th>{{::locale.HEIGHT}}</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hoverable-section options-position-row"
+              ng-repeat="position in options.positions track by position.name">
+              <td>
+                  <input type="text"
+                  class="form-control"
+                  ng-change="markAsDirty()"
+                  ng-model="position.name"/>
+                </td>
+              <td><input type="number"
+                class="form-control"
+                ng-change="markAsDirty()"
+                min="1"
+                  step="1"
+                ng-model="position.x"/></td>
+              <td><input type="number"
+                class="form-control"
+                ng-change="markAsDirty()"
+                min="1"
+                  step="1"
+                ng-model="position.y"/></td>
+              <td><input type="number"
+                class="form-control"
+                ng-change="markAsDirty()"
+                min="1"
+                  step="1"
+                ng-model="position.width"/></td>
+              <td><input type="number"
+                class="form-control"
+                min="1"
+                  step="1"
+                ng-change="markAsDirty()"
+                ng-model="position.height"/></td>
+              <td class="tab-action-bar">
+                <span class="btn btn-default"
+                      title="{{::locale.REMOVE_POSITION}}"
+                      ng-click="deletePositionOption(position)">
+                              <i class="fa fa-remove"></i>
+                </span>
+                <span class="btn btn-default" ng-repeat="monitor in MONITORS" ng-click="setCustomPositionAsMonitor(position, monitor);">{{monitor.idx}}</option>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
   <div class="row" ng-if="showNewTabOption || showEditTabOption">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 rule-dialog">
@@ -566,10 +652,11 @@
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/select2/select2.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/file-saver/FileSaver.js"></script>
 <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
 <script src="bower_components/angular-uuid4/angular-uuid4.js"></script>
 <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script src="bower_components/intro.js/intro.js"></script>
+<script src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

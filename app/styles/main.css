@@ -107,8 +107,14 @@ tr:hover .tab-action-bar .btn {
   display: none;
 }
 
-.options-rule-row td {
+.options-rule-row td,
+.options-position-row td {
   line-height: 34px !important
+}
+
+.custom-select {
+  max-width: 250px !important;
+  min-width: 250px !important;
 }
 
 .monitor-select {
