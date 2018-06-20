@@ -221,6 +221,9 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
             windowHandler.id = window.id;
             vm.windowHandlers[windowHandler.uuid] = windowHandler;
             console.log('Window ' + window.id + ' created.');
+            chrome.windows.update(window.id, {state:'maximized'}, function onUpdated() {
+              console.log('Maximized detection window');
+            });
             setTimeout(function () {
               console.log('Removing window ' + window.id);
               closeWindowByHandler(windowHandler);

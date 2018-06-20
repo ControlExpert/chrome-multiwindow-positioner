@@ -1,3 +1,9 @@
+<a name="1.0.15"></a>
+# 1.0.15 (2018-20-June)
+
+* Proper fix for maximized mode support.
+* Improve monitor detection overlay, its now in max mode. For Win10, due to DPI misaligment issue, its even better, as no misaligment exists in max mode.
+
 <a name="1.0.14"></a>
 # 1.0.14 (2018-20-June)
 

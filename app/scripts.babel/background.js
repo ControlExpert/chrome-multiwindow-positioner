@@ -54,6 +54,7 @@ const states = {
 };
 
 let displayInfos = [];
+
 loadDisplayInfos();
 
 function loadDisplayInfos() {
@@ -425,6 +426,7 @@ function onTabCreated(tab, disableCreationMessage) {
   } catch(err) {
     (console.error || console.log).call(console, err.stack || err);
   }
+  
   function moveTabIntoPositionedWindow(tab, count) {
     if (count > MAX_MOVE_TRIES) {
       console.log('Tab with empty url could not be resolved after ' + MAX_MOVE_TRIES + ' tries');
@@ -437,16 +439,14 @@ function onTabCreated(tab, disableCreationMessage) {
         });
       }, 100);
     } else {
+
       const tabRuleOptions = loadOptions();
       const tabRule = findTabRuleMatch(tabRuleOptions, tab);
+      let isCustomPosition = false;
       if (tabRule) {
         console.log('Tab matched ' + tab.id + ' moving tab with url:' + tab.url);
         let createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
         
-        //if (tabRule.position === POSITIONS.CENTER.id) {
-        //  createData = {state:'maximized'};
-        //}
-
         if (tabRule.custom && tabRuleOptions.positions && tabRuleOptions.positions.length > 0) {
           const customPosition = findCustomPositionMatch(tabRuleOptions, tabRule.custom);
           if (customPosition) {
@@ -456,6 +456,7 @@ function onTabCreated(tab, disableCreationMessage) {
               width: getInt(customPosition.width),
               height: getInt(customPosition.height)
             };
+            isCustomPosition = true;
           }
         }
 
@@ -463,7 +464,14 @@ function onTabCreated(tab, disableCreationMessage) {
         if (tabRule.popup) {
           createData.type = 'popup';
         }
-        chrome.windows.create(createData, function onCreated() {
+        chrome.windows.create(createData, function onCreated(window) {
+          if (!isCustomPosition && tabRule.position === POSITIONS.CENTER.id) {
+            console.log('Maximizing tab matched ' + tab.id + ' moving tab with url:' + tab.url);
+            // maximized mode, should only be set after the tab has moved to the right monitor.
+            chrome.windows.update(window.id, {state:'maximized'}, function onUpdated() {
+              console.log('Maximized');
+            });
+          }
         });
       }
     }
