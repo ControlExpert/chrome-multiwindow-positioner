@@ -443,9 +443,9 @@ function onTabCreated(tab, disableCreationMessage) {
         console.log('Tab matched ' + tab.id + ' moving tab with url:' + tab.url);
         let createData = calculateWorkAreaByPosition(tabRule.monitor.workArea, tabRule.position);
         
-        if (tabRule.position === POSITIONS.CENTER.id) {
-          createData = {state:'maximized'};
-        }
+        //if (tabRule.position === POSITIONS.CENTER.id) {
+        //  createData = {state:'maximized'};
+        //}
 
         if (tabRule.custom && tabRuleOptions.positions && tabRuleOptions.positions.length > 0) {
           const customPosition = findCustomPositionMatch(tabRuleOptions, tabRule.custom);

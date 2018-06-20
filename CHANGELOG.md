@@ -1,3 +1,8 @@
+<a name="1.0.14"></a>
+# 1.0.14 (2018-20-June)
+
+* Revert maximized mode.
+
 <a name="1.0.12"></a>
 # 1.0.12 (2018-20-June)
 
