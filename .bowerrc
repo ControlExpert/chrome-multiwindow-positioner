@@ -3,7 +3,7 @@
   "strict-ssl": false,
   "registry": {
     "search": [
-      "https://bower.herokuapp.com"
+      "https://registry.bower.io"
     ]
   },
   "timeout": 300000
