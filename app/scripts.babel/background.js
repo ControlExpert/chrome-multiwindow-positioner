@@ -28,7 +28,8 @@ const POSITIONS = {
   LEFT_HALF: {id: 'left-half', name: 'left-half'},
   RIGHT_HALF: {id: 'right-half', name: 'right-half'},
   TOP_HALF: {id: 'top-half', name: 'top-half'},
-  BOTTOM_HALF: {id: 'bottom-half', name: 'bottom-half'}
+  BOTTOM_HALF: {id: 'bottom-half', name: 'bottom-half'},
+  FULLSCREEN: { id: 'fullscreen', name: 'fullscreen' }
 };
 
 const WINDOW_ID_NONE = -1;
@@ -200,6 +201,8 @@ function determinePositionByCurrentLocation(monitor, window) {
   try {
     if (window.state === WINDOW_STATES.MAXIMIZED) {
       position = POSITIONS.CENTER.id;
+    } else if (window.state === WINDOW_STATES.FULLSCREEN) {
+      position = POSITIONS.FULLSCREEN.id;
     } else {
       for (const key in POSITIONS) {
         if (POSITIONS.hasOwnProperty(key)) {
@@ -470,6 +473,12 @@ function onTabCreated(tab, disableCreationMessage) {
             // maximized mode, should only be set after the tab has moved to the right monitor.
             chrome.windows.update(window.id, {state:'maximized'}, function onUpdated() {
               console.log('Maximized');
+            });
+          } else if (!isCustomPosition && tabRule.position === POSITIONS.FULLSCREEN.id) {
+            console.log('Fullscreen tab matched ' + tab.id + ' moving tab with url:' + tab.url);
+            // maximized mode, should only be set after the tab has moved to the right monitor.
+            chrome.windows.update(window.id, {state:'fullscreen'}, function onUpdated() {
+              console.log('Fullscreen');
             });
           }
         });

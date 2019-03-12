@@ -18,7 +18,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
       LEFT_HALF: {id: 'left-half', name: vm.locale.LEFT_HALF},
       RIGHT_HALF: {id: 'right-half', name: vm.locale.RIGHT_HALF},
       TOP_HALF: {id: 'top-half', name: vm.locale.TOP_HALF},
-      BOTTOM_HALF: {id: 'bottom-half', name: vm.locale.BOTTOM_HALF}
+      BOTTOM_HALF: {id: 'bottom-half', name: vm.locale.BOTTOM_HALF},
+      FULLSCREEN: { id: 'fullscreen', name: vm.locale.FULLSCREEN }
     };
 
     const DEFAULT_MONITORS = {
@@ -974,6 +975,7 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         RIGHT_HALF: chrome.i18n.getMessage('RIGHT_HALF'),
         TOP_HALF: chrome.i18n.getMessage('TOP_HALF'),
         BOTTOM_HALF: chrome.i18n.getMessage('BOTTOM_HALF'),
+        FULLSCREEN: chrome.i18n.getMessage('FULLSCREEN'),
 
         //default monitors
         DEFAULT_MONITOR: chrome.i18n.getMessage('DEFAULT_MONITOR'),
@@ -1027,6 +1029,8 @@ angular.module('multiWindowPositioner', ['ngFileUpload', 'ui.checkbox', 'uuid4']
         localizedPosition = vm.locale.TOP_HALF;
       } else if (position === POSITIONS.BOTTOM_HALF.id) {
         localizedPosition = vm.locale.BOTTOM_HALF;
+      } else if (position === POSITIONS.FULLSCREEN.id) {
+        localizedPosition = vm.locale.FULLSCREEN;
       }
 
       return localizedPosition

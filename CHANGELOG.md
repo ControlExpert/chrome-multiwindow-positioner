@@ -1,3 +1,8 @@
+<a name="1.0.16"></a>
+# 1.0.16 (2019-12-March)
+
+* New: add full screen maximized mode support.
+
 <a name="1.0.15"></a>
 # 1.0.15 (2018-20-June)
 

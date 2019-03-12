@@ -171,6 +171,10 @@
     "message": "Bottom-Half",
     "description": ""
   },
+  "FULLSCREEN": {
+    "message": "Fullscreen",
+    "description": ""
+  },
   "DEFAULT_MONITOR": {
     "message": "Default Monitor",
     "description": ""

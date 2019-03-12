@@ -171,6 +171,10 @@
     "message": "untere Hälfte",
     "description": ""
   },
+  "FULLSCREEN": {
+    "message": "Vollbild",
+    "description": ""
+  },
   "DEFAULT_MONITOR": {
     "message": "Standardmonitor",
     "description": ""
