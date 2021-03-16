@@ -1,4 +1,4 @@
-// generated on 2016-10-04 using generator-chrome-extension 0.6.1
+// generated on 2021-03-16 using generator-chrome-extension 0.7.2
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
@@ -55,10 +55,14 @@ gulp.task('html',  () => {
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.sourcemaps.init())
     .pipe($.if('*.js', $.uglify()))
-      //TODO has problems with bootstrap sourcemaps
-    //.pipe($.if('*.css', $.cleanCss({compatibility: '*'})))
+    .pipe($.if('*.css', $.cleanCss({compatibility: '*'})))
     .pipe($.sourcemaps.write())
-    .pipe($.if('*.html', $.htmlmin({removeComments: true, collapseWhitespace: true})))
+    .pipe($.if('*.html', $.htmlmin({
+      collapseWhitespace: true,
+      minifyCSS: true,
+      minifyJS: true,
+      removeComments: true
+    })))
     .pipe(gulp.dest('dist'));
 });
 
@@ -82,8 +86,9 @@ gulp.task('chromeManifest', () => {
 
 gulp.task('babel', () => {
   return gulp.src('app/scripts.babel/**/*.js')
+      .pipe($.plumber())
       .pipe($.babel({
-        presets: ['es2015']
+        presets: ['@babel/env']
       }))
       .pipe(gulp.dest('app/scripts'));
 });
@@ -120,7 +125,7 @@ gulp.task('wiredep', () => {
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-      .pipe($.zip('chrome-multiwindow-positioner-' + manifest.version + '.zip'))
+      .pipe($.zip('chrome multiwindow positioner-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
 });
 

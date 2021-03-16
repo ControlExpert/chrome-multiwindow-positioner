@@ -1,53 +1,19 @@
 {
-  "manifest_version": 2,
   "name": "__MSG_appName__",
-  "short_name": "MWP",
-  "version": "1.0.17",
-
-  "default_locale": "en",
+  "version": "0.0.1",
+  "manifest_version": 2,
   "description": "__MSG_appDescription__",
-  "author": "Igor Lino @ ControlExpert",
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"
   },
-
-  "homepage_url": "https://github.com/ControlExpert/chrome-multiwindow-positioner",
+  "default_locale": "en",
   "background": {
     "scripts": [
+      "libs/polyfill.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
   },
-  "permissions": [
-    "system.display",
-    "activeTab",
-    "tabs",
-    "storage"
-  ],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true,
-    "open_in_tab": true
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
-    }
-  ],
-  "externally_connectable": {
-    "matches": ["*://igorlino.github.io/*"]
-  },
-  "web_accessible_resources": [
-    "images/icon-48.png",
-    "images/options-loader.gif"
-  ]
+  "permissions": []
 }
