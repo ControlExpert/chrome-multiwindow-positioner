@@ -74,7 +74,7 @@ gulp build
 
 To test, go to: chrome://extensions, enable Developer mode and load app as an unpacked extension.
 
-Need more information about Chrome Extension? Please visit [Google Chrome Extension Development](http://developer.chrome.com/extensions/devguide.html)
+Need more information about Chrome Extension? Please visit [Google Chrome Extension Development](https://developer.chrome.com/docs/extensions/)
 
 ## gulp tasks
 
