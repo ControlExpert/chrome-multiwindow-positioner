@@ -8,8 +8,8 @@
     "node": ">=0.8.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-es2015": "^6.24.1",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.0.0",
     "brace-expansion": "1.1.7",
     "del": "^2.2.0",
     "gulp": "^4.0.2",
@@ -47,5 +47,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "@babel/register": "^7.0.0"
   }
 }
