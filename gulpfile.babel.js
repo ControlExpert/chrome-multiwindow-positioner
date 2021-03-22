@@ -1,4 +1,3 @@
-// generated on 2016-10-04 using generator-chrome-extension 0.6.1
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
@@ -7,7 +6,7 @@ import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
 
-gulp.task('extras', () => {
+gulp.task('extras', gulp.series(() => {
   return gulp.src([
     'app/*.*',
     'app/_locales/**',
@@ -18,7 +17,7 @@ gulp.task('extras', () => {
     base: 'app',
     dot: true
   }).pipe(gulp.dest('dist'));
-});
+}));
 
 function lint(files, options) {
   return () => {
@@ -28,13 +27,13 @@ function lint(files, options) {
   };
 }
 
-gulp.task('lint', lint('app/scripts.babel/**/*.js', {
+gulp.task('lint', gulp.series(lint('app/scripts.babel/**/*.js', {
   env: {
     es6: true
   }
-}));
+})));
 
-gulp.task('images', () => {
+gulp.task('images', gulp.series(() => {
   return gulp.src('app/images/**/*')
     .pipe($.if($.if.isFile, $.cache($.imagemin({
       progressive: true,
@@ -48,9 +47,9 @@ gulp.task('images', () => {
       this.end();
     })))
     .pipe(gulp.dest('dist/images'));
-});
+}));
 
-gulp.task('html',  () => {
+gulp.task('html',  gulp.series(() => {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.sourcemaps.init())
@@ -60,9 +59,9 @@ gulp.task('html',  () => {
     .pipe($.sourcemaps.write())
     .pipe($.if('*.html', $.htmlmin({removeComments: true, collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));
-});
+}));
 
-gulp.task('chromeManifest', () => {
+gulp.task('chromeManifest', gulp.series(() => {
   return gulp.src('app/manifest.json')
     .pipe($.chromeManifest({
       buildnumber: true,
@@ -78,19 +77,19 @@ gulp.task('chromeManifest', () => {
   .pipe($.if('*.js', $.uglify()))
   .pipe($.if('*.js', $.sourcemaps.write('.')))
   .pipe(gulp.dest('dist'));
-});
+}));
 
-gulp.task('babel', () => {
+gulp.task('babel', gulp.series(() => {
   return gulp.src('app/scripts.babel/**/*.js')
       .pipe($.babel({
         presets: ['es2015']
       }))
       .pipe(gulp.dest('app/scripts'));
-});
+}));
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', gulp.series(del.bind(null, ['.tmp', 'dist'])));
 
-gulp.task('watch', ['lint', 'babel'], () => {
+gulp.task('watch', gulp.series('lint', 'babel'), () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -101,36 +100,36 @@ gulp.task('watch', ['lint', 'babel'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
-  gulp.watch('bower.json', ['wiredep']);
+  gulp.watch('app/scripts.babel/**/*.js', gulp.series('lint', 'babel'));
+  gulp.watch('bower.json', gulp.series('wiredep'));
 });
 
-gulp.task('size', () => {
+gulp.task('size', gulp.series(() => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-});
+}));
 
-gulp.task('wiredep', () => {
+gulp.task('wiredep', gulp.series(() => {
   gulp.src('app/*.html')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
-});
+}));
 
-gulp.task('package', function () {
+gulp.task('package', gulp.series(function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
       .pipe($.zip('chrome-multiwindow-positioner-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
-});
+}));
 
-gulp.task('build', (cb) => {
+gulp.task('build', gulp.series(cb => {
   runSequence(
     'lint', 'babel', 'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
-});
+}));
 
-gulp.task('default', ['clean'], cb => {
+gulp.task('default', gulp.series('clean', cb => {
   runSequence('build', cb);
-});
+}));
