@@ -26,7 +26,7 @@
     "gulp-plumber": ">=1.1.0",
     "gulp-size": ">=2.1.0",
     "gulp-sourcemaps": ">=1.6.0",
-    "gulp-uglify": ">=1.5.3",
+    "gulp-uglify": ">=3.0.2",
     "gulp-useref": ">=3.0.8",
     "gulp-zip": ">=3.2.0",
     "main-bower-files": ">=2.11.1",
