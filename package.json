@@ -25,7 +25,7 @@
     "gulp-htmlmin": ">=2.0.0",
     "gulp-plumber": ">=1.1.0",
     "gulp-size": ">=2.1.0",
-    "gulp-sourcemaps": ">=1.6.0",
+    "gulp-sourcemaps": ">=3.0.0",
     "gulp-uglify": ">=3.0.2",
     "gulp-useref": ">=3.0.8",
     "gulp-zip": ">=5.1.0",
