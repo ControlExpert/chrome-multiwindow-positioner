@@ -21,9 +21,7 @@
   },
   "permissions": [
     "system.display",
-    "activeTab",
-    "tabs",
-    "storage"
+    "tabs"
   ],
   "options_ui": {
     "page": "options.html",
