@@ -30,7 +30,7 @@
     "gulp-useref": ">=5.0.0",
     "gulp-zip": ">=5.1.0",
     "main-bower-files": ">=2.11.1",
-    "run-sequence": ">=1.1.5",
+    "run-sequence": ">=2.2.1",
     "wiredep": ">=4.0.0"
   },
   "eslintConfig": {
