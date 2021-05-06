@@ -1,18 +1,18 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_appName__",
   "short_name": "MWP",
-  "version": "1.0.17",
+  "version": "2021.05",
 
   "default_locale": "en",
   "description": "__MSG_appDescription__",
-  "author": "Igor Lino @ ControlExpert",
+  "author": "Ben Christensen",
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"
   },
 
-  "homepage_url": "https://github.com/ControlExpert/chrome-multiwindow-positioner",
+  "homepage_url": "https://github.com/ctrleverything/chrome-multiwindow-positioner",
   "background": {
     "scripts": [
       "scripts/chromereload.js",
@@ -21,9 +21,7 @@
   },
   "permissions": [
     "system.display",
-    "activeTab",
-    "tabs",
-    "storage"
+    "tabs"
   ],
   "options_ui": {
     "page": "options.html",
