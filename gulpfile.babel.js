@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
-import runSequence from 'run-sequence';
+import runSequence from 'gulp4-run-sequence';
 import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
