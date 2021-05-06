@@ -82,7 +82,7 @@ gulp.task('chromeManifest', gulp.series(() => {
 gulp.task('babel', gulp.series(() => {
   return gulp.src('app/scripts.babel/**/*.js')
       .pipe($.babel({
-        presets: ['es2015']
+        presets: ['@babel/preset-env']
       }))
       .pipe(gulp.dest('app/scripts'));
 }));
