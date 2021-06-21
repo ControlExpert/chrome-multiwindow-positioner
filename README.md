@@ -1,5 +1,7 @@
 # Chrome MultiWindow Positioner
 
+[![CircleCI](https://circleci.com/gh/ctrleverything/chrome-multiwindow-positioner.svg?style=shield)](https://app.circleci.com/pipelines/github/ctrleverything/chrome-multiwindow-positioner)
+
 Extension that enables effective automated window positioning/placement in multi-monitor setups.
 
 ## Features
