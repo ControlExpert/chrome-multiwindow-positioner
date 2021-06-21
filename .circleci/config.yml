@@ -17,6 +17,9 @@ jobs:
             npm install -g yarn --force
             yarn set version berry
       - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - run:
           name: Build with yarn + gulp
           command: yarn run gulp build
 
