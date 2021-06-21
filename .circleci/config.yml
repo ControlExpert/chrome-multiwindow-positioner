@@ -29,6 +29,9 @@ jobs:
       # - node/install-packages:
       #     pkg-manager: yarn 
       - run:
+          name: Install gulp-cli
+          command: npm install -g gulp-cli
+      - run:
           name: Build
           command: gulp build
 
