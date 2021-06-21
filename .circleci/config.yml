@@ -13,10 +13,10 @@ jobs:
           pkg-manager: yarn
           override-ci-command: yarn install --immutable
       # Set yarn v2
-      - run:
-          command:
-            npm install -g yarn --force
-            yarn set version berry
+      # - run:
+      #    command:
+      #      npm install -g yarn --force
+      #      yarn set version berry
       - run:
           name: Build with yarn + gulp
           command: yarn run gulp build
