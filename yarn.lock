@@ -1086,9 +1086,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:>=7.14.7":
-  version: 7.14.7
-  resolution: "@babel/preset-env@npm:7.14.7"
+"@babel/preset-env@npm:>=7.14.8":
+  version: 7.14.8
+  resolution: "@babel/preset-env@npm:7.14.8"
   dependencies:
     "@babel/compat-data": ^7.14.7
     "@babel/helper-compilation-targets": ^7.14.5
@@ -1157,7 +1157,7 @@ __metadata:
     "@babel/plugin-transform-unicode-escapes": ^7.14.5
     "@babel/plugin-transform-unicode-regex": ^7.14.5
     "@babel/preset-modules": ^0.1.4
-    "@babel/types": ^7.14.5
+    "@babel/types": ^7.14.8
     babel-plugin-polyfill-corejs2: ^0.2.2
     babel-plugin-polyfill-corejs3: ^0.2.2
     babel-plugin-polyfill-regenerator: ^0.2.2
@@ -1165,7 +1165,7 @@ __metadata:
     semver: ^6.3.0
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 50c21b42c47a2d7ae26f70d6f5e77b83ab803fb54b22ae6e398a4ab6b388f7397207ff6ca51e5cb697de14d31965988147a2b65009e638fb04a3b8a5c60676c8
+  checksum: 41725eef1ae0206686a76a4a0fe09454bf59eda4e6b610ea9f90ae027bc30107db10a2c10b0ce7384ce00100b877e24face2a6a84473dd6b4972f2f6d86dc5e4
   languageName: node
   linkType: hard
 
@@ -2427,7 +2427,7 @@ __metadata:
   dependencies:
     "@babel/core": ">=7.14.8"
     "@babel/polyfill": 7.12.1
-    "@babel/preset-env": ">=7.14.7"
+    "@babel/preset-env": ">=7.14.8"
     "@babel/register": ">=7.14.5"
     babel-eslint: ">=10.0.1"
     del: ">=6.0.0"
