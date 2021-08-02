@@ -68,6 +68,7 @@
     "@bower_components/mocha": "mochajs/mocha",
     "@bower_components/select2": "ivaynberg/select2",
     "@bower_components/select2-bootstrap-css": "t0m/select2-bootstrap-css",
+    "angular-bootstrap": "^0.12.2",
     "gulp4-run-sequence": "^1.0.1"
   },
   "scripts": {

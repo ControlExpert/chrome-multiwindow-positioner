@@ -1570,6 +1570,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"angular-bootstrap@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "angular-bootstrap@npm:0.12.2"
+  checksum: 6adb729700fd26c163f0657021ebc0db1475792fba8d90785a98f2fbd6c04dbf5dc5dfc0b790610bc5529165f9ae526ea656459962028bf9a475b2d0fd33de04
+  languageName: node
+  linkType: hard
+
 "ansi-colors@npm:4.1.1":
   version: 4.1.1
   resolution: "ansi-colors@npm:4.1.1"
@@ -2630,6 +2637,7 @@ __metadata:
     "@bower_components/mocha": mochajs/mocha
     "@bower_components/select2": ivaynberg/select2
     "@bower_components/select2-bootstrap-css": t0m/select2-bootstrap-css
+    angular-bootstrap: ^0.12.2
     babel-eslint: ">=10.0.1"
     del: ">=6.0.0"
     gulp: ">=3.9.1"
