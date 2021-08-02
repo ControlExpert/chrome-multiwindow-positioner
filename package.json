@@ -3,7 +3,8 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.8.0",
+    "yarn": ">= 1.0.0"
   },
   "devDependencies": {
     "@babel/core": ">=7.14.8",
@@ -55,6 +56,21 @@
     }
   },
   "dependencies": {
+    "@bower_components/angular": "angular/bower-angular",
+    "@bower_components/angular-bootstrap": "angular-ui/bootstrap-bower",
+    "@bower_components/angular-bootstrap-checkbox": "sebastianha/angular-bootstrap-checkbox",
+    "@bower_components/angular-intro.js": "mendhak/angular-intro.js",
+    "@bower_components/angular-resource": "angular/bower-angular-resource",
+    "@bower_components/angular-uuid4": "monicao/angular-uuid4",
+    "@bower_components/file-saver": "eligrey/FileSaver.js",
+    "@bower_components/intro.js": "usablica/intro.js",
+    "@bower_components/lodash": "lodash/lodash#4.17.5",
+    "@bower_components/mocha": "mochajs/mocha",
+    "@bower_components/select2": "ivaynberg/select2",
+    "@bower_components/select2-bootstrap-css": "t0m/select2-bootstrap-css",
     "gulp4-run-sequence": "^1.0.1"
+  },
+  "scripts": {
+    "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'app\\bower_components', 'junction') } catch (e) { }\""
   }
 }
